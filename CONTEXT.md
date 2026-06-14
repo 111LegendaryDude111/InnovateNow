@@ -18,17 +18,20 @@
 | 2026-06-14 | Разделить Ollama-клиент на клиент, payload builders, transport и errors | `src/llm/llm.py` был больше 200 строк и смешивал ответственность | Публичный API сохранен, низкоуровневый HTTP изолирован в `src/llm/transport.py` |
 | 2026-06-14 | Добавить `pytest` в dev dependency group | Нужен стандартный запуск `uv run pytest` | `pytest` зафиксирован в `pyproject.toml` и `uv.lock`; проверка `uv run pytest` проходит, 9 тестов |
 | 2026-06-14 | Разнести provider clients из `llm.py` по отдельным модулям | `src/llm/llm.py` вырос до 441 строки после добавления OpenRouter | `llm.py` стал compatibility facade; `OllamaClient` живет в `ollama.py`, `OpenRouterClient` — в `openrouter.py` |
+| 2026-06-14 | CLI `ask` принимает тему и тип контента вместо сырого positional prompt | Задание требует пользовательские поля `topic` и `content type` с динамической сборкой prompt | Сборка prompt вынесена в `src/llm/prompt_builder.py`; `README.md` описывает setup и usage приложения |
 
 ## Implemented Features
 
 | Date | Feature | Summary | Files / Modules | Notes |
 |---|---|---|---|---|
 | 2026-06-14 | LLM CLI/client | CLI умеет `ask` и `status`; клиенты покрывают Ollama и OpenRouter | `main.py`, `src/llm` | Тесты используют мок `urllib.request.urlopen` и не читают реальный `.env` |
+| 2026-06-14 | Dynamic content prompt | CLI `ask` строит prompt из `--topic` и `--content-type` | `main.py`, `src/llm/prompt_builder.py` | Сырой positional prompt в CLI больше не используется |
 
 ## Architecture Notes
 
 - Основные компоненты: `ollama.py` и `openrouter.py` оркестрируют provider API; `openrouter_support.py` держит OpenRouter options/headers/env helpers; `payloads.py` собирает тела запросов; `transport.py` выполняет HTTP и нормализует ошибки; `errors.py` хранит provider-specific исключения; `llm.py` оставлен как compatibility facade.
 - Потоки данных: CLI создает активный provider client, клиент собирает payload, transport отправляет запрос в provider API и возвращает JSON-объект.
+- CLI `ask` сначала собирает user prompt из `--topic` и `--content-type`, затем передает его в `OpenRouterClient.generate`.
 - Интеграции: локальный Ollama HTTP API по умолчанию `http://localhost:11434`; OpenRouter API через `https://openrouter.ai/api/v1`.
 - Где нельзя ломать интерфейсы: публичные импорты из `llm`, включая `OllamaClient`, `OpenRouterClient`, `LLMError`, provider-specific errors и helper-функции.
 

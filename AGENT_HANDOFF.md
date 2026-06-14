@@ -1,5 +1,85 @@
 ## Handoff Entry
 
+- Date: 2026-06-14 22:06 MSK
+- Agent: Codex
+- Task: исправить CLI-ввод `topic`/`content type` и README после ревью
+- Status: completed
+
+### Completed
+
+- Прочитаны `README.md`, `CONTEXT.md`, `AGENT_HANDOFF.md`, `AGENTS.md`.
+- `AGENT_TASK_LOG.md` в начальном `rg --files` отсутствовал, позже появился пустым и был заполнен.
+- Прочитаны skills `$karpathy-guidelines` и `$caveman`.
+- Прочитаны инструкции `subagents/machine-learning-engineer.md`; конфликтов с `AGENTS.md` не найдено.
+- CLI `ask` переведен на обязательные аргументы `--topic` и `--content-type`.
+- Добавлен `src/llm/prompt_builder.py` для динамической сборки prompt из темы и типа контента.
+- README заменен на документацию приложения: setup, OpenRouter env vars, usage и tests.
+- Добавлены тесты на сборку prompt и обновлен тест CLI.
+- Долгосрочный контекст обновлен в `CONTEXT.md`.
+
+### Files Changed
+
+- `main.py`
+- `src/llm/prompt_builder.py`
+- `tests/test_main.py`
+- `tests/test_prompt_builder.py`
+- `README.md`
+- `CONTEXT.md`
+- `AGENT_TASK_LOG.md`
+- `AGENT_HANDOFF.md`
+
+### Commands Run
+
+- `sed -n '1,240p' /Users/davidsukhashvili/.codex/skills/karpathy-guidelines/SKILL.md`
+- `sed -n '1,240p' /Users/davidsukhashvili/.codex/skills/caveman/SKILL.md`
+- `rg --files -g 'README.md' -g 'CONTEXT.md' -g 'AGENT_HANDOFF.md' -g 'AGENT_TASK_LOG.md' -g 'AGENTS.md' -g 'subagents/machine-learning-engineer.md'`
+- `sed -n '1,260p' README.md`
+- `sed -n '1,260p' CONTEXT.md`
+- `sed -n '1,260p' AGENT_HANDOFF.md`
+- `sed -n '1,320p' AGENTS.md`
+- `sed -n '1,620p' subagents/machine-learning-engineer.md`
+- `rg --files`
+- `git status --short`
+- `wc -l main.py src/llm/*.py tests/*.py README.md CONTEXT.md`
+- `sed -n '1,240p' main.py`
+- `sed -n '1,240p' tests/test_main.py`
+- `sed -n '1,260p' tests/test_openrouter_client.py`
+- `sed -n '1,240p' src/llm/openrouter.py`
+- `sed -n '1,220p' src/llm/openrouter_support.py`
+- `sed -n '1,220p' src/llm/__init__.py`
+- `sed -n '1,220p' pyproject.toml`
+- `sed -n '1,220p' src/llm/llm.py`
+- `sed -n '1,180p' src/llm/helpers.py`
+- `sed -n '1,220p' tests/test_ollama_client.py`
+- `uv run pytest`
+- `date '+%Y-%m-%d %H:%M %Z'`
+- `sed -n '1,260p' AGENT_TASK_LOG.md`
+- `wc -l AGENT_TASK_LOG.md AGENT_HANDOFF.md`
+
+### Tests / Checks
+
+- Passed: `uv run pytest` — 11 tests passed.
+- Passed: line count check; touched code files stay under 200 lines (`main.py` 135, `src/llm/prompt_builder.py` 21).
+
+### Decisions
+
+- Сырой positional prompt удален из CLI `ask`, потому что ревью указало на обязательность ввода `topic` и `content type`.
+- Сборка prompt вынесена в отдельный модуль, чтобы не увеличивать `openrouter.py`, который уже близок к лимиту 200 строк.
+- Runtime-зависимости не добавлялись.
+- `.env` не читался вручную; тесты мокают загрузку окружения.
+- Fallbacks не добавлялись.
+
+### Risks / Blockers
+
+- Старый вызов `python main.py ask "raw prompt"` больше не поддерживается; новый формат: `python main.py ask --topic "..." --content-type "..."`.
+
+### Next Steps
+
+- Использовать новый CLI-формат в проверках и документации.
+- При необходимости добавить отдельную команду для сырого prompt только как явное новое требование.
+
+## Handoff Entry
+
 - Date: 2026-06-14 21:49 MSK
 - Agent: Codex
 - Task: отрефакторить `src/llm/llm.py`

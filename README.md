@@ -1,29 +1,59 @@
-# Документация для агентов
+# Task Learn LLM Client
 
-Этот каталог хранит правила, контекст и handoff-файлы, которые помогают агентам работать последовательно между сессиями.
+Python CLI and lightweight library clients for working with LLM providers. The
+current CLI uses OpenRouter and can generate content from a topic plus requested
+content type.
 
-## Файлы
+## Setup
 
-| Файл | Описание |
-| --- | --- |
-| `AGENTS.md` | Основные правила работы агента в репозитории: порядок чтения файлов, guardrails, skills, handoff, task log, testing rules и требования к качеству кода. |
-| `AGENT_HANDOFF.md` | Краткое текущее состояние проекта и задач для следующего агента: что сделано, что осталось, какие есть риски, блокеры и next steps. |
-| `CONTEXT.md` | Долгосрочный контекст проекта: устойчивые решения, ограничения, архитектурные договоренности, known issues и важные изменения. |
-| `SKILLS.md` | Рекомендуемые skills для установки и использования: базовые, coding, architecture, documentation, audit и optional tools. |
-| `README.md` | Краткая карта документации и назначение файлов в этом каталоге. |
+Install project dependencies:
 
-## Дополнительные файлы
+```bash
+uv sync
+```
 
-| Файл | Описание |
-| --- | --- |
-| `TODO/TODO_AGENT_AUDIT(2).md` | Черновик checklist для аудита работы агента: логи, handoff, context updates, tests, guardrails и repeated-error protocol. Может быть оформлен как optional skill `$agent-audit`. |
+Create `.env` in the project root or export the variables in your shell:
 
-## Рекомендуемый порядок чтения
+```bash
+OPENROUTER_API_KEY=your_api_key_here
+OPENROUTER_MODEL=deepseek/deepseek-v4-flash
+```
 
-1. `README.md`
-2. `CONTEXT.md`
-3. `AGENTS.md`
-4. `AGENT_HANDOFF.md`
-5. `SKILLS.md`
+`OPENROUTER_MODEL` is optional. If it is not set, the default model is
+`deepseek/deepseek-v4-flash`.
 
-Если задача связана с аудитом работы агента, дополнительно читать `TODO/TODO_AGENT_AUDIT(2).md`.
+## Usage
+
+Check OpenRouter configuration and model availability:
+
+```bash
+uv run python main.py status
+```
+
+Generate content by topic and content type:
+
+```bash
+uv run python main.py ask --topic "Python unit tests" --content-type "tutorial"
+```
+
+Add a system prompt when you need extra style or behavior constraints:
+
+```bash
+uv run python main.py ask \
+  --topic "OpenRouter API clients" \
+  --content-type "implementation checklist" \
+  --system "Be concise and practical"
+```
+
+The `ask` command builds a prompt from `--topic` and `--content-type`, then sends
+it to OpenRouter.
+
+## Tests
+
+Run the test suite:
+
+```bash
+uv run pytest
+```
+
+The tests mock provider HTTP calls and do not read the real `.env` file.

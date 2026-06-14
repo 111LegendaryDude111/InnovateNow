@@ -11,17 +11,24 @@ if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
 from llm import LLMError, OpenRouterClient
+from llm.prompt_builder import build_content_prompt
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """Создает CLI parser для команд приложения."""
     parser = argparse.ArgumentParser(
         description="Run the project LLM through OpenRouter.",
     )
     subparsers = parser.add_subparsers(dest="command")
 
-    ask_parser = subparsers.add_parser("ask", help="Send a prompt to the LLM")
+    ask_parser = subparsers.add_parser("ask", help="Generate content by topic")
     _add_client_options(ask_parser)
-    ask_parser.add_argument("prompt", nargs="+", help="Prompt text")
+    ask_parser.add_argument("--topic", required=True, help="Content topic")
+    ask_parser.add_argument(
+        "--content-type",
+        required=True,
+        help="Requested content type",
+    )
     ask_parser.add_argument("--system", help="Optional system prompt")
 
     status_parser = subparsers.add_parser(
@@ -34,6 +41,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Запускает CLI и возвращает process exit code."""
     load_env_file(ENV_FILE)
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -48,7 +56,7 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     if args.command == "ask":
-        return _run_ask(client, " ".join(args.prompt), args.system)
+        return _run_ask(client, args.topic, args.content_type, args.system)
     if args.command == "status":
         return _run_status(client)
 
@@ -61,9 +69,19 @@ def _add_client_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--base-url", help="OpenRouter base URL")
 
 
-def _run_ask(client: OpenRouterClient, prompt: str, system: str | None) -> int:
+def _run_ask(
+    client: OpenRouterClient,
+    topic: str,
+    content_type: str,
+    system: str | None,
+) -> int:
+    """Собирает prompt из пользовательских полей и отправляет его в LLM."""
     try:
+        prompt = build_content_prompt(topic, content_type)
         print(client.generate(prompt, system=system))
+    except ValueError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 2
     except LLMError as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1

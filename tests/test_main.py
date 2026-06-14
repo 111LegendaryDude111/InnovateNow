@@ -27,17 +27,36 @@ class FakeClient:
 
 
 class MainTests(unittest.TestCase):
-    def test_ask_runs_llm_from_main_entrypoint(self) -> None:
+    def test_ask_builds_prompt_from_topic_and_content_type(self) -> None:
         with (
             patch("main.load_env_file"),
             patch("main.OpenRouterClient.from_env", return_value=FakeClient()),
         ):
             stdout = StringIO()
             with redirect_stdout(stdout):
-                exit_code = app_main.main(["ask", "hello", "--system", "short"])
+                exit_code = app_main.main(
+                    [
+                        "ask",
+                        "--topic",
+                        "Python testing",
+                        "--content-type",
+                        "tutorial",
+                        "--system",
+                        "short",
+                    ],
+                )
 
         self.assertEqual(exit_code, 0)
-        self.assertEqual(stdout.getvalue(), "hello::short\n")
+        self.assertEqual(
+            stdout.getvalue(),
+            (
+                "You are a content generation assistant.\n"
+                "Topic: Python testing\n"
+                "Content type: tutorial\n"
+                "Write the requested content in a clear, structured, and useful way."
+                "::short\n"
+            ),
+        )
 
     def test_status_prints_openrouter_config(self) -> None:
         with (
