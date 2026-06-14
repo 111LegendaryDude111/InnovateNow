@@ -89,6 +89,12 @@ streaming chat completion requests to OpenRouter with `stream: true`.
 
 ## Frontend
 
+Start backend and frontend together:
+
+```bash
+make dev
+```
+
 Start the backend:
 
 ```bash
