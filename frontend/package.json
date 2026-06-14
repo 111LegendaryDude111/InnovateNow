@@ -1,0 +1,19 @@
+{
+  "name": "task-learn-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "rspack serve --mode development",
+    "build": "rspack build --mode production"
+  },
+  "dependencies": {
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {
+    "@rspack/cli": "1.7.11",
+    "@rspack/core": "1.7.11",
+    "@rspack/dev-server": "1.2.1"
+  }
+}

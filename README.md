@@ -48,6 +48,71 @@ uv run python main.py ask \
 The `ask` command builds a prompt from `--topic` and `--content-type`, then sends
 it to OpenRouter.
 
+## Streaming API
+
+Start the local API server:
+
+```bash
+uv run uvicorn llm.api:app --app-dir src --reload
+```
+
+Stream a real OpenRouter response through Server-Sent Events (SSE):
+
+```bash
+curl -N -X POST http://127.0.0.1:8000/llm/stream \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"Explain Python unit tests","system":"Be concise"}'
+```
+
+The request body is JSON:
+
+```json
+{
+  "prompt": "Explain Python unit tests",
+  "system": "Be concise"
+}
+```
+
+`prompt` is required and must be a non-empty string. `system` is optional.
+
+Each SSE message has a stable event name and JSON payload:
+
+```text
+event: delta
+data: {"type":"delta","content":"OpenRouter response chunk","index":0,"done":false}
+```
+
+The stream emits `start`, one or more `delta` events, then `done`. If streaming
+logic fails after the connection starts, the stream emits an `error` event with
+`done: true` and then closes. The local API loads `.env` on startup and sends
+streaming chat completion requests to OpenRouter with `stream: true`.
+
+## Frontend
+
+Start the backend:
+
+```bash
+uv run uvicorn llm.api:app --app-dir src --host 127.0.0.1 --port 8000 --reload
+```
+
+Start the React frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open `http://127.0.0.1:5173`. The frontend uses Rspack, sends `POST` requests to
+`/llm/stream`, and reads OpenRouter-backed SSE chunks with `fetch`.
+
+Build the frontend:
+
+```bash
+cd frontend
+npm run build
+```
+
 ## Prompt Templates
 
 Reusable prompt documents:

@@ -21,3 +21,5 @@
 | 005 | Решить, нужен ли отдельный raw prompt режим | HITL | Нет |
 | 006 | Создать few-shot prompting template для классификации support tickets | AFK | Нет |
 | 007 | Создать начальную AI Prompt Library для marketing content | AFK | Нет |
+| 008 | Добавить server-side streaming endpoint для LLM responses | HITL | Нет: выбран FastAPI + SSE |
+| 009 | Создать full-stack MVP `CreativeCanvas AI` для генерации изображений | HITL | Human decision: image generation provider/API |
