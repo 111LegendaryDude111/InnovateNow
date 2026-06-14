@@ -48,6 +48,13 @@ uv run python main.py ask \
 The `ask` command builds a prompt from `--topic` and `--content-type`, then sends
 it to OpenRouter.
 
+## Prompt Templates
+
+Reusable prompt documents:
+
+- [Few-shot support ticket classification template](docs/prompts/few-shot-support-ticket-classification-template.md)
+- [Marketing AI Prompt Library](docs/prompts/marketing-ai-prompt-library/README.md)
+
 ## Tests
 
 Run the test suite:

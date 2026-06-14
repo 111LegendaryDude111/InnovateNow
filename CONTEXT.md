@@ -26,6 +26,8 @@
 |---|---|---|---|---|
 | 2026-06-14 | LLM CLI/client | CLI умеет `ask` и `status`; клиенты покрывают Ollama и OpenRouter | `main.py`, `src/llm` | Тесты используют мок `urllib.request.urlopen` и не читают реальный `.env` |
 | 2026-06-14 | Dynamic content prompt | CLI `ask` строит prompt из `--topic` и `--content-type` | `main.py`, `src/llm/prompt_builder.py` | Сырой positional prompt в CLI больше не используется |
+| 2026-06-14 | Few-shot support ticket template | Добавлен самостоятельный шаблон для классификации support tickets | `docs/prompts/few-shot-support-ticket-classification-template.md`, `README.md` | Шаблон содержит таксономию, 3 примера и строгий JSON-формат |
+| 2026-06-14 | Marketing AI Prompt Library | Добавлена начальная внутренняя библиотека reusable prompts для marketing content | `docs/prompts/marketing-ai-prompt-library/README.md`, `README.md` | 5 content areas, 18 prompt files, категории разнесены по директориям, один markdown-файл на prompt |
 
 ## Architecture Notes
 
@@ -41,6 +43,10 @@
 - Не добавлять Docker/microservices без явной необходимости.
 - Предпочитать `uv`, `pyproject.toml`, `pytest`, lightweight MVP stack.
 - Все рискованные изменения — маленькими PR/changesets.
+
+## Workflow Notes
+
+- Доработки фиксируются в локальной папке `issues/`: одна markdown-задача — один проверяемый вертикальный срез.
 
 ## Open Questions
 
