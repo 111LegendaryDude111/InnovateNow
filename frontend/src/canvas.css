@@ -1,0 +1,85 @@
+.canvas-panel {
+  display: flex;
+  min-height: 600px;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+}
+
+.image-stage {
+  display: grid;
+  min-height: 500px;
+  flex: 1;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #d5dde5;
+  border-radius: 8px;
+  background: #101820;
+}
+
+.image-stage img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.empty-stage {
+  color: #aeb8c2;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), #101820;
+  background-size: 28px 28px;
+  font-weight: 800;
+}
+
+.history-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  max-width: 1220px;
+  margin: 20px auto 0;
+}
+
+.history-strip button,
+.history-strip p {
+  min-height: 120px;
+  color: #425466;
+}
+
+.history-strip button {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.history-strip img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.history-strip span {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #ffffff;
+  background: rgba(15, 23, 42, 0.78);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.history-strip p {
+  display: grid;
+  margin: 0;
+  place-items: center;
+  font-weight: 800;
+}
+
+@media (max-width: 780px) {
+  .canvas-panel,
+  .image-stage {
+    min-height: 420px;
+  }
+}

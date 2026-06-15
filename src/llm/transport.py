@@ -27,13 +27,40 @@ def post_json(
     if headers is not None:
         request_headers.update(headers)
 
-    req = request.Request(
-        url,
-        data=data,
-        headers=request_headers,
-        method="POST",
-    )
+    req = request.Request(url, data=data, headers=request_headers, method="POST")
     return send_json_request(
+        req,
+        timeout=timeout,
+        base_url=base_url,
+        service_name=service_name,
+        error_cls=error_cls,
+        connection_error_cls=connection_error_cls,
+    )
+
+
+def post_json_bytes(
+    url: str,
+    payload: Mapping[str, Any],
+    *,
+    timeout: float,
+    base_url: str,
+    headers: Mapping[str, str] | None = None,
+    accept: str = "application/octet-stream",
+    service_name: str = "LLM",
+    error_cls: type[LLMError] = LLMError,
+    connection_error_cls: type[LLMConnectionError] = LLMConnectionError,
+) -> tuple[bytes, str]:
+    """Отправляет POST JSON и возвращает бинарный payload с MIME type."""
+    data = json.dumps(payload).encode("utf-8")
+    request_headers = {
+        "Accept": accept,
+        "Content-Type": "application/json",
+    }
+    if headers is not None:
+        request_headers.update(headers)
+
+    req = request.Request(url, data=data, headers=request_headers, method="POST")
+    return send_binary_request(
         req,
         timeout=timeout,
         base_url=base_url,
@@ -58,11 +85,7 @@ def get_json(
     if headers is not None:
         request_headers.update(headers)
 
-    req = request.Request(
-        url,
-        headers=request_headers,
-        method="GET",
-    )
+    req = request.Request(url, headers=request_headers, method="GET")
     return send_json_request(
         req,
         timeout=timeout,
@@ -71,6 +94,36 @@ def get_json(
         error_cls=error_cls,
         connection_error_cls=connection_error_cls,
     )
+
+
+def send_binary_request(
+    req: request.Request,
+    *,
+    timeout: float,
+    base_url: str,
+    service_name: str = "LLM",
+    error_cls: type[LLMError] = LLMError,
+    connection_error_cls: type[LLMConnectionError] = LLMConnectionError,
+) -> tuple[bytes, str]:
+    """Выполняет HTTP-запрос и возвращает raw body для binary provider APIs."""
+    try:
+        with request.urlopen(req, timeout=timeout) as response:
+            body = response.read()
+            content_type = (
+                response.headers.get("Content-Type", "").split(";", 1)[0].strip()
+            )
+    except error.HTTPError as exc:
+        raise error_cls(_http_error_message(exc, service_name)) from exc
+    except error.URLError as exc:
+        raise connection_error_cls(
+            f"Could not connect to {service_name} at {base_url}: {exc.reason}"
+        ) from exc
+
+    if not body:
+        raise error_cls(f"{service_name} returned an empty response")
+    if not content_type:
+        raise error_cls(f"{service_name} returned no content type")
+    return body, content_type
 
 
 def send_json_request(

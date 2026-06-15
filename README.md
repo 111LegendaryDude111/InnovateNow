@@ -17,10 +17,12 @@ Create `.env` in the project root or export the variables in your shell:
 ```bash
 OPENROUTER_API_KEY=your_api_key_here
 OPENROUTER_MODEL=deepseek/deepseek-v4-flash
+HF_TOKEN=your_hugging_face_token_here
 ```
 
 `OPENROUTER_MODEL` is optional. If it is not set, the default model is
 `deepseek/deepseek-v4-flash`.
+`HF_TOKEN` is required only for CreativeCanvas AI image generation.
 
 ## Usage
 
@@ -109,8 +111,9 @@ npm install
 npm run dev
 ```
 
-Open `http://127.0.0.1:5173`. The frontend uses Rspack, sends `POST` requests to
-`/llm/stream`, and reads OpenRouter-backed SSE chunks with `fetch`.
+Open `http://127.0.0.1:5173`. The frontend uses Rspack and has two pages:
+LLM streaming messages backed by `POST /llm/stream`, and CreativeCanvas AI image
+generation backed by `POST /images/generate`.
 
 Build the frontend:
 
@@ -118,6 +121,37 @@ Build the frontend:
 cd frontend
 npm run build
 ```
+
+## CreativeCanvas AI
+
+CreativeCanvas AI is the image generation UI in the React frontend. It sends the
+prompt, aspect ratio, and style preset to the FastAPI backend at
+`POST /images/generate`. The backend reads `HF_TOKEN` server-side and calls
+Hugging Face Inference Providers directly over HTTP; the API key is never sent
+to the frontend.
+
+Supported image parameters:
+
+- `aspect_ratio`: `square`, `landscape`, `portrait`
+- `style_preset`: `photorealistic`, `product`, `illustration`, `minimal`, `none`
+
+Manual backend check:
+
+```bash
+curl -X POST http://127.0.0.1:8000/images/generate \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"A clean product campaign image","aspect_ratio":"square","style_preset":"product"}'
+```
+
+The response contains `image_base64`, `mime_type`, `size`, `model`, and provider
+metadata. The frontend renders the base64 PNG, supports download, and keeps the
+current browser session gallery in memory.
+
+Default image provider settings:
+
+- provider: Hugging Face HF Inference API
+- token env var: `HF_TOKEN`
+- model: `black-forest-labs/FLUX.1-schnell`
 
 ## Prompt Templates
 

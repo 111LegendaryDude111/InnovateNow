@@ -23,3 +23,11 @@ class OpenRouterError(LLMError):
 
 class OpenRouterConnectionError(OpenRouterError, LLMConnectionError):
     """Ошибка соединения с OpenRouter."""
+
+
+class HuggingFaceImageError(LLMError):
+    """Ошибка ответа Hugging Face Images API или некорректного payload."""
+
+
+class HuggingFaceImageConnectionError(HuggingFaceImageError, LLMConnectionError):
+    """Ошибка соединения с Hugging Face Images API."""

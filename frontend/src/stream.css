@@ -1,0 +1,25 @@
+.response-panel {
+  min-height: 520px;
+  border: 1px solid #cad4dd;
+  border-radius: 8px;
+  padding: 20px;
+  background: #ffffff;
+}
+
+.response-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.response-panel pre {
+  min-height: 390px;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #1f2937;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  line-height: 1.55;
+}

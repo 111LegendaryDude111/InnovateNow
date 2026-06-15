@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from dataclasses import asdict
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -10,6 +11,13 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from .env import load_env_file
+from .errors import HuggingFaceImageError
+from .image_generation import HuggingFaceImageClient
+from .image_options import (
+    require_image_aspect_ratio,
+    require_image_prompt,
+    require_image_style_preset,
+)
 from .openrouter import OpenRouterClient
 from .openrouter_streaming import stream_openrouter_prompt_chunks
 from .streaming import (
@@ -45,10 +53,64 @@ class StreamRequest(BaseModel):
     system: str | None = None
 
 
+class ImageRequest(BaseModel):
+    prompt: str
+    aspect_ratio: str
+    style_preset: str
+
+
+class ImageResponse(BaseModel):
+    image_base64: str
+    mime_type: str
+    prompt: str
+    aspect_ratio: str
+    style_preset: str
+    size: str
+    model: str
+    provider: str
+    created: int | None = None
+    revised_prompt: str | None = None
+
+
 @app.post("/llm/stream")
 def stream_llm_response(request: StreamRequest) -> StreamingResponse:
     """Принимает prompt и возвращает LLM-ответ как SSE-поток."""
     return create_stream_response(request)
+
+
+@app.post("/images/generate", response_model=ImageResponse)
+def generate_image(request: ImageRequest) -> ImageResponse:
+    """Принимает prompt и параметры изображения, возвращает base64 PNG."""
+    return create_image_response(request)
+
+
+def create_image_response(
+    request: ImageRequest,
+    *,
+    client: HuggingFaceImageClient | None = None,
+) -> ImageResponse:
+    """Создает image response после проверки пользовательских параметров."""
+    try:
+        prompt = require_image_prompt(request.prompt)
+        aspect_ratio = require_image_aspect_ratio(request.aspect_ratio)
+        style_preset = require_image_style_preset(request.style_preset)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    image_client = client or HuggingFaceImageClient.from_env()
+    if not image_client.has_api_key:
+        raise HTTPException(status_code=500, detail="HF_TOKEN is required")
+
+    try:
+        result = image_client.generate_image(
+            prompt,
+            aspect_ratio=aspect_ratio,
+            style_preset=style_preset,
+        )
+    except HuggingFaceImageError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+    return ImageResponse(**asdict(result))
 
 
 def create_stream_response(

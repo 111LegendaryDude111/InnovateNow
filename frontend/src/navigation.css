@@ -1,0 +1,38 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  max-width: 1220px;
+  margin: 0 auto 20px;
+}
+
+.page-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 6px;
+  padding: 4px;
+  border-radius: 8px;
+  background: #d8e0e7;
+}
+
+.page-tabs button {
+  min-height: 42px;
+  border: 0;
+  border-radius: 6px;
+  color: #425466;
+  background: transparent;
+  font-weight: 800;
+}
+
+.page-tabs .selected {
+  color: #ffffff;
+  background: #155e75;
+}
+
+@media (max-width: 780px) {
+  .page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
