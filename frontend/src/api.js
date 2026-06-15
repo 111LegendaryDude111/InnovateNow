@@ -1,5 +1,6 @@
 const IMAGE_ENDPOINT = "http://127.0.0.1:8000/images/generate";
 const STREAM_ENDPOINT = "http://127.0.0.1:8000/llm/stream";
+const VOICE_ENDPOINT = "http://127.0.0.1:8000/voice/respond";
 
 export async function generateImage({ prompt, aspectRatio, stylePreset }) {
   const response = await fetch(IMAGE_ENDPOINT, {
@@ -34,6 +35,20 @@ export async function streamAnswer({ prompt, system, onChunk }) {
   }
 
   await readStreamEvents(response.body, onChunk);
+}
+
+export async function requestVoiceResponse({ audioBlob, language }) {
+  const response = await fetch(`${VOICE_ENDPOINT}?language=${encodeURIComponent(language)}`, {
+    method: "POST",
+    headers: { "Content-Type": audioBlob.type || "application/octet-stream" },
+    body: audioBlob,
+  });
+
+  if (!response.ok) {
+    throw new Error(await readErrorMessage(response));
+  }
+
+  return response.json();
 }
 
 // Читает SSE chunks из fetch stream и передает delta-события UI.

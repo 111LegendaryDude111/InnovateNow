@@ -31,3 +31,19 @@ class HuggingFaceImageError(LLMError):
 
 class HuggingFaceImageConnectionError(HuggingFaceImageError, LLMConnectionError):
     """Ошибка соединения с Hugging Face Images API."""
+
+
+class HuggingFaceSpeechError(LLMError):
+    """Ошибка ответа Hugging Face ASR API или некорректного payload."""
+
+
+class HuggingFaceSpeechConnectionError(HuggingFaceSpeechError, LLMConnectionError):
+    """Ошибка соединения с Hugging Face ASR API."""
+
+
+class HuggingFaceTTSError(LLMError):
+    """Ошибка ответа Hugging Face TTS API или некорректного payload."""
+
+
+class HuggingFaceTTSConnectionError(HuggingFaceTTSError, LLMConnectionError):
+    """Ошибка соединения с Hugging Face TTS API."""

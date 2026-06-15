@@ -22,7 +22,8 @@ HF_TOKEN=your_hugging_face_token_here
 
 `OPENROUTER_MODEL` is optional. If it is not set, the default model is
 `deepseek/deepseek-v4-flash`.
-`HF_TOKEN` is required only for CreativeCanvas AI image generation.
+`HF_TOKEN` is required for CreativeCanvas AI image generation and server-side
+Voice Assistant speech recognition/Text-to-Speech.
 
 ## Usage
 
@@ -97,6 +98,9 @@ Start backend and frontend together:
 make dev
 ```
 
+`make dev` first stops existing listeners on local dev ports `8000` and `5173`,
+then starts backend and frontend.
+
 Start the backend:
 
 ```bash
@@ -113,7 +117,7 @@ npm run dev
 
 Open `http://127.0.0.1:5173`. The frontend uses Rspack and has three pages:
 LLM streaming messages backed by `POST /llm/stream`, CreativeCanvas AI image
-generation backed by `POST /images/generate`, and a browser-only Voice
+generation backed by `POST /images/generate`, and a server-backed Voice
 Assistant prototype.
 
 Build the frontend:
@@ -132,36 +136,50 @@ npm test
 
 ## AI Voice Assistant
 
-The Voice Assistant is a frontend-only MVP that uses the browser Web Speech API:
+Detailed voice documentation: [AI Voice Assistant](docs/voice-assistant.md).
+
+The Voice Assistant is a server-backed MVP:
 
 ```text
-microphone -> SpeechRecognition -> command parser -> response text -> speechSynthesis
+microphone -> MediaRecorder -> POST /voice/respond -> Hugging Face ASR -> OpenRouter LLM -> Hugging Face TTS -> audio playback
 ```
 
-It does not add backend endpoints, cloud STT/TTS providers, new API keys, audio
-storage, wake word detection, long-term memory, or LLM reasoning. Speech
-recognition uses `SpeechRecognition` when available and `webkitSpeechRecognition`
-for compatible browsers. Text-to-Speech uses `window.speechSynthesis`.
-Some browsers back `SpeechRecognition` with a vendor network service. If the UI
-shows a `network` error, the browser speech service is unavailable or blocked;
-the project backend is not involved in that failure.
+The backend accepts raw audio bytes at `POST /voice/respond?language=ru|en`,
+transcribes speech with Hugging Face ASR using server-side `HF_TOKEN`, sends the
+transcript to OpenRouter using `OPENROUTER_API_KEY`, and returns transcript plus
+LLM response text plus base64 TTS audio. The frontend plays the returned audio.
+The prototype does not store audio, add wake word detection, or keep long-term
+conversation memory. The UI also has an optional `Auto continue` loop for
+hands-free repeated turns after each spoken response ends.
+
+Default voice provider settings:
+
+- STT provider: Hugging Face HF Inference API
+- STT token env var: `HF_TOKEN`
+- STT model: `openai/whisper-large-v3`
+- LLM provider: OpenRouter
+- LLM token env var: `OPENROUTER_API_KEY`
+- TTS provider: Hugging Face HF Inference API
+- TTS token env var: `HF_TOKEN`
+- TTS models: `facebook/mms-tts-rus`, `facebook/mms-tts-eng`
 
 Browser/device prerequisites:
 
-- a browser with Web Speech recognition and speech synthesis support;
+- a browser with `MediaRecorder`, microphone access, and speech synthesis support;
 - microphone access granted by the user;
-- internet access and unblocked browser speech services when the browser uses
-  network-backed recognition;
 - local frontend served from `http://127.0.0.1:5173` or another browser-trusted
   origin.
 
 Manual test scenarios:
 
+- set `HF_TOKEN` and `OPENROUTER_API_KEY`;
 - open `http://127.0.0.1:5173`, select `Voice Assistant`, choose `RU`, click
-  `Start`, and say `Привет`;
-- choose `RU`, click `Start`, and say `Сколько сейчас времени`;
-- choose `EN`, click `Start`, and say `Tell a joke`;
-- deny microphone access once and confirm the UI shows an explicit error.
+  `Start`, say `Привет`, then click `Stop`;
+- choose `EN`, click `Start`, ask a short question, then click `Stop`;
+- enable `Auto continue` and confirm the next recording starts after the spoken
+  response finishes;
+- confirm the UI shows transcript, detected intent, LLM response, provider state,
+  audio playback status, and explicit errors for missing microphone/API keys.
 
 ## CreativeCanvas AI
 

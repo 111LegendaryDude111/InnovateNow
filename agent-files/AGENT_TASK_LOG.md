@@ -155,3 +155,63 @@
 - Commands run: `npm test` in `frontend/`, `npm run build` in `frontend/`, `uv run pytest`, `wc -l ...`, `git diff --check`, `git status --short`
 - Result: `npm test` passed 10/10; `npm run build` compiled successfully; `uv run pytest` passed 37 tests; `git diff --check` passed; changed code files remain under 200 lines.
 - Follow-up: For reliable STT when browser Web Speech network service is blocked, choose cloud/local STT provider in a separate decision.
+
+### Log Entry
+
+- Time: 2026-06-15 12:47 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Voice Assistant переделан из frontend-only Web Speech/heuristic prototype в server-backed STT + OpenRouter LLM prototype.
+- Reason: Пользователь уточнил, что нужен полный реальный прототип через сервер с ответом от LLM.
+- Files touched: `src/llm/api.py`, `src/llm/speech_recognition.py`, `src/llm/voice_api.py`, `src/llm/voice_assistant.py`, `src/llm/errors.py`, `tests/test_speech_recognition.py`, `tests/test_voice_api.py`, `frontend/src/VoicePage.jsx`, `frontend/src/VoiceBlocks.jsx`, `frontend/src/api.js`, `frontend/src/voiceRecording.js`, `frontend/src/voiceRecording.test.js`, `frontend/src/voiceSpeech.js`, `frontend/src/voice.css`, `frontend/package.json`, `README.md`, `agent-files/CONTEXT.md`, `issues/010-build-ai-voice-assistant-prototype.md`, `issues/README.md`
+- Commands run: `uv run pytest`, `npm test` in `frontend/`, `npm run build` in `frontend/`, `git diff --check`, `wc -l ...`, `rg ...`, `make dev`
+- Result: Backend endpoint `POST /voice/respond?language=ru|en` accepts raw audio, calls Hugging Face ASR with `HF_TOKEN`, calls OpenRouter with `OPENROUTER_API_KEY`, and returns transcript plus LLM response; frontend records audio via `MediaRecorder` and uses browser TTS for spoken response. Checks passed: `uv run pytest` 48 tests, `npm test` 2 tests, `npm run build`, `git diff --check`; touched code files are below 200 lines; `make dev` started backend at `http://127.0.0.1:8000` and frontend at `http://127.0.0.1:5173/`.
+- Follow-up: Manual test requires valid `HF_TOKEN`, `OPENROUTER_API_KEY`, microphone permission, backend at `127.0.0.1:8000`, frontend at `127.0.0.1:5173`.
+
+### Log Entry
+
+- Time: 2026-06-15 13:47 MSK
+- Agent: Codex
+- Action type: edit
+- Action: `Makefile` updated so `make dev` runs `stop-ports` before starting backend/frontend.
+- Reason: User hit repeated `EADDRINUSE` on ports `8000` and `5173` after interrupted dev sessions and asked for `make dev` to kill occupied ports before launch.
+- Files touched: `Makefile`, `README.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_TASK_LOG.md`
+- Commands run: `make stop-ports`, `make -n dev`, `make dev`, second `make dev`, sent Ctrl-C to test dev session, `lsof -nP -iTCP:8000 -sTCP:LISTEN`, `lsof -nP -iTCP:5173 -sTCP:LISTEN`, `git diff --check`
+- Result: Second `make dev` printed listeners on `8000/5173`, stopped them, and started backend/frontend without `EADDRINUSE`; final `lsof` found no listeners after test cleanup.
+- Follow-up: User can run `make dev`; it will terminate existing listeners on local dev ports before startup.
+
+### Log Entry
+
+- Time: 2026-06-15 15:06 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Исправлен feedback по Voice Assistant: добавлен server-side TTS, explicit intent classification, frontend audio playback, optional auto-continue loop и timeout handling для provider calls.
+- Reason: Feedback указал отсутствие TTS, client audio loop, explicit command parsing и docs; attachment показал uncaught `TimeoutError` из Hugging Face ASR как 500 traceback.
+- Files touched: `src/llm/text_to_speech.py`, `src/llm/voice_intents.py`, `src/llm/voice_assistant.py`, `src/llm/voice_api.py`, `src/llm/transport.py`, `src/llm/errors.py`, `tests/test_text_to_speech.py`, `tests/test_voice_intents.py`, `tests/test_voice_api.py`, `tests/test_speech_recognition.py`, `frontend/src/VoicePage.jsx`, `frontend/src/VoiceControls.jsx`, `frontend/src/voiceAudio.js`, `frontend/src/voiceAudio.test.js`, `frontend/src/voice.css`, `frontend/package.json`, `README.md`, `agent-files/CONTEXT.md`, `issues/010-build-ai-voice-assistant-prototype.md`, `agent-files/AGENT_TASK_LOG.md`
+- Commands run: `uv run pytest`, `npm test` in `frontend/`, `npm run build` in `frontend/`, `rg ...`, `wc -l ...`, `git diff --check`, `git status --short`
+- Result: Voice flow is now microphone recording -> server ASR -> explicit intent (`greeting`, `datetime`, `joke`, `general`) -> OpenRouter LLM -> Hugging Face TTS -> frontend audio playback. Provider read timeout is converted to provider connection error instead of raw 500 traceback. Checks passed: `uv run pytest` 58 tests, `npm test` 4 tests, `npm run build`, `git diff --check`; touched code files are under 200 lines.
+- Follow-up: Manual test requires valid `HF_TOKEN` for ASR/TTS and `OPENROUTER_API_KEY` for LLM.
+
+### Log Entry
+
+- Time: 2026-06-15 23:35 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Added dedicated Voice Assistant documentation.
+- Reason: User requested documentation for voice feature.
+- Files touched: `docs/voice-assistant.md`, `README.md`, `agent-files/AGENT_TASK_LOG.md`
+- Commands run: `cat README.md`, `cat agent-files/CONTEXT.md`, `cat agent-files/AGENT_HANDOFF.md`, `rg --files docs agent-files issues`, `tail -n 80 agent-files/AGENT_TASK_LOG.md`
+- Result: New doc covers architecture, env vars, run flow, UI flow, API contract, intents, manual checks, troubleshooting, and automated checks; README links to it.
+- Follow-up: Run `git diff --check`.
+
+### Log Entry
+
+- Time: 2026-06-15 23:40 MSK
+- Agent: Codex
+- Action type: command
+- Action: Prepared staged Voice Assistant changes for commit after git reported missing author identity.
+- Reason: User's `git commit -m 'add voice'` failed because `user.name` and `user.email` were not configured.
+- Files touched: `agent-files/AGENT_TASK_LOG.md`
+- Commands run: `uv run pytest`, `npm test` in `frontend/`, `npm run build` in `frontend/`, `git diff --check`, `git config user.name ...`, `git config user.email ...`, `git commit -m 'add voice'`
+- Result: Checks passed before commit; repo-local git identity reused the latest commit author.
+- Follow-up: none

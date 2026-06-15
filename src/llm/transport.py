@@ -114,10 +114,8 @@ def send_binary_request(
             )
     except error.HTTPError as exc:
         raise error_cls(_http_error_message(exc, service_name)) from exc
-    except error.URLError as exc:
-        raise connection_error_cls(
-            f"Could not connect to {service_name} at {base_url}: {exc.reason}"
-        ) from exc
+    except (error.URLError, TimeoutError) as exc:
+        raise connection_error_cls(_connection_error_message(exc, service_name, base_url)) from exc
 
     if not body:
         raise error_cls(f"{service_name} returned an empty response")
@@ -141,10 +139,8 @@ def send_json_request(
             body = response.read()
     except error.HTTPError as exc:
         raise error_cls(_http_error_message(exc, service_name)) from exc
-    except error.URLError as exc:
-        raise connection_error_cls(
-            f"Could not connect to {service_name} at {base_url}: {exc.reason}"
-        ) from exc
+    except (error.URLError, TimeoutError) as exc:
+        raise connection_error_cls(_connection_error_message(exc, service_name, base_url)) from exc
 
     if not body:
         return {}
@@ -178,6 +174,12 @@ def _http_error_message(exc: error.HTTPError, service_name: str) -> str:
     if message:
         return f"{service_name} API error {exc.code}: {message}"
     return f"{service_name} API error {exc.code}: {exc.reason}"
+
+
+def _connection_error_message(exc: error.URLError | TimeoutError, service_name: str, base_url: str) -> str:
+    if isinstance(exc, TimeoutError):
+        return f"Timed out connecting to {service_name} at {base_url}"
+    return f"Could not connect to {service_name} at {base_url}: {exc.reason}"
 
 
 def _extract_error_message(payload: Mapping[str, Any]) -> str | None:

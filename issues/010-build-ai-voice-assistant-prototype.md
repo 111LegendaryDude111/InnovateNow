@@ -1,41 +1,39 @@
-# Создать MVP AI Voice Assistant со STT, TTS и простыми командами
+# Создать MVP AI Voice Assistant со server STT, LLM-ответом и TTS
 
-- Type: HITL
-- Status: todo
+- Type: feature
+- Status: done
 - User stories covered:
   - Как пользователь, я хочу говорить с приложением через микрофон, чтобы не вводить команды вручную.
   - Как пользователь, я хочу слышать голосовой ответ ассистента, чтобы получить базовый voice interface.
-  - Как пользователь, я хочу, чтобы ассистент понимал простые команды: приветствие, время/дату и простое действие вроде шутки.
-  - Как сопровождающий проекта, я хочу тестируемую командную логику и безопасную интеграцию STT/TTS без утечки API keys.
+  - Как пользователь, я хочу получать ответ от LLM по распознанной речи, чтобы ассистент был настоящим voice interface.
+  - Как сопровождающий проекта, я хочу тестируемую server-side интеграцию STT/LLM/TTS без утечки API keys.
 
 ## What to build
 
-Создать начальный AI Voice Assistant prototype в существующем приложении. Вертикальный срез должен пройти end-to-end: microphone input -> Speech-to-Text -> command processing -> text response -> Text-to-Speech -> visible transcript/status/errors в UI.
+Создать начальный AI Voice Assistant prototype в существующем приложении. Вертикальный срез должен пройти end-to-end: microphone input -> audio recording -> server Speech-to-Text -> command intent classification -> LLM response -> server Text-to-Speech -> frontend audio playback -> visible transcript/status/errors в UI.
 
-Перед реализацией нужно подтвердить STT/TTS подход. Рекомендуемый MVP-путь для текущего React frontend: использовать browser Web Speech API для microphone capture, STT и TTS без новых backend dependencies и без cloud API keys. Если нужен cloud STT/TTS provider, нужно отдельное решение по provider, env vars, хранению ключей на backend и мокам в тестах.
+Итоговый STT/LLM/TTS подход: frontend записывает audio через MediaRecorder и отправляет raw audio bytes в backend endpoint `POST /voice/respond?language=ru|en`. Backend вызывает Hugging Face ASR через server-side `HF_TOKEN`, классифицирует intent (`greeting`, `datetime`, `joke`, `general`), затем вызывает OpenRouter через `OPENROUTER_API_KEY`, генерирует TTS audio через Hugging Face TTS и возвращает transcript, intent, LLM response text и audio payload. Frontend проигрывает audio response и поддерживает optional `Auto continue` loop.
 
-Не добавлять authentication, wake word detection, long-term conversation memory, persistent audio storage или LLM reasoning в этот MVP. Optional LLM integration оставить отдельной задачей.
+Не добавлять authentication, wake word detection, long-term conversation memory или persistent audio storage в этот MVP.
 
 ## Acceptance criteria
 
-- [ ] Человек подтвердил STT/TTS подход: browser Web Speech API или конкретный cloud/local provider.
-- [ ] Если выбран cloud/local provider и нужны новые dependencies/API keys, человек явно подтвердил dependency policy и имена env vars.
-- [ ] Добавлен понятный entrypoint для Voice Assistant в существующем frontend navigation или отдельной странице.
-- [ ] UI показывает microphone permission/listening state, recognized transcript, assistant text response, spoken response status и error state.
-- [ ] Пользователь может start/stop listening вручную; бесконечный loop не блокирует UI и не запускается без user action.
-- [ ] STT преобразует captured speech в текстовую команду через выбранный engine/library/API.
-- [ ] TTS озвучивает сформированный text response через выбранный engine/library/API.
-- [ ] Command processing logic выделена в тестируемую функцию/модуль и принимает текст STT как input.
-- [ ] Ассистент распознает минимум 3 типа запросов: greeting/self-introduction, time/date, simple predefined action/response.
-- [ ] Для каждого recognized command формируется стабильный text response и запускается TTS.
-- [ ] Если speech recognition fails, microphone недоступен или command not understood, пользователь получает понятную ошибку или clarification prompt.
-- [ ] Browser/API unsupported state обработан явно, без падения приложения.
-- [ ] Тесты покрывают command processing и основные error branches без реального microphone и без реальных STT/TTS/API calls.
-- [ ] Если backend участвует в STT/TTS или command processing, backend tests мокают внешние provider calls и не читают реальный `.env`.
-- [ ] README или отдельная документация описывает запуск, browser/device prerequisites, выбранный STT/TTS подход и manual test сценарий.
-- [ ] `uv run pytest` проходит, если изменяется backend/shared logic; `npm run build` проходит, если изменяется frontend.
+- [x] Человек подтвердил server-backed STT/LLM approach после отказа от browser Web Speech STT.
+- [x] Новые dependencies не добавлены; используются существующие `HF_TOKEN` и `OPENROUTER_API_KEY`.
+- [x] Добавлен понятный entrypoint для Voice Assistant в существующем frontend navigation.
+- [x] UI показывает recording/transcribing state, recognized transcript, assistant text response, spoken response status и error state.
+- [x] Пользователь может start/stop recording вручную; бесконечный loop не блокирует UI и не запускается без user action.
+- [x] STT преобразует recorded audio в текст через Hugging Face ASR на backend.
+- [x] LLM формирует ответ через OpenRouter на backend.
+- [x] Backend явно классифицирует минимум 3 типа запросов: `greeting`, `datetime`, `joke`.
+- [x] TTS генерирует audio response через Hugging Face TTS на backend.
+- [x] Frontend проигрывает TTS audio response и может включить optional continuous loop через `Auto continue`.
+- [x] Если microphone/API/provider недоступны, пользователь получает понятную ошибку.
+- [x] Browser API unsupported state обработан явно, без падения приложения.
+- [x] Backend tests мокают внешние provider calls и не читают реальный `.env`.
+- [x] README описывает запуск, browser/device prerequisites, выбранный STT/LLM/TTS подход и manual test сценарий.
+- [x] `uv run pytest`, `npm test`, `npm run build` проходят.
 
 ## Blocked by
 
-- Human decision: подтвердить STT/TTS подход для MVP.
-- Human decision: если не browser Web Speech API, выбрать provider/library и разрешить нужные dependencies/API keys.
+- none

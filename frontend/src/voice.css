@@ -14,7 +14,7 @@
 
 .voice-status-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -66,7 +66,23 @@
   overflow-wrap: anywhere;
 }
 
-.status-processing { background: #7c3aed; }
+.status-starting { background: #1d4ed8; }
+.status-recording { background: #b91c1c; }
+.status-transcribing { background: #7c3aed; }
+
+.voice-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #425466;
+  font-weight: 800;
+}
+
+.voice-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #0f766e;
+}
 
 @media (max-width: 920px) {
   .voice-status-grid {

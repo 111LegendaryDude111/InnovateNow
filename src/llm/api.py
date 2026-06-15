@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from dataclasses import asdict
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -24,6 +24,7 @@ from .streaming import (
     iter_sse_events,
     require_stream_prompt,
 )
+from .voice_api import VoiceResponse, create_voice_response
 
 API_ENV_FILE = Path(__file__).resolve().parents[2] / ".env"
 LOCAL_FRONTEND_ORIGINS = [
@@ -82,6 +83,16 @@ def stream_llm_response(request: StreamRequest) -> StreamingResponse:
 def generate_image(request: ImageRequest) -> ImageResponse:
     """Принимает prompt и параметры изображения, возвращает base64 PNG."""
     return create_image_response(request)
+
+
+@app.post("/voice/respond", response_model=VoiceResponse)
+async def respond_to_voice(request: Request) -> VoiceResponse:
+    """Принимает audio body, распознает речь и возвращает ответ LLM."""
+    return create_voice_response(
+        await request.body(),
+        mime_type=request.headers.get("content-type", ""),
+        language=request.query_params.get("language", "ru"),
+    )
 
 
 def create_image_response(

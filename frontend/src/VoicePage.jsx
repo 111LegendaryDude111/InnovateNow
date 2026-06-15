@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { createVoiceAssistantResponse } from "./voiceCommands.js";
+import { OutputBlock } from "./VoiceBlocks.jsx";
+import { VoiceControls } from "./VoiceControls.jsx";
+import { requestVoiceResponse } from "./api.js";
+import { playVoiceAudio } from "./voiceAudio.js";
 import {
-  describeRecognitionError,
-  getSpeechRecognitionConstructor,
-  hasSpeechSynthesis,
-  speakResponse,
-} from "./voiceSpeech.js";
+  createAudioBlob,
+  getSupportedAudioMimeType,
+  hasAudioRecording,
+  stopStream,
+} from "./voiceRecording.js";
 
 const LANGUAGES = [
-  { id: "ru", label: "RU", recognitionLang: "ru-RU", speechLang: "ru-RU" },
-  { id: "en", label: "EN", recognitionLang: "en-US", speechLang: "en-US" },
+  { id: "ru", label: "RU" },
+  { id: "en", label: "EN" },
 ];
 
 function VoicePage() {
@@ -19,99 +22,124 @@ function VoicePage() {
   const [transcript, setTranscript] = useState("");
   const [assistantText, setAssistantText] = useState("");
   const [intent, setIntent] = useState("none");
+  const [provider, setProvider] = useState("server");
+  const [autoContinue, setAutoContinue] = useState(false);
   const [error, setError] = useState("");
-  const recognitionRef = useRef(null);
+  const recorderRef = useRef(null);
+  const streamRef = useRef(null);
+  const chunksRef = useRef([]);
+  const autoContinueRef = useRef(false);
 
   const selectedLanguage = LANGUAGES.find((item) => item.id === language);
-  const isListening = status === "listening" || status === "starting";
+  const isRecording = status === "recording" || status === "starting";
+  const isBusy = isRecording || status === "transcribing";
+
+  useEffect(() => {
+    autoContinueRef.current = autoContinue;
+  }, [autoContinue]);
 
   useEffect(() => {
     return () => {
-      recognitionRef.current?.abort();
-      window.speechSynthesis?.cancel();
+      recorderRef.current?.stop();
+      stopStream(streamRef.current);
     };
   }, []);
 
-  function handleStart() {
-    const SpeechRecognition = getSpeechRecognitionConstructor();
-    if (!SpeechRecognition) {
+  async function handleStart() {
+    if (!hasAudioRecording()) {
       setStatus("error");
-      setError("Speech Recognition is not supported in this browser.");
+      setError("Audio recording is not supported in this browser.");
       return;
     }
-    if (!hasSpeechSynthesis()) {
+    resetOutput();
+    try {
+      setStatus("starting");
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+      startRecorder(stream, selectedLanguage);
+    } catch (recordingError) {
       setStatus("error");
-      setError("Text-to-Speech is not supported in this browser.");
+      setError(recordingError.message);
+      stopStream(streamRef.current);
+    }
+  }
+
+  function startRecorder(stream, activeLanguage) {
+    const mimeType = getSupportedAudioMimeType();
+    const options = mimeType ? { mimeType } : undefined;
+    const recorder = new MediaRecorder(stream, options);
+
+    chunksRef.current = [];
+    recorder.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        chunksRef.current.push(event.data);
+      }
+    };
+    recorder.onerror = (event) => {
+      recorderRef.current = null;
+      setStatus("error");
+      setError(event.error?.message || "Audio recording failed.");
+      stopStream(stream);
+    };
+    recorder.onstart = () => setStatus("recording");
+    recorder.onstop = () => handleRecordingStop(recorder, activeLanguage);
+
+    recorderRef.current = recorder;
+    recorder.start();
+  }
+
+  function handleStop() {
+    if (recorderRef.current?.state === "recording") {
+      recorderRef.current.stop();
+    }
+  }
+
+  async function handleRecordingStop(recorder, activeLanguage) {
+    recorderRef.current = null;
+    stopStream(streamRef.current);
+    const audioBlob = createAudioBlob(chunksRef.current, recorder.mimeType);
+    chunksRef.current = [];
+
+    if (!audioBlob.size) {
+      setStatus("error");
+      setError("Audio recording is empty. Try again.");
       return;
     }
 
+    setStatus("transcribing");
+    try {
+      const result = await requestVoiceResponse({
+        audioBlob,
+        language: activeLanguage.id,
+      });
+      setTranscript(result.transcript);
+      setAssistantText(result.response_text);
+      setIntent(result.intent);
+      setProvider(`${result.stt_provider} + ${result.llm_provider} + ${result.tts_provider}`);
+      setStatus("done");
+      await playVoiceAudio({
+        audioBase64: result.tts_audio_base64,
+        mimeType: result.tts_mime_type,
+        onStart: () => setSpeechStatus("playing"),
+        onEnd: () => setSpeechStatus("done"),
+      });
+      if (autoContinueRef.current) {
+        setTimeout(() => handleStart(), 250);
+      }
+    } catch (voiceError) {
+      setStatus("error");
+      setSpeechStatus("error");
+      setError(voiceError.message);
+    }
+  }
+
+  function resetOutput() {
     setError("");
     setTranscript("");
     setAssistantText("");
     setIntent("none");
+    setProvider("server");
     setSpeechStatus("idle");
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = selectedLanguage.recognitionLang;
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.onstart = () => setStatus("listening");
-    recognition.onresult = (event) => handleRecognitionResult(event, selectedLanguage);
-    recognition.onnomatch = () => {
-      setStatus("error");
-      setError("Speech was not recognized. Try again.");
-    };
-    recognition.onerror = (event) => {
-      recognitionRef.current = null;
-      setStatus("error");
-      setError(describeRecognitionError(event.error));
-    };
-    recognition.onend = () => {
-      if (recognitionRef.current === recognition) {
-        recognitionRef.current = null;
-        setStatus((current) => (current === "listening" ? "idle" : current));
-      }
-    };
-
-    try {
-      recognitionRef.current = recognition;
-      setStatus("starting");
-      recognition.start();
-    } catch (startError) {
-      recognitionRef.current = null;
-      setStatus("error");
-      setError(startError.message);
-    }
-  }
-
-  function handleStop() {
-    const recognition = recognitionRef.current;
-    recognitionRef.current = null;
-    recognition?.stop();
-    setStatus("idle");
-  }
-
-  function handleRecognitionResult(event, activeLanguage) {
-    const text = event.results?.[0]?.[0]?.transcript?.trim() ?? "";
-    setTranscript(text);
-
-    if (!text) {
-      setStatus("error");
-      setError("Speech was not recognized. Try again.");
-      return;
-    }
-
-    setStatus("processing");
-    const response = createVoiceAssistantResponse(text, {
-      language: activeLanguage.id,
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    });
-    setIntent(response.intent);
-    setAssistantText(response.responseText);
-    setStatus("done");
-    speakResponse(response.responseText, activeLanguage.speechLang, setSpeechStatus, setError);
   }
 
   return (
@@ -119,43 +147,27 @@ function VoicePage() {
       <section className="control-panel">
         <div className="brand-row">
           <div>
-            <p className="eyebrow">Web Speech</p>
+            <p className="eyebrow">Server Voice</p>
             <h2>Microphone</h2>
           </div>
           <span className={`status status-${status}`}>{status}</span>
         </div>
 
-        <fieldset>
-          <legend>Language</legend>
-          <div className="segmented">
-            {LANGUAGES.map((item) => (
-              <button
-                className={language === item.id ? "selected" : ""}
-                disabled={isListening}
-                key={item.id}
-                onClick={() => setLanguage(item.id)}
-                type="button"
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </fieldset>
-
-        <div className="voice-actions">
-          <button className="primary-action" disabled={isListening} onClick={handleStart} type="button">
-            Start
-          </button>
-          <button className="secondary-action" disabled={!isListening} onClick={handleStop} type="button">
-            Stop
-          </button>
-        </div>
-
-        <div className="voice-status-grid" aria-label="Voice status">
-          <StatusItem label="Microphone" value={status} />
-          <StatusItem label="Speech" value={speechStatus} />
-          <StatusItem label="Intent" value={intent} />
-        </div>
+        <VoiceControls
+          autoContinue={autoContinue}
+          intent={intent}
+          isBusy={isBusy}
+          isRecording={isRecording}
+          language={language}
+          languages={LANGUAGES}
+          onAutoContinueChange={setAutoContinue}
+          onLanguageChange={setLanguage}
+          onStart={handleStart}
+          onStop={handleStop}
+          provider={provider}
+          speechStatus={speechStatus}
+          status={status}
+        />
 
         {error ? <p className="error">{error}</p> : null}
       </section>
@@ -163,35 +175,17 @@ function VoicePage() {
       <section className="voice-panel" aria-live="polite">
         <div className="response-header">
           <div>
-            <p className="eyebrow">Transcript</p>
+            <p className="eyebrow">LLM Response</p>
             <h2>Assistant Response</h2>
           </div>
         </div>
 
         <div className="voice-output">
-          <OutputBlock label="Recognized" value={transcript || "No transcript yet."} />
+          <OutputBlock label="Transcript" value={transcript || "No transcript yet."} />
           <OutputBlock label="Response" value={assistantText || "Response will appear here."} />
         </div>
       </section>
     </section>
-  );
-}
-
-function StatusItem({ label, value }) {
-  return (
-    <div>
-      <span>{label}</span>
-      <strong>{value}</strong>
-    </div>
-  );
-}
-
-function OutputBlock({ label, value }) {
-  return (
-    <article>
-      <span>{label}</span>
-      <p>{value}</p>
-    </article>
   );
 }
 
