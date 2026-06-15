@@ -1,21 +1,24 @@
 import { useState } from "react";
 import ImagePage from "./ImagePage.jsx";
 import StreamPage from "./StreamPage.jsx";
+import VoicePage from "./VoicePage.jsx";
 
 const PAGES = [
-  { id: "stream", label: "LLM Stream" },
-  { id: "images", label: "Images" },
+  { id: "stream", label: "LLM Stream", title: "Streaming Messages" },
+  { id: "images", label: "Images", title: "CreativeCanvas AI" },
+  { id: "voice", label: "Voice Assistant", title: "Voice Assistant" },
 ];
 
 function App() {
   const [activePage, setActivePage] = useState("stream");
+  const pageTitle = PAGES.find((page) => page.id === activePage).title;
 
   return (
     <main className="app-shell">
       <header className="page-header">
         <div>
           <p className="eyebrow">Task Learn</p>
-          <h1>{activePage === "stream" ? "Streaming Messages" : "CreativeCanvas AI"}</h1>
+          <h1>{pageTitle}</h1>
         </div>
         <nav className="page-tabs" aria-label="App pages">
           {PAGES.map((page) => (
@@ -31,7 +34,9 @@ function App() {
         </nav>
       </header>
 
-      {activePage === "stream" ? <StreamPage /> : <ImagePage />}
+      {activePage === "stream" ? <StreamPage /> : null}
+      {activePage === "images" ? <ImagePage /> : null}
+      {activePage === "voice" ? <VoicePage /> : null}
     </main>
   );
 }

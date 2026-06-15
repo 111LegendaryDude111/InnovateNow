@@ -9,7 +9,7 @@
 
 .page-tabs {
   display: grid;
-  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
   padding: 4px;
   border-radius: 8px;
@@ -34,5 +34,11 @@
   .page-header {
     align-items: stretch;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 520px) {
+  .page-tabs {
+    grid-template-columns: 1fr;
   }
 }

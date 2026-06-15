@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "rspack serve --mode development",
-    "build": "rspack build --mode production"
+    "build": "rspack build --mode production",
+    "test": "node --test src/voiceCommands.test.js src/voiceSpeech.test.js"
   },
   "dependencies": {
     "react": "^19.2.3",

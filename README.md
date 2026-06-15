@@ -111,9 +111,10 @@ npm install
 npm run dev
 ```
 
-Open `http://127.0.0.1:5173`. The frontend uses Rspack and has two pages:
-LLM streaming messages backed by `POST /llm/stream`, and CreativeCanvas AI image
-generation backed by `POST /images/generate`.
+Open `http://127.0.0.1:5173`. The frontend uses Rspack and has three pages:
+LLM streaming messages backed by `POST /llm/stream`, CreativeCanvas AI image
+generation backed by `POST /images/generate`, and a browser-only Voice
+Assistant prototype.
 
 Build the frontend:
 
@@ -121,6 +122,46 @@ Build the frontend:
 cd frontend
 npm run build
 ```
+
+Run frontend unit tests:
+
+```bash
+cd frontend
+npm test
+```
+
+## AI Voice Assistant
+
+The Voice Assistant is a frontend-only MVP that uses the browser Web Speech API:
+
+```text
+microphone -> SpeechRecognition -> command parser -> response text -> speechSynthesis
+```
+
+It does not add backend endpoints, cloud STT/TTS providers, new API keys, audio
+storage, wake word detection, long-term memory, or LLM reasoning. Speech
+recognition uses `SpeechRecognition` when available and `webkitSpeechRecognition`
+for compatible browsers. Text-to-Speech uses `window.speechSynthesis`.
+Some browsers back `SpeechRecognition` with a vendor network service. If the UI
+shows a `network` error, the browser speech service is unavailable or blocked;
+the project backend is not involved in that failure.
+
+Browser/device prerequisites:
+
+- a browser with Web Speech recognition and speech synthesis support;
+- microphone access granted by the user;
+- internet access and unblocked browser speech services when the browser uses
+  network-backed recognition;
+- local frontend served from `http://127.0.0.1:5173` or another browser-trusted
+  origin.
+
+Manual test scenarios:
+
+- open `http://127.0.0.1:5173`, select `Voice Assistant`, choose `RU`, click
+  `Start`, and say `Привет`;
+- choose `RU`, click `Start`, and say `Сколько сейчас времени`;
+- choose `EN`, click `Start`, and say `Tell a joke`;
+- deny microphone access once and confirm the UI shows an explicit error.
 
 ## CreativeCanvas AI
 

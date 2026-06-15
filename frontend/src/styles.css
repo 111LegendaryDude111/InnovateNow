@@ -1,6 +1,7 @@
 @import "./canvas.css";
 @import "./navigation.css";
 @import "./stream.css";
+@import "./voice.css";
 
 :root {
   color: #1d2733;

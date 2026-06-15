@@ -23,3 +23,4 @@
 | 007 | Создать начальную AI Prompt Library для marketing content | AFK | Нет |
 | 008 | Добавить server-side streaming endpoint для LLM responses | HITL | Нет: выбран FastAPI + SSE |
 | 009 | Создать full-stack MVP `CreativeCanvas AI` для генерации изображений | HITL | Human decision: image generation provider/API |
+| 010 | Создать MVP AI Voice Assistant со STT, TTS и простыми командами | HITL | Human decision: STT/TTS подход |
