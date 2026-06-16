@@ -26,3 +26,4 @@
 | 010 | Создать MVP AI Voice Assistant со server STT, LLM-ответом и TTS | feature | Нет |
 | 011 | Создать foundation для document embeddings и semantic similarity через Hugging Face API | AFK | Нет |
 | 012 | Развернуть Qdrant vector database для semantic search readiness | AFK | Нет |
+| 013 | Добавить API endpoint для semantic product search | AFK | Нет |

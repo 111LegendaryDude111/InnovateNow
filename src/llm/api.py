@@ -20,6 +20,11 @@ from .image_options import (
 )
 from .openrouter import OpenRouterClient
 from .openrouter_streaming import stream_openrouter_prompt_chunks
+from .product_search_api import (
+    SemanticSearchRequest,
+    SemanticSearchResponse,
+    create_semantic_search_response,
+)
 from .streaming import (
     iter_sse_events,
     require_stream_prompt,
@@ -93,6 +98,12 @@ async def respond_to_voice(request: Request) -> VoiceResponse:
         mime_type=request.headers.get("content-type", ""),
         language=request.query_params.get("language", "ru"),
     )
+
+
+@app.post("/search/semantic", response_model=SemanticSearchResponse)
+def search_semantic_products(request: SemanticSearchRequest) -> SemanticSearchResponse:
+    """Принимает natural language query и возвращает semantic product matches."""
+    return create_semantic_search_response(request)
 
 
 def create_image_response(

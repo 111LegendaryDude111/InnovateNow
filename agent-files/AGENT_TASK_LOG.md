@@ -2,6 +2,42 @@
 
 ### Log Entry
 
+- Time: 2026-06-16 22:26 MSK
+- Agent: Codex
+- Action type: inspect
+- Action: Прочитаны обязательные файлы проекта, `AGENTS.md`, skill `$to-issues`, инструкции `agent-files/subagents/machine-learning-engineer.md` и индекс `issues/README.md`.
+- Reason: Пользователь попросил добавить задачу для semantic product search API, без реализации.
+- Files touched: `README.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_HANDOFF.md`, `agent-files/AGENT_TASK_LOG.md`, `AGENTS.md`, `issues/README.md`, `agent-files/subagents/machine-learning-engineer.md`, `$to-issues`
+- Commands run: `date '+%Y-%m-%d %H:%M %Z'`, `find issues -maxdepth 1 -type f -print | sort`, `git status --short --untracked-files=all`
+- Result: Текущий context показывает Hugging Face embeddings foundation; новая задача может переиспользовать этот provider contract и добавить FastAPI endpoint.
+- Follow-up: Создать локальный issue `013` и обновить индекс задач.
+
+### Log Entry
+
+- Time: 2026-06-16 22:26 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Добавлена задача `013` про semantic product search API и обновлен индекс задач.
+- Reason: Оформить требования пользователя как локальную задачу в `issues/`.
+- Files touched: `issues/013-add-semantic-product-search-api.md`, `issues/README.md`
+- Commands run: none
+- Result: Задача создана как `AFK`; зафиксирован FastAPI endpoint `POST /search/semantic`, Hugging Face embeddings, in-memory `numpy` index для MVP и тесты с mocked embeddings.
+- Follow-up: Следующий агент может реализовывать issue `013` без дополнительного выбора model/API.
+
+### Log Entry
+
+- Time: 2026-06-16 22:26 MSK
+- Agent: Codex
+- Action type: test
+- Action: Проверена структура папки `issues/` и наличие новой задачи.
+- Reason: Убедиться, что новый markdown-файл записан и индекс обновлен.
+- Files touched: none
+- Commands run: `find issues -maxdepth 1 -type f -print | sort`, `git status --short --untracked-files=all`
+- Result: Новый файл `issues/013-add-semantic-product-search-api.md` существует; автотесты не запускались, потому что код не менялся.
+- Follow-up: Handoff остается `status: clear`.
+
+### Log Entry
+
 - Time: 2026-06-16 20:01 MSK
 - Agent: Codex
 - Action type: edit
@@ -394,4 +430,40 @@
 - Files touched: `docs/qdrant-search-and-database.md`, `README.md`, `agent-files/AGENT_TASK_LOG.md`.
 - Commands run: `cat README.md`, `cat agent-files/CONTEXT.md`, `cat agent-files/AGENT_HANDOFF.md`, `cat docs/qdrant-semantic-search.md`, `tail -n 80 agent-files/AGENT_TASK_LOG.md`, `date '+%Y-%m-%d %H:%M %Z'`.
 - Result: New doc explains data flow, ingest, Qdrant collection, point payload shape, query flow, demo queries, Qdrant responsibilities, recreate cases, and current limitations. README links to it.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 22:42 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Реализован issue `013`: semantic product search API с committed product dataset, lazy in-memory `numpy` index и endpoint `POST /search/semantic`.
+- Reason: Нужен проверяемый e-commerce semantic search vertical slice без обязательного Docker/Qdrant и без новых heavy ML dependencies.
+- Files touched: `data/product_catalog.json`, `src/llm/product_catalog.py`, `src/llm/product_search.py`, `src/llm/product_search_api.py`, `src/llm/api.py`, `tests/test_product_semantic_search.py`, `docs/product-semantic-search.md`, `README.md`, `agent-files/CONTEXT.md`, `issues/013-add-semantic-product-search-api.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `uv run pytest tests/test_product_semantic_search.py`, `uv run pytest`, `git diff --check`, `wc -l ...`, `rg ...` dependency/secret guards, `uv run python main.py --help`, `git status --short --untracked-files=all`.
+- Result: Added 50-item product catalog; endpoint validates blank query and `top_k`; response includes query metadata, model, rank, score, product fields; tests use fake embeddings and cover ranking, response shape, no token exposure, and index cache reuse. Checks passed: targeted product tests 8/8, full pytest 82/82, `git diff --check`; product code/test files are below 200 lines.
+- Follow-up: Real endpoint calls require server-side `HF_TOKEN`; Qdrant is intentionally not used by this MVP endpoint.
+
+### Log Entry
+
+- Time: 2026-06-16 22:45 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Дополнена документация `docs/product-semantic-search.md` инструкцией по runtime flow, flow по файлам и ручной проверке endpoint.
+- Reason: Пользователь попросил добавить к описанию объяснение, как работает semantic product search и какой у него flow.
+- Files touched: `docs/product-semantic-search.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `sed -n ...`, `git status --short --untracked-files=all`, `git diff --check`, `rg ...` secret guard, `date '+%Y-%m-%d %H:%M %Z'`.
+- Result: Документация теперь объясняет первый запрос, повторные запросы, lazy index cache, роли файлов и `make backend` + `curl` manual check без клиентского token.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 22:54 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Усилен REST endpoint proof для semantic product search после review feedback.
+- Reason: Feedback утверждал, что `/search/semantic` отсутствует и semantic search доступен только через CLI; фактически route уже был в `src/llm/api.py`, но не было HTTP-level test через FastAPI client.
+- Files touched: `tests/test_product_semantic_search_endpoint.py`, `docs/product-semantic-search.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `rg ...`, `sed -n ...`, `uv run pytest tests/test_product_semantic_search_endpoint.py tests/test_product_semantic_search.py`, `uv run pytest`, `git diff --check`, `wc -l ...`, secret guard `rg ...`.
+- Result: Добавлен `TestClient.post("/search/semantic", ...)` test с fake service; docs explicitly state this is a REST API path registered in `src/llm/api.py`, not CLI-only. Checks passed: product tests 9/9, full pytest 83/83, `git diff --check`; one Starlette deprecation warning from FastAPI TestClient.
 - Follow-up: none
