@@ -25,3 +25,4 @@
 | 009 | Создать full-stack MVP `CreativeCanvas AI` для генерации изображений | HITL | Human decision: image generation provider/API |
 | 010 | Создать MVP AI Voice Assistant со server STT, LLM-ответом и TTS | feature | Нет |
 | 011 | Создать foundation для document embeddings и semantic similarity через Hugging Face API | AFK | Нет |
+| 012 | Развернуть Qdrant vector database для semantic search readiness | AFK | Нет |

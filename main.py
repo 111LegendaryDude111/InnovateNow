@@ -17,6 +17,11 @@ from llm.embedding_cli import (
 )
 from llm.env import load_env_file
 from llm.prompt_builder import build_content_prompt
+from llm.qdrant_cli import (
+    QDRANT_COMMANDS,
+    add_qdrant_subcommands,
+    run_qdrant_command,
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -42,6 +47,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_client_options(status_parser)
     add_embedding_subcommands(subparsers)
+    add_qdrant_subcommands(subparsers)
 
     return parser
 
@@ -58,6 +64,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command in EMBEDDING_COMMANDS:
         return run_embedding_command(args)
+    if args.command in QDRANT_COMMANDS:
+        return run_qdrant_command(args)
 
     client = OpenRouterClient.from_env(
         model=args.model,

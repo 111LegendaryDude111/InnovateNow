@@ -335,3 +335,63 @@
 - Commands run: `sed -n ...`, `tail -n ...`, `date '+%Y-%m-%d %H:%M %Z'`
 - Result: README теперь содержит только заголовок и 4 описания: LLM chat + streaming, Voice, Embeddings, Generate image.
 - Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 22:13 MSK
+- Agent: Codex
+- Action type: inspect
+- Action: Прочитаны обязательные project files, issue `012`, skills `$karpathy-guidelines`/`$caveman`/`$ponytail`, `agent-files/subagents/machine-learning-engineer.md`, текущий embeddings foundation и task log по issue `011`.
+- Reason: Реализовать Qdrant semantic-search readiness без дублирования Hugging Face embeddings pipeline и без тяжелых local ML dependencies.
+- Files touched: `README.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_HANDOFF.md`, `agent-files/AGENT_TASK_LOG.md`, `agent-files/subagents/machine-learning-engineer.md`, `src/llm/*embedding*`, `src/llm/huggingface_embeddings.py`, `issues/012-deploy-qdrant-vector-database-semantic-search.md`.
+- Commands run: `cat ...`, `rg --files`, `sed -n ...`, `wc -l ...`, `git status --short --untracked-files=all`.
+- Result: Подтверждено, что issue `011` реализован через remote Hugging Face model `ibm-granite/granite-embedding-311m-multilingual-r2`; для `012` нужен Qdrant slice без UI/RAG/auth/cloud deployment.
+- Follow-up: Добавить Qdrant dataset, client layer, CLI, docs and tests.
+
+### Log Entry
+
+- Time: 2026-06-16 22:13 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Реализован Qdrant vector database readiness vertical slice.
+- Reason: Выполнить issue `012`: deterministic dataset -> Hugging Face remote embeddings -> Qdrant collection setup -> vector ingest with metadata -> top-k password/headphones semantic queries.
+- Files touched: `data/qdrant_sample_documents.json`, `src/llm/qdrant_vector_store.py`, `src/llm/qdrant_cli.py`, `main.py`, `tests/test_qdrant_vector_search.py`, `docs/qdrant-semantic-search.md`, `pyproject.toml`, `uv.lock`, `agent-files/CONTEXT.md`, `issues/012-deploy-qdrant-vector-database-semantic-search.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `uv add 'qdrant-client>=1.12.0'`.
+- Result: Added `qdrant-client>=1.12.0` resolved to `1.18.0`; committed 60-item Qdrant sample dataset; added `qdrant-ingest`, `qdrant-search`, `qdrant-demo`; Qdrant collection uses detected vector size and cosine distance; payload includes source ID, text, category/type and embedding model; docs cover Docker setup, expected output and troubleshooting.
+- Follow-up: Run tests and guard checks.
+
+### Log Entry
+
+- Time: 2026-06-16 22:13 MSK
+- Agent: Codex
+- Action type: test
+- Action: Запущены проверки после реализации issue `012`.
+- Reason: Подтвердить unit tests, CLI parser, whitespace, dependency guard and local line limits.
+- Files touched: `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `uv run pytest tests/test_qdrant_vector_search.py`, `uv run python main.py qdrant-ingest --help`, `uv run python main.py qdrant-search --help`, `uv run python main.py qdrant-demo --help`, `uv run pytest`, `git diff --check`, `wc -l main.py src/llm/qdrant_cli.py src/llm/qdrant_vector_store.py tests/test_qdrant_vector_search.py`, `rg 'name = "(sentence-transformers|torch|tensorflow|scikit-learn|pandas)"|"(sentence-transformers|torch|tensorflow|scikit-learn|pandas)>=' pyproject.toml uv.lock`, `uv run python main.py --help`.
+- Result: Targeted Qdrant tests passed 5/5; full `uv run pytest` passed 74/74; CLI help exposes Qdrant commands; `git diff --check` passed; changed code/test files are below 200 lines; forbidden heavy local ML deps were not found in `pyproject.toml` or `uv.lock`.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 22:18 MSK
+- Agent: Codex
+- Action type: edit
+- Action: README updated with a concise description of completed Qdrant semantic search work.
+- Reason: User asked to add a description of what was done to `README.md`.
+- Files touched: `README.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `cat README.md`, `cat agent-files/CONTEXT.md`, `cat agent-files/AGENT_HANDOFF.md`, `git status --short --untracked-files=all`, `git diff --check README.md agent-files/AGENT_TASK_LOG.md`, `date '+%Y-%m-%d %H:%M %Z'`.
+- Result: README now lists `Qdrant semantic search` as an app module and summarizes dataset, Qdrant store, CLI commands, dependency, tests, and documentation.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 22:22 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Added separate Russian documentation for how semantic search and Qdrant storage work.
+- Reason: User asked to describe search behavior and the database in a separate file.
+- Files touched: `docs/qdrant-search-and-database.md`, `README.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `cat README.md`, `cat agent-files/CONTEXT.md`, `cat agent-files/AGENT_HANDOFF.md`, `cat docs/qdrant-semantic-search.md`, `tail -n 80 agent-files/AGENT_TASK_LOG.md`, `date '+%Y-%m-%d %H:%M %Z'`.
+- Result: New doc explains data flow, ingest, Qdrant collection, point payload shape, query flow, demo queries, Qdrant responsibilities, recreate cases, and current limitations. README links to it.
+- Follow-up: none

@@ -1,0 +1,362 @@
+[
+  {
+    "document_id": "QDR-001",
+    "title": "FAQ: Reset a forgotten password",
+    "category": "faq",
+    "text": "Customers can reset a forgotten password from the sign-in page by choosing Forgot password, entering the account email, and opening the secure reset link. The link expires after fifteen minutes and can be requested again."
+  },
+  {
+    "document_id": "QDR-002",
+    "title": "FAQ: Change a known password",
+    "category": "faq",
+    "text": "Signed-in users can change a known password from Profile, Security, Change password. The account requires the current password and a new password that meets the company strength policy."
+  },
+  {
+    "document_id": "QDR-003",
+    "title": "Support: Password reset email not received",
+    "category": "support",
+    "text": "If a password reset email does not arrive, ask the customer to check spam, confirm the email address, and wait two minutes before sending another reset link. Support can verify the account email but must not ask for the password."
+  },
+  {
+    "document_id": "QDR-004",
+    "title": "Support: Account locked after failed password attempts",
+    "category": "support",
+    "text": "After six failed password attempts the account is locked for ten minutes. Support can confirm the lockout window and recommend a password reset if the customer cannot remember the original credentials."
+  },
+  {
+    "document_id": "QDR-005",
+    "title": "FAQ: Enable multi-factor authentication",
+    "category": "faq",
+    "text": "Users can enable multi-factor authentication from Profile, Security, Two step verification. The product supports authenticator apps and recovery codes for account access."
+  },
+  {
+    "document_id": "QDR-006",
+    "title": "Support: Lost authenticator device",
+    "category": "support",
+    "text": "When a customer loses an authenticator device, verify identity through the recovery flow and use backup codes if available. Do not disable multi-factor authentication without approved account recovery checks."
+  },
+  {
+    "document_id": "QDR-007",
+    "title": "Product: AeroTune wireless headphones",
+    "category": "product",
+    "text": "AeroTune wireless headphones include active noise cancellation, a detachable boom microphone, touch audio controls, and twenty eight hours of battery life for calls, music, and travel."
+  },
+  {
+    "document_id": "QDR-008",
+    "title": "Product: StudioPro over-ear headphones",
+    "category": "product",
+    "text": "StudioPro over-ear headphones are built for editing podcasts and video. They provide balanced audio, soft ear pads, wired monitoring, and a replaceable cable for desk setups."
+  },
+  {
+    "document_id": "QDR-009",
+    "title": "Product: PocketBeat earbuds",
+    "category": "product",
+    "text": "PocketBeat earbuds fit in a small charging case and offer sweat resistance, quick pairing, and clear voice pickup for short calls. They are designed for commuting and exercise."
+  },
+  {
+    "document_id": "QDR-010",
+    "title": "Support: Headphones Bluetooth pairing",
+    "category": "support",
+    "text": "To pair wireless headphones, hold the power button for five seconds until the blue light flashes, select the headset in Bluetooth settings, and confirm that audio output moved to the device."
+  },
+  {
+    "document_id": "QDR-011",
+    "title": "Support: Headphones microphone not working",
+    "category": "support",
+    "text": "If the headset microphone is not detected, check input device settings, reconnect Bluetooth, charge the battery, and test with a voice recording app before replacing hardware."
+  },
+  {
+    "document_id": "QDR-012",
+    "title": "Article: Choosing headphones for remote work",
+    "category": "article",
+    "text": "Remote workers usually need headphones with stable Bluetooth, a clear microphone, comfortable ear cups, and enough battery for meetings. Noise cancellation helps in shared spaces."
+  },
+  {
+    "document_id": "QDR-013",
+    "title": "FAQ: Update billing card",
+    "category": "faq",
+    "text": "Account owners can update the billing card from Workspace settings, Billing, Payment method. The new card is used for the next invoice and can be removed after another valid method is added."
+  },
+  {
+    "document_id": "QDR-014",
+    "title": "Support: Failed subscription charge",
+    "category": "support",
+    "text": "When a subscription charge fails, the system retries billing three times over seven days. Customers should update the card, check bank approval, or contact billing support."
+  },
+  {
+    "document_id": "QDR-015",
+    "title": "FAQ: Download invoice",
+    "category": "faq",
+    "text": "Invoices are available in Workspace settings under Billing history. Account owners can download PDF invoices and receipts for each completed payment."
+  },
+  {
+    "document_id": "QDR-016",
+    "title": "Support: Refund request policy",
+    "category": "support",
+    "text": "Refund requests are reviewed by billing support. Monthly plans can be refunded within seven days if usage is minimal, while annual plans require manager approval."
+  },
+  {
+    "document_id": "QDR-017",
+    "title": "FAQ: Invite a teammate",
+    "category": "faq",
+    "text": "Admins can invite teammates from Workspace settings, Members, Invite. Each invitation includes a role, email address, and optional team assignment."
+  },
+  {
+    "document_id": "QDR-018",
+    "title": "Support: Invitation link expired",
+    "category": "support",
+    "text": "Invitation links expire after seven days. Admins can resend the invite from the members page, and the old link stops working after the new invite is issued."
+  },
+  {
+    "document_id": "QDR-019",
+    "title": "FAQ: Remove a teammate",
+    "category": "faq",
+    "text": "Workspace admins can remove a teammate from Members, More actions, Remove. The user loses workspace access immediately but owned documents remain in the workspace."
+  },
+  {
+    "document_id": "QDR-020",
+    "title": "Article: Role based access overview",
+    "category": "article",
+    "text": "Role based access keeps workspace permissions predictable. Owners manage billing, admins manage members and settings, editors change content, and viewers can only read shared material."
+  },
+  {
+    "document_id": "QDR-021",
+    "title": "Product: SecureNote knowledge base",
+    "category": "product",
+    "text": "SecureNote is an internal knowledge base for policies, runbooks, and customer answers. It supports permissions, version history, and quick semantic search across trusted documents."
+  },
+  {
+    "document_id": "QDR-022",
+    "title": "Product: MetricsBoard analytics dashboard",
+    "category": "product",
+    "text": "MetricsBoard tracks revenue, support volume, activation, churn, and product adoption. Teams use the dashboard to compare weekly trends and export CSV reports."
+  },
+  {
+    "document_id": "QDR-023",
+    "title": "Product: FlowDesk support inbox",
+    "category": "product",
+    "text": "FlowDesk combines support tickets, customer context, internal notes, and SLA timers. Agents can assign conversations, add tags, and search similar resolved cases."
+  },
+  {
+    "document_id": "QDR-024",
+    "title": "Support: SLA timer paused",
+    "category": "support",
+    "text": "The SLA timer pauses when a ticket waits for customer response and resumes when the customer replies. Internal notes do not change the timer state."
+  },
+  {
+    "document_id": "QDR-025",
+    "title": "FAQ: Export customer data",
+    "category": "faq",
+    "text": "Workspace owners can export customer data from Privacy settings. The export includes profiles, tickets, invoices, and audit events in a compressed archive."
+  },
+  {
+    "document_id": "QDR-026",
+    "title": "Support: Delete customer data",
+    "category": "support",
+    "text": "Data deletion requests must be verified by privacy support. The request removes customer profile data, anonymizes ticket content where required, and records an audit event."
+  },
+  {
+    "document_id": "QDR-027",
+    "title": "Article: Privacy request workflow",
+    "category": "article",
+    "text": "Privacy requests should include request type, customer identity, legal region, and due date. Support must track completion and avoid exposing personal data in public ticket comments."
+  },
+  {
+    "document_id": "QDR-028",
+    "title": "FAQ: Connect Slack alerts",
+    "category": "faq",
+    "text": "Admins can connect Slack alerts from Integrations, Slack, Add workspace. Alerts can be routed by ticket priority, billing events, and system health status."
+  },
+  {
+    "document_id": "QDR-029",
+    "title": "Support: Slack integration disconnected",
+    "category": "support",
+    "text": "If Slack alerts stop arriving, reconnect the workspace integration, confirm channel permissions, and send a test alert from the integrations page."
+  },
+  {
+    "document_id": "QDR-030",
+    "title": "FAQ: Webhook signing secret",
+    "category": "faq",
+    "text": "Webhook payloads include a timestamp and signature header. Developers should verify the signing secret before processing events from the product."
+  },
+  {
+    "document_id": "QDR-031",
+    "title": "Support: Webhook delivery retry",
+    "category": "support",
+    "text": "Webhook delivery retries occur for failed responses for up to twenty four hours. The events page shows response codes, retry timing, and final delivery status."
+  },
+  {
+    "document_id": "QDR-032",
+    "title": "Article: API rate limits",
+    "category": "article",
+    "text": "The public API allows six hundred requests per minute per workspace. Clients should handle rate limit responses with exponential backoff and avoid retry storms."
+  },
+  {
+    "document_id": "QDR-033",
+    "title": "FAQ: Generate an API key",
+    "category": "faq",
+    "text": "Developers can generate an API key from Workspace settings, Developer tools, API keys. The key is shown once and should be stored in a secret manager."
+  },
+  {
+    "document_id": "QDR-034",
+    "title": "Support: API key leaked",
+    "category": "support",
+    "text": "If an API key is leaked, revoke it immediately, rotate dependent services, review recent audit logs, and create a new key with the minimum required permissions."
+  },
+  {
+    "document_id": "QDR-035",
+    "title": "FAQ: Single sign-on setup",
+    "category": "faq",
+    "text": "Enterprise owners can configure single sign-on with SAML metadata, allowed domains, and test users. Keep password login enabled until the SSO test succeeds."
+  },
+  {
+    "document_id": "QDR-036",
+    "title": "Support: SSO login failed",
+    "category": "support",
+    "text": "For SSO login failures, compare the identity provider certificate, callback URL, user email domain, and clock skew. Capture the error code from the authentication log."
+  },
+  {
+    "document_id": "QDR-037",
+    "title": "FAQ: Create a project template",
+    "category": "faq",
+    "text": "Project admins can create templates from an existing project. Templates keep task structure, default assignees, due date offsets, and custom fields."
+  },
+  {
+    "document_id": "QDR-038",
+    "title": "Support: Template fields missing",
+    "category": "support",
+    "text": "If custom fields are missing from a project template, confirm that the fields are active in workspace settings and that the user has permission to view them."
+  },
+  {
+    "document_id": "QDR-039",
+    "title": "Product: PlanTrack roadmap manager",
+    "category": "product",
+    "text": "PlanTrack helps product teams collect feature ideas, score roadmap candidates, publish release plans, and connect customer feedback to roadmap decisions."
+  },
+  {
+    "document_id": "QDR-040",
+    "title": "Article: Roadmap prioritization score",
+    "category": "article",
+    "text": "A practical roadmap score combines customer impact, revenue opportunity, implementation effort, strategic fit, and confidence. Teams should revisit scores before every planning cycle."
+  },
+  {
+    "document_id": "QDR-041",
+    "title": "FAQ: Upload CSV contacts",
+    "category": "faq",
+    "text": "CSV contact uploads require email, name, and optional company columns. The importer previews rows, reports validation errors, and skips duplicate email addresses."
+  },
+  {
+    "document_id": "QDR-042",
+    "title": "Support: CSV import failed",
+    "category": "support",
+    "text": "If a CSV import fails, check file encoding, required columns, row count limits, and duplicate email values. Download the error report before retrying."
+  },
+  {
+    "document_id": "QDR-043",
+    "title": "FAQ: Configure email domain",
+    "category": "faq",
+    "text": "Marketing admins can configure a sending domain by adding SPF, DKIM, and DMARC records in DNS. Verification can take several hours."
+  },
+  {
+    "document_id": "QDR-044",
+    "title": "Support: Email deliverability drop",
+    "category": "support",
+    "text": "When email deliverability drops, check bounce rate, spam complaints, DNS records, recent campaign changes, and whether the sending domain was recently warmed up."
+  },
+  {
+    "document_id": "QDR-045",
+    "title": "Product: CampaignPilot email automation",
+    "category": "product",
+    "text": "CampaignPilot builds email sequences with audience segments, schedule rules, A/B subject line tests, and conversion reports for marketing teams."
+  },
+  {
+    "document_id": "QDR-046",
+    "title": "Article: Writing support macros",
+    "category": "article",
+    "text": "Good support macros answer the question directly, include the next action, avoid private internal notes, and leave room for agent personalization."
+  },
+  {
+    "document_id": "QDR-047",
+    "title": "FAQ: Create a support macro",
+    "category": "faq",
+    "text": "Support admins can create macros from Settings, Support, Macros. A macro can include saved reply text, tags, priority, and assignment rules."
+  },
+  {
+    "document_id": "QDR-048",
+    "title": "Support: Macro applied wrong tag",
+    "category": "support",
+    "text": "If a macro applies the wrong tag, review the macro actions, remove the tag from affected tickets, and update any automation rules that rely on the tag."
+  },
+  {
+    "document_id": "QDR-049",
+    "title": "FAQ: Mobile push notifications",
+    "category": "faq",
+    "text": "Users can manage mobile push notifications from Account settings, Notifications. Options include mentions, assigned tickets, billing alerts, and weekly summaries."
+  },
+  {
+    "document_id": "QDR-050",
+    "title": "Support: Push notifications delayed",
+    "category": "support",
+    "text": "Delayed push notifications are usually caused by device battery optimization, disabled app permissions, unstable network connectivity, or a stale mobile app version."
+  },
+  {
+    "document_id": "QDR-051",
+    "title": "Product: FieldKit mobile inspection app",
+    "category": "product",
+    "text": "FieldKit lets field teams complete inspections offline, attach photos, capture signatures, and sync reports when the device reconnects to the network."
+  },
+  {
+    "document_id": "QDR-052",
+    "title": "Article: Offline sync conflict handling",
+    "category": "article",
+    "text": "Offline sync should preserve local edits, detect conflicts, and show the latest server version before a user chooses which change to keep."
+  },
+  {
+    "document_id": "QDR-053",
+    "title": "FAQ: Backup workspace data",
+    "category": "faq",
+    "text": "Workspace backups run nightly and retain thirty days of snapshots. Enterprise owners can request a restore through support with the target timestamp."
+  },
+  {
+    "document_id": "QDR-054",
+    "title": "Support: Restore deleted project",
+    "category": "support",
+    "text": "Deleted projects can be restored within thirty days if the workspace backup contains the project. Support needs project name, deletion time, and owner approval."
+  },
+  {
+    "document_id": "QDR-055",
+    "title": "FAQ: Incident status page",
+    "category": "faq",
+    "text": "The public status page reports active incidents, maintenance windows, uptime history, and component health. Customers can subscribe by email or webhook."
+  },
+  {
+    "document_id": "QDR-056",
+    "title": "Support: Report a service outage",
+    "category": "support",
+    "text": "For a suspected service outage, collect region, workspace ID, error messages, timestamps, and affected workflows. Escalate to incident response if multiple customers are impacted."
+  },
+  {
+    "document_id": "QDR-057",
+    "title": "Article: Incident postmortem checklist",
+    "category": "article",
+    "text": "A postmortem should include impact, timeline, root cause, detection gap, customer communication, corrective actions, and owners for each follow-up item."
+  },
+  {
+    "document_id": "QDR-058",
+    "title": "FAQ: Audit log search",
+    "category": "faq",
+    "text": "Audit logs can be searched by actor, action, target, IP address, and date range. Security teams export filtered logs for compliance reviews."
+  },
+  {
+    "document_id": "QDR-059",
+    "title": "Support: Missing audit event",
+    "category": "support",
+    "text": "If an expected audit event is missing, verify the event type, actor account, workspace, time range, and whether the action happened through an external integration."
+  },
+  {
+    "document_id": "QDR-060",
+    "title": "Article: Secure support handling",
+    "category": "article",
+    "text": "Support agents must avoid asking for passwords, tokens, or full payment details. Use secure verification links and redact private customer data from shared examples."
+  }
+]
