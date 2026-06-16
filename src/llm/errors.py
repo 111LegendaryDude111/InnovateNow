@@ -47,3 +47,14 @@ class HuggingFaceTTSError(LLMError):
 
 class HuggingFaceTTSConnectionError(HuggingFaceTTSError, LLMConnectionError):
     """Ошибка соединения с Hugging Face TTS API."""
+
+
+class HuggingFaceEmbeddingsError(LLMError):
+    """Ошибка ответа Hugging Face Embeddings API или некорректного payload."""
+
+
+class HuggingFaceEmbeddingsConnectionError(
+    HuggingFaceEmbeddingsError,
+    LLMConnectionError,
+):
+    """Ошибка соединения с Hugging Face Embeddings API."""

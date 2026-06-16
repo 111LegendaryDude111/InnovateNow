@@ -1,0 +1,122 @@
+[
+  {
+    "document_id": "DOC-001",
+    "title": "Project Omega Phase 1 Report",
+    "category": "report",
+    "text": "Project Omega Phase 1 delivered the customer analytics dashboard, consolidated event tracking, and partner reporting export. The next phase focuses on retention cohorts, data freshness alerts, and onboarding metrics for regional teams."
+  },
+  {
+    "document_id": "DOC-002",
+    "title": "Customer Support FAQ: Password Reset",
+    "category": "faq",
+    "text": "Customers can reset a forgotten password from the sign-in page by selecting Forgot password and confirming the email link within fifteen minutes. Support agents should verify account ownership before triggering a manual reset."
+  },
+  {
+    "document_id": "DOC-003",
+    "title": "New Employee Onboarding Guide",
+    "category": "onboarding",
+    "text": "New employees receive laptop setup, identity access, payroll registration, and product orientation during the first week. Managers must schedule a thirty day check-in and assign a team buddy before the start date."
+  },
+  {
+    "document_id": "DOC-004",
+    "title": "Quarterly Financial Review",
+    "category": "finance",
+    "text": "Quarterly revenue increased through enterprise renewals and partner channel expansion. Operating expenses remained within plan, while cloud infrastructure costs require continued monitoring during the analytics rollout."
+  },
+  {
+    "document_id": "DOC-005",
+    "title": "Server Maintenance Schedule",
+    "category": "operations",
+    "text": "Production server maintenance occurs on the first Sunday of each month between 02:00 and 04:00 UTC. Teams must freeze deployments, notify support, and verify health checks after database patching completes."
+  },
+  {
+    "document_id": "DOC-006",
+    "title": "Marketing Strategy for Product Launch",
+    "category": "marketing",
+    "text": "The product launch campaign targets operations leaders with customer proof, webinar demos, and comparison pages. Marketing will coordinate paid search, lifecycle email, and sales enablement assets two weeks before release."
+  },
+  {
+    "document_id": "DOC-007",
+    "title": "API Integration Guide for Partners",
+    "category": "api",
+    "text": "Partners authenticate with scoped API keys, send JSON requests over HTTPS, and use idempotency keys for write operations. Integration tests should validate webhook signatures, pagination, rate limits, and retry behavior."
+  },
+  {
+    "document_id": "DOC-008",
+    "title": "Security Best Practices for Remote Work",
+    "category": "security",
+    "text": "Remote employees must use multi-factor authentication, approved password managers, encrypted devices, and the corporate VPN for internal systems. Sensitive files should stay in managed cloud storage, not personal drives."
+  },
+  {
+    "document_id": "DOC-009",
+    "title": "HR Flex-Time Policy Update",
+    "category": "hr",
+    "text": "Flex-time allows employees to shift daily working hours when team coverage and customer obligations remain protected. Managers approve recurring schedules and document exceptions for payroll and compliance review."
+  },
+  {
+    "document_id": "DOC-010",
+    "title": "Troubleshooting Common Network Issues",
+    "category": "support",
+    "text": "For network issues, check VPN status, local Wi-Fi signal, DNS configuration, and recent firewall changes. Escalate to infrastructure when packet loss persists or multiple employees report the same service outage."
+  },
+  {
+    "document_id": "DOC-011",
+    "title": "Data Privacy Compliance Guidelines",
+    "category": "compliance",
+    "text": "Customer data must be collected for documented business purposes, retained only as long as required, and removed after approved deletion requests. Teams must complete privacy review before launching new data workflows."
+  },
+  {
+    "document_id": "DOC-012",
+    "title": "Sales Team Performance Metrics",
+    "category": "sales",
+    "text": "Sales performance is reviewed through pipeline coverage, win rate, average contract value, renewal risk, and forecast accuracy. Regional leaders submit weekly notes explaining material changes in late stage opportunities."
+  },
+  {
+    "document_id": "DOC-013",
+    "title": "Software Development Lifecycle Overview",
+    "category": "engineering",
+    "text": "Engineering teams plan work through scoped issues, review changes through pull requests, and release after automated tests pass. Risky changes require rollback notes, monitoring checks, and owner sign-off."
+  },
+  {
+    "document_id": "DOC-014",
+    "title": "Cloud Migration Plan",
+    "category": "infrastructure",
+    "text": "The cloud migration plan moves reporting jobs, object storage, and backup automation before customer-facing APIs. Each stage includes data validation, latency checks, access review, and a rollback window."
+  },
+  {
+    "document_id": "DOC-015",
+    "title": "Client Success Case Study",
+    "category": "customer-success",
+    "text": "A retail client reduced weekly reporting time after adopting automated dashboards and partner exports. Success managers highlighted faster executive reviews, fewer manual spreadsheets, and better renewal conversations."
+  },
+  {
+    "document_id": "DOC-016",
+    "title": "Disaster Recovery Plan",
+    "category": "operations",
+    "text": "Disaster recovery uses daily encrypted backups, regional failover testing, and a documented incident commander rotation. Critical services have recovery time objectives and recovery point objectives reviewed quarterly."
+  },
+  {
+    "document_id": "DOC-017",
+    "title": "Brand Guidelines",
+    "category": "brand",
+    "text": "Brand materials should use the approved logo, accessible color contrast, concise product messaging, and plain language. Public documents require review for tone, claims, trademarks, and visual consistency."
+  },
+  {
+    "document_id": "DOC-018",
+    "title": "Product Feature Roadmap",
+    "category": "product",
+    "text": "The roadmap prioritizes semantic search, dashboard collaboration, advanced permissions, and partner analytics. Product managers will validate demand through customer interviews before committing each major release."
+  },
+  {
+    "document_id": "DOC-019",
+    "title": "AI Ethics Policy for Machine Learning",
+    "category": "policy",
+    "text": "Machine learning projects must document intended use, data sources, evaluation metrics, privacy risks, and human review boundaries. Teams should avoid automated decisions without monitoring, appeal paths, and stakeholder approval."
+  },
+  {
+    "document_id": "DOC-020",
+    "title": "Supply Chain Optimization Report",
+    "category": "report",
+    "text": "Supply chain optimization reduced late shipments through demand forecasting, supplier scorecards, and inventory alerts. Operations will continue measuring fulfillment cycle time, exception volume, and vendor reliability."
+  }
+]

@@ -10,6 +10,11 @@ if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
 from llm import LLMError, OpenRouterClient
+from llm.embedding_cli import (
+    EMBEDDING_COMMANDS,
+    add_embedding_subcommands,
+    run_embedding_command,
+)
 from llm.env import load_env_file
 from llm.prompt_builder import build_content_prompt
 
@@ -36,6 +41,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Show OpenRouter connection settings and check the API",
     )
     _add_client_options(status_parser)
+    add_embedding_subcommands(subparsers)
 
     return parser
 
@@ -49,6 +55,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.command is None:
         parser.print_help()
         return 0
+
+    if args.command in EMBEDDING_COMMANDS:
+        return run_embedding_command(args)
 
     client = OpenRouterClient.from_env(
         model=args.model,

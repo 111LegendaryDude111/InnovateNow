@@ -2,6 +2,102 @@
 
 ### Log Entry
 
+- Time: 2026-06-16 20:01 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Исправлен runtime error `Model not supported by provider hf-inference` в `embeddings-build`.
+- Reason: Пользователь получил 400 от Hugging Face; текущий код использовал неверный router path `/hf-inference/pipeline/feature-extraction/{model}`, а `sentence-transformers/all-MiniLM-L6-v2` на correct `/models/{model}` route запускается как sentence-similarity pipeline, не embeddings.
+- Files touched: `src/llm/huggingface_embeddings.py`, `tests/test_huggingface_embeddings.py`, `docs/document-embeddings.md`, `README.md`, `issues/011-build-document-embeddings-foundation.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: official Hugging Face docs lookup, `uv run python main.py embeddings-build`, `uv run python main.py embeddings-build --base-url https://router.huggingface.co/hf-inference/models --model ibm-granite/granite-embedding-311m-multilingual-r2`, `uv run python main.py embeddings-build --base-url https://router.huggingface.co/hf-inference/models --model sentence-transformers/all-MiniLM-L6-v2 --output artifacts/document_embeddings_minilm_test.json`, `uv run python main.py embeddings-search --query "how do I reset my password?"`, targeted pytest, `git diff --check`.
+- Result: Default endpoint changed to `/hf-inference/models`; default model changed to `ibm-granite/granite-embedding-311m-multilingual-r2`. Real `embeddings-build` wrote 20 records; real search returned `DOC-002 Customer Support FAQ: Password Reset` as top match. Targeted tests passed 11/11; final `uv run pytest` passed 69/69; `git diff --check` passed.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 17:59 MSK
+- Agent: Codex
+- Action type: inspect
+- Action: Прочитаны `README.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_HANDOFF.md`, `agent-files/AGENT_TASK_LOG.md`, `AGENTS.md`, issue `011`, обязательные skills `$karpathy-guidelines`/`$caveman` и `agent-files/subagents/machine-learning-engineer.md`.
+- Reason: Подготовить реализацию foundation для document embeddings и semantic similarity через remote Hugging Face API.
+- Files touched: none
+- Commands run: `rg --files ...`, `sed -n ...`, `tail -n 120 agent-files/AGENT_TASK_LOG.md`, Hugging Face docs lookup for feature-extraction API.
+- Result: Подтвержден scope: CLI/backend pipeline без UI/vector DB/RAG answering; tests должны мокать HF и не читать real `HF_TOKEN`.
+- Follow-up: Реализовать sample dataset, preprocessing/chunking, HF embeddings client, JSON storage, cosine similarity demo и tests.
+
+### Log Entry
+
+- Time: 2026-06-16 17:59 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Реализован document embeddings foundation для issue `011`.
+- Reason: Выполнить vertical slice sample documents -> preprocessing/chunking -> remote HF embeddings -> JSON artifact -> cosine similarity top-k demo.
+- Files touched: `data/internal_knowledge_documents.json`, `src/llm/document_models.py`, `src/llm/document_collection.py`, `src/llm/document_preprocessing.py`, `src/llm/huggingface_embeddings.py`, `src/llm/embedding_storage.py`, `src/llm/semantic_similarity.py`, `src/llm/embedding_pipeline.py`, `src/llm/embedding_cli.py`, `src/llm/errors.py`, `main.py`, `tests/test_document_embeddings.py`, `tests/test_huggingface_embeddings.py`, `docs/document-embeddings.md`, `README.md`, `.gitignore`, `pyproject.toml`, `uv.lock`, `agent-files/CONTEXT.md`, `agent-files/AGENT_HANDOFF.md`, `issues/011-build-document-embeddings-foundation.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `uv lock`.
+- Result: Добавлены 20 sample business documents, HF feature-extraction client with `HF_TOKEN`, default model `sentence-transformers/all-MiniLM-L6-v2`, chunk metadata with `document_id`/`chunk_id`, JSON storage, `embeddings-build`/`embeddings-search`, docs and `numpy>=2.0.0`; search берет model из artifact, если `--model` не указан.
+- Follow-up: Запустить проверки.
+
+### Log Entry
+
+- Time: 2026-06-16 17:59 MSK
+- Agent: Codex
+- Action type: test
+- Action: Запущены проверки после реализации issue `011`.
+- Reason: Подтвердить unit tests, CLI parser, whitespace, dependency guard и file size limits.
+- Files touched: `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `python -m compileall ...`, `uv run pytest`, retry after test expectation fix, `uv run python main.py embeddings-build --help`, `uv run python main.py embeddings-search --help`, `git diff --check`, `wc -l ...`, `rg ... pyproject.toml uv.lock`.
+- Result: `python -m compileall ...` не запустился из-за локального pyenv missing `3.13`; использован проектный `uv run`. Первый `uv run pytest` упал из-за слишком точного test expectation для title; тест исправлен. Финальный `uv run pytest` passed 69/69. CLI help работает, `git diff --check` passed, forbidden heavy ML deps не найдены, новые code/test files меньше 200 строк.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-15 23:45 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Задача `011` скорректирована под удаленный Hugging Face Inference API для embeddings.
+- Reason: Пользователь попросил использовать Hugging Face API и указать нужные библиотеки для remote API реализации.
+- Files touched: `issues/011-build-document-embeddings-foundation.md`, `issues/README.md`, `agent-files/AGENT_TASK_LOG.md`
+- Commands run: none
+- Result: Issue `011` переведен из `HITL` в `AFK`; зафиксированы `HF_TOKEN`, модель `sentence-transformers/all-MiniLM-L6-v2`, dependency `numpy>=2.0.0`, запрет на локальные `sentence-transformers/torch/tensorflow/scikit-learn/pandas` для MVP.
+- Follow-up: Реализация может начинаться без дополнительного решения по model/API, если подходит указанная Hugging Face модель.
+
+### Log Entry
+
+- Time: 2026-06-15 23:45 MSK
+- Agent: Codex
+- Action type: inspect
+- Action: Прочитаны обязательные файлы проекта, `AGENTS.md`, skill `$to-issues`, инструкции `agent-files/subagents/machine-learning-engineer.md` и индекс `issues/README.md`.
+- Reason: Пользователь попросил создать задачу для document embeddings и semantic similarity, без реализации.
+- Files touched: `README.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_HANDOFF.md`, `agent-files/AGENT_TASK_LOG.md`, `AGENTS.md`, `issues/README.md`, `agent-files/subagents/machine-learning-engineer.md`, `$to-issues`
+- Commands run: `date '+%Y-%m-%d %H:%M %Z'`, `find issues -maxdepth 1 -type f -print | sort`, `git status --short --untracked-files=all`
+- Result: Подтверждено, что задача ML/data-related и требует выбора embedding model/library/API перед реализацией.
+- Follow-up: Создать локальный issue `011` и обновить индекс задач.
+
+### Log Entry
+
+- Time: 2026-06-15 23:45 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Добавлена задача `011` про document embeddings foundation и обновлен индекс задач.
+- Reason: Оформить требования пользователя как локальную задачу в `issues/`.
+- Files touched: `issues/011-build-document-embeddings-foundation.md`, `issues/README.md`
+- Commands run: none
+- Result: Задача создана как `HITL`, потому что нужно выбрать embedding model/library/API и подтвердить тяжелые ML/NLP dependencies или внешний embeddings API.
+- Follow-up: Следующий агент должен получить human decision перед реализацией.
+
+### Log Entry
+
+- Time: 2026-06-15 23:45 MSK
+- Agent: Codex
+- Action type: test
+- Action: Проверена структура папки `issues/` и наличие новой задачи.
+- Reason: Убедиться, что новый markdown-файл записан и индекс обновлен.
+- Files touched: none
+- Commands run: `find issues -maxdepth 1 -type f -print | sort`, `git status --short --untracked-files=all`
+- Result: Новый файл `issues/011-build-document-embeddings-foundation.md` существует; автотесты не запускались, потому что код не менялся.
+- Follow-up: Handoff остается `status: clear`.
+
+### Log Entry
+
 - Time: 2026-06-15 11:11 MSK
 - Agent: Codex
 - Action type: inspect
@@ -214,4 +310,28 @@
 - Files touched: `agent-files/AGENT_TASK_LOG.md`
 - Commands run: `uv run pytest`, `npm test` in `frontend/`, `npm run build` in `frontend/`, `git diff --check`, `git config user.name ...`, `git config user.email ...`, `git commit -m 'add voice'`
 - Result: Checks passed before commit; repo-local git identity reused the latest commit author.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 21:38 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Добавлен короткий обзор частей приложения в `README.md`.
+- Reason: Пользователь попросил кратко описать LLM chat + streaming, voice, embeddings и image generation.
+- Files touched: `README.md`, `agent-files/AGENT_TASK_LOG.md`
+- Commands run: `sed -n ...`, `tail -n ...`, `git status --short`, `date '+%Y-%m-%d %H:%M %Z'`
+- Result: Вверху README добавлен раздел `Части приложения` с 4 пунктами.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 21:39 MSK
+- Agent: Codex
+- Action type: edit
+- Action: `README.md` сокращен до описания модулей приложения.
+- Reason: Пользователь попросил оставить в README только описание модулей и удалить остальное.
+- Files touched: `README.md`, `agent-files/AGENT_TASK_LOG.md`
+- Commands run: `sed -n ...`, `tail -n ...`, `date '+%Y-%m-%d %H:%M %Z'`
+- Result: README теперь содержит только заголовок и 4 описания: LLM chat + streaming, Voice, Embeddings, Generate image.
 - Follow-up: none
