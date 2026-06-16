@@ -20,7 +20,10 @@ def rank_embedding_records(
     embeddings = [_record_embedding(record) for record in records]
     scores = cosine_scores(query_embedding, embeddings)
     order = np.argsort(scores)[::-1][:top_k]
-    return [_match_from_record(records[int(index)], float(scores[int(index)])) for index in order]
+    return [
+        _match_from_record(records[int(index)], float(scores[int(index)]))
+        for index in order
+    ]
 
 
 def cosine_scores(

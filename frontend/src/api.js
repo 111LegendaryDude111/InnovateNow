@@ -1,4 +1,6 @@
 const IMAGE_ENDPOINT = "http://127.0.0.1:8000/images/generate";
+const PDF_ASK_ENDPOINT = "http://127.0.0.1:8000/pdf/ask";
+const PDF_INGEST_ENDPOINT = "http://127.0.0.1:8000/pdf/ingest";
 const STREAM_ENDPOINT = "http://127.0.0.1:8000/llm/stream";
 const VOICE_ENDPOINT = "http://127.0.0.1:8000/voice/respond";
 
@@ -42,6 +44,42 @@ export async function requestVoiceResponse({ audioBlob, language }) {
     method: "POST",
     headers: { "Content-Type": audioBlob.type || "application/octet-stream" },
     body: audioBlob,
+  });
+
+  if (!response.ok) {
+    throw new Error(await readErrorMessage(response));
+  }
+
+  return response.json();
+}
+
+export async function ingestPdfFiles(files) {
+  const formData = new FormData();
+  for (const file of files) {
+    formData.append("files", file);
+  }
+
+  const response = await fetch(PDF_INGEST_ENDPOINT, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error(await readErrorMessage(response));
+  }
+
+  return response.json();
+}
+
+export async function askPdfQuestion({ sessionId, question, topK }) {
+  const response = await fetch(PDF_ASK_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      session_id: sessionId,
+      question,
+      top_k: topK,
+    }),
   });
 
   if (!response.ok) {

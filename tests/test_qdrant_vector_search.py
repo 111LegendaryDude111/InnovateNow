@@ -59,7 +59,9 @@ class FakeQdrantClient:
         self.deleted.append(collection_name)
         self.collections.discard(collection_name)
 
-    def create_collection(self, collection_name: str, *, vectors_config: object) -> None:
+    def create_collection(
+        self, collection_name: str, *, vectors_config: object
+    ) -> None:
         self.created.append((collection_name, vectors_config))
         self.collections.add(collection_name)
 
@@ -91,8 +93,12 @@ class QdrantVectorSearchTests(unittest.TestCase):
 
         self.assertEqual(len(documents), 60)
         self.assertEqual(len({document.document_id for document in documents}), 60)
-        self.assertTrue(any("password" in document.text.lower() for document in documents))
-        self.assertTrue(any("headphones" in document.text.lower() for document in documents))
+        self.assertTrue(
+            any("password" in document.text.lower() for document in documents)
+        )
+        self.assertTrue(
+            any("headphones" in document.text.lower() for document in documents)
+        )
 
     def test_build_points_preserves_payload_metadata(self) -> None:
         document = KnowledgeDocument("QDR-100", "Password FAQ", "faq", "reset password")
@@ -108,7 +114,9 @@ class QdrantVectorSearchTests(unittest.TestCase):
     def test_ingest_creates_cosine_collection_and_upserts_points(self) -> None:
         documents = [
             KnowledgeDocument("QDR-001", "Password", "faq", "reset password"),
-            KnowledgeDocument("QDR-007", "Headphones", "product", "wireless headphones"),
+            KnowledgeDocument(
+                "QDR-007", "Headphones", "product", "wireless headphones"
+            ),
         ]
         client = FakeQdrantClient()
 

@@ -22,7 +22,9 @@ def load_products(path: Path) -> list[Product]:
     if not isinstance(payload, list):
         raise ValueError("product catalog must be a JSON array")
 
-    products = [_product_from_payload(item, index) for index, item in enumerate(payload)]
+    products = [
+        _product_from_payload(item, index) for index, item in enumerate(payload)
+    ]
     require_unique_product_ids(products)
     return products
 

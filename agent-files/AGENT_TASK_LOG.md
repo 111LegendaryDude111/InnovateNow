@@ -2,6 +2,102 @@
 
 ### Log Entry
 
+- Time: 2026-06-16 23:29 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Расширена документация `docs/pdf-qa-tool.md` разделом `Что Сделано`.
+- Reason: Пользователь попросил добавить доку с описанием выполненной реализации PDF Q&A Tool.
+- Files touched: `docs/pdf-qa-tool.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `sed -n ...`, `git diff --check`, `date '+%Y-%m-%d %H:%M %Z'`.
+- Result: Документация теперь содержит summary MVP, список сделанных частей, dependencies и карту основных файлов.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 23:17 MSK
+- Agent: Codex
+- Action type: inspect
+- Action: Прочитаны обязательные проектные файлы, issue `014`, обязательные skills `$karpathy-guidelines`/`$caveman`/`$ponytail`, RAG/ML subagent rules, текущие API/frontend/test/docs паттерны.
+- Reason: Реализовать PDF Q&A Tool как вертикальный FastAPI + React slice без тяжелых RAG dependencies.
+- Files touched: `README.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_HANDOFF.md`, `issues/014-build-pdf-qa-tool.md`, `src/llm/api.py`, `frontend/src/App.jsx`, `frontend/src/api.js`, tests/docs/style files.
+- Commands run: `rg --files`, `sed -n ...`, `wc -l ...`, `git status --short`.
+- Result: Подтверждено, что проект уже имеет Hugging Face embeddings, OpenRouter, in-memory `numpy` search pattern и React navigation без router dependency.
+- Follow-up: Реализовать backend, frontend, tests, docs.
+
+### Log Entry
+
+- Time: 2026-06-16 23:17 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Реализован issue `014`: PDF multipart ingest, `pypdf` text extraction, page-aware chunks, session-scoped in-memory embeddings index, grounded OpenRouter answer endpoint и frontend page `PDF Q&A`.
+- Reason: Выполнить acceptance criteria для PDF upload -> retrieval -> answer generation с sources.
+- Files touched: `pyproject.toml`, `uv.lock`, `src/llm/pdf_processing.py`, `src/llm/pdf_qa_models.py`, `src/llm/pdf_qa.py`, `src/llm/pdf_qa_api.py`, `src/llm/api.py`, `frontend/src/PdfQaPage.jsx`, `frontend/src/pdf.css`, `frontend/src/api.js`, `frontend/src/App.jsx`, `frontend/src/navigation.css`, `frontend/src/styles.css`, `tests/test_pdf_qa.py`, `docs/pdf-qa-tool.md`, `README.md`, `agent-files/CONTEXT.md`, `issues/014-build-pdf-qa-tool.md`.
+- Commands run: `uv add pypdf python-multipart`.
+- Result: Added only requested upload/PDF dependencies; no LangChain/LlamaIndex/local ML/vector index dependencies.
+- Follow-up: Run full backend/frontend checks.
+
+### Log Entry
+
+- Time: 2026-06-16 23:17 MSK
+- Agent: Codex
+- Action type: test
+- Action: Запущены проверки после реализации PDF Q&A Tool.
+- Reason: Подтвердить backend API/domain behavior, frontend build, whitespace, dependency guard и file size limits.
+- Files touched: `agent-files/AGENT_TASK_LOG.md`, `agent-files/AGENT_HANDOFF.md`.
+- Commands run: `uv run pytest tests/test_pdf_qa.py`, `npm run build`, `uv run pytest`, `git diff --check`, `wc -l ...`, `rg "langchain|llama_index|sentence-transformers|torch|tensorflow|faiss-cpu|hnswlib|scikit-learn" pyproject.toml uv.lock`.
+- Result: PDF tests passed 9/9; full `uv run pytest` passed 92/92 with existing StarletteDeprecationWarning from FastAPI TestClient; `npm run build` passed; `git diff --check` passed; new code/test/frontend files are under 200 lines; forbidden heavy dependencies not found.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 23:17 MSK
+- Agent: Codex
+- Action type: command
+- Action: Запущен local dev stack для ручной проверки PDF Q&A UI/API.
+- Reason: Frontend был изменен; нужно дать пользователю рабочий URL.
+- Files touched: `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `make dev`, `curl -fsS http://127.0.0.1:5173/`, `curl -fsS http://127.0.0.1:8000/openapi.json`.
+- Result: Frontend отвечает на `http://127.0.0.1:5173/`; backend OpenAPI отвечает и содержит `/pdf/ingest` и `/pdf/ask`.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-16 22:58 MSK
+- Agent: Codex
+- Action type: inspect
+- Action: Прочитаны обязательные файлы проекта, `AGENTS.md`, skill `$to-issues`, инструкции `agent-files/subagents/machine-learning-engineer.md` и индекс `issues/README.md`.
+- Reason: Пользователь попросил добавить задачу для PDF Q&A Tool, без реализации.
+- Files touched: `README.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_HANDOFF.md`, `AGENTS.md`, `agent-files/subagents/machine-learning-engineer.md`, `issues/README.md`
+- Commands run: `date '+%Y-%m-%d %H:%M %Z'`, `git status --short --untracked-files=all`
+- Result: Текущий context показывает Hugging Face embeddings, OpenRouter LLM и FastAPI/React stack; задача может использовать existing provider contracts.
+- Follow-up: Создать локальный issue `014` и обновить индекс задач.
+
+### Log Entry
+
+- Time: 2026-06-16 22:58 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Добавлена задача `014` про PDF Q&A Tool и обновлен индекс задач.
+- Reason: Оформить требования пользователя как локальную задачу в `issues/`.
+- Files touched: `issues/014-build-pdf-qa-tool.md`, `issues/README.md`
+- Commands run: none
+- Result: Задача создана как `AFK`; зафиксированы PDF upload, `pypdf`, `python-multipart`, Hugging Face embeddings, OpenRouter answer generation, session-scoped in-memory index and tests with mocked providers.
+- Follow-up: Следующий агент может реализовывать issue `014` без дополнительного выбора model/API.
+
+### Log Entry
+
+- Time: 2026-06-16 22:58 MSK
+- Agent: Codex
+- Action type: test
+- Action: Проверена структура папки `issues/` и наличие новой задачи.
+- Reason: Убедиться, что новый markdown-файл записан и индекс обновлен.
+- Files touched: none
+- Commands run: `find issues -maxdepth 1 -type f -print | sort`, `git status --short --untracked-files=all`
+- Result: Новый файл `issues/014-build-pdf-qa-tool.md` существует; автотесты не запускались, потому что код не менялся.
+- Follow-up: Handoff остается `status: clear`.
+
+### Log Entry
+
 - Time: 2026-06-16 22:26 MSK
 - Agent: Codex
 - Action type: inspect

@@ -39,7 +39,9 @@ class SpeechRecognitionTests(unittest.TestCase):
         ) as urlopen:
             client = HuggingFaceSpeechClient(api_key="test-key")
 
-            result = client.transcribe(b"audio-bytes", mime_type="audio/webm;codecs=opus")
+            result = client.transcribe(
+                b"audio-bytes", mime_type="audio/webm;codecs=opus"
+            )
 
         self.assertEqual(result.text, "hello from audio")
         self.assertEqual(result.provider, "huggingface")

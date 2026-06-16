@@ -32,9 +32,14 @@ class FakeEmbeddingProvider:
         lower = text.lower()
         if any(word in lower for word in ("chair", "recliner", "reading", "lounge")):
             return [1.0, 0.0, 0.0, 0.0]
-        if any(word in lower for word in ("headphone", "earbud", "flight", "focus", "noise")):
+        if any(
+            word in lower
+            for word in ("headphone", "earbud", "flight", "focus", "noise")
+        ):
             return [0.0, 1.0, 0.0, 0.0]
-        if any(word in lower for word in ("hub", "automate", "routine", "light", "scene")):
+        if any(
+            word in lower for word in ("hub", "automate", "routine", "light", "scene")
+        ):
             return [0.0, 0.0, 1.0, 0.0]
         return [0.0, 0.0, 0.0, 1.0]
 
@@ -90,8 +95,12 @@ class ProductSemanticSearchTests(unittest.TestCase):
 
         self.assertEqual(len(products), 50)
         self.assertEqual(len({product.product_id for product in products}), 50)
-        self.assertTrue(all(product.name and product.description for product in products))
-        self.assertTrue(all(product.category and product.price > 0 for product in products))
+        self.assertTrue(
+            all(product.name and product.description for product in products)
+        )
+        self.assertTrue(
+            all(product.category and product.price > 0 for product in products)
+        )
         self.assertNotIn("HF_TOKEN", raw)
         self.assertNotIn("Authorization", raw)
         self.assertNotIn("hf_", raw)
@@ -100,7 +109,9 @@ class ProductSemanticSearchTests(unittest.TestCase):
         provider = FakeEmbeddingProvider()
         index = build_product_search_index(sample_products(), provider)
 
-        query_embedding = provider.embed_texts(["headphones for flights and focus work"])[0]
+        query_embedding = provider.embed_texts(
+            ["headphones for flights and focus work"]
+        )[0]
         results = index.search(query_embedding, top_k=2)
 
         self.assertEqual(index.model, "fake-product-embedding-model")
@@ -123,7 +134,9 @@ class ProductSemanticSearchTests(unittest.TestCase):
 
         self.assertEqual(response.model, "fake-product-embedding-model")
         self.assertEqual(response.top_k, 1)
-        self.assertEqual(response.normalized_query, "device to automate lights and home routines")
+        self.assertEqual(
+            response.normalized_query, "device to automate lights and home routines"
+        )
         self.assertEqual(response.results[0].rank, 1)
         self.assertEqual(response.results[0].product_id, "PROD-006")
         self.assertEqual(response.results[0].category, "smart home")

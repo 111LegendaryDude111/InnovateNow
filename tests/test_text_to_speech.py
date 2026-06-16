@@ -26,7 +26,9 @@ class FakeBinaryResponse:
 
 class TextToSpeechTests(unittest.TestCase):
     def test_synthesize_posts_text_to_language_model(self) -> None:
-        with patch("llm.transport.request.urlopen", return_value=FakeBinaryResponse()) as urlopen:
+        with patch(
+            "llm.transport.request.urlopen", return_value=FakeBinaryResponse()
+        ) as urlopen:
             client = HuggingFaceTTSClient(api_key="test-key")
 
             result = client.synthesize("Hello", language="en")

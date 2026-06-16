@@ -1,0 +1,129 @@
+.pdf-panel {
+  display: grid;
+  min-height: 600px;
+  gap: 18px;
+  border: 1px solid #cad4dd;
+  border-radius: 8px;
+  padding: 20px;
+  background: #ffffff;
+}
+
+.pdf-question {
+  display: grid;
+  gap: 14px;
+}
+
+.pdf-question label {
+  display: grid;
+  width: 92px;
+  gap: 6px;
+  color: #425466;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.pdf-question input {
+  height: 38px;
+}
+
+.pdf-answer {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.pdf-answer > p {
+  min-height: 120px;
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.pdf-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pdf-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 8px;
+  color: #273444;
+}
+
+.pdf-list span,
+.pdf-sources strong {
+  overflow-wrap: anywhere;
+}
+
+.pdf-list strong {
+  color: #64748b;
+  font-size: 0.82rem;
+}
+
+.pdf-documents {
+  display: grid;
+  gap: 8px;
+}
+
+.pdf-sources {
+  display: grid;
+  gap: 10px;
+}
+
+.pdf-sources h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 1rem;
+}
+
+.pdf-sources ol {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pdf-sources li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 12px;
+  border: 1px solid #d7e0e8;
+  border-radius: 8px;
+  padding: 12px;
+  background: #f8fafc;
+}
+
+.pdf-sources li p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #425466;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.pdf-sources li span {
+  color: #0f766e;
+  font-weight: 800;
+}
+
+.status-uploading,
+.status-asking {
+  background: #1d4ed8;
+}
+
+@media (max-width: 560px) {
+  .pdf-list li,
+  .pdf-sources li {
+    grid-template-columns: 1fr;
+  }
+}

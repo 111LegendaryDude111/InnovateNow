@@ -33,7 +33,9 @@ def add_embedding_subcommands(subparsers: argparse._SubParsersAction) -> None:
     build_parser.add_argument("--documents", type=Path, default=DEFAULT_DOCUMENTS_PATH)
     build_parser.add_argument("--output", type=Path, default=DEFAULT_ARTIFACT_PATH)
     build_parser.add_argument("--chunk-words", type=int, default=DEFAULT_CHUNK_WORDS)
-    build_parser.add_argument("--chunk-overlap", type=int, default=DEFAULT_CHUNK_OVERLAP)
+    build_parser.add_argument(
+        "--chunk-overlap", type=int, default=DEFAULT_CHUNK_OVERLAP
+    )
 
     search_parser = subparsers.add_parser(
         "embeddings-search",

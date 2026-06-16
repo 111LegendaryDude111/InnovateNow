@@ -13,7 +13,9 @@ def load_documents(path: Path) -> list[KnowledgeDocument]:
     if not isinstance(payload, list):
         raise ValueError("document collection must be a JSON array")
 
-    documents = [_document_from_payload(item, index) for index, item in enumerate(payload)]
+    documents = [
+        _document_from_payload(item, index) for index, item in enumerate(payload)
+    ]
     require_unique_document_ids(documents)
     return documents
 

@@ -34,7 +34,9 @@ class HuggingFaceTTSClient:
     def __post_init__(self) -> None:
         self.api_key = self.api_key.strip()
         self.base_url = self.base_url.rstrip("/")
-        self.model_by_language = self.model_by_language or dict(DEFAULT_HUGGINGFACE_TTS_MODELS)
+        self.model_by_language = self.model_by_language or dict(
+            DEFAULT_HUGGINGFACE_TTS_MODELS
+        )
 
         if not self.base_url:
             raise ValueError("Hugging Face TTS base URL must be a non-empty string")
@@ -54,7 +56,9 @@ class HuggingFaceTTSClient:
             api_key=api_key if api_key is not None else os.getenv("HF_TOKEN", ""),
             base_url=base_url
             or os.getenv("HUGGINGFACE_TTS_BASE_URL", DEFAULT_HUGGINGFACE_TTS_BASE_URL),
-            timeout=timeout if timeout is not None else huggingface_tts_timeout_from_env(),
+            timeout=timeout
+            if timeout is not None
+            else huggingface_tts_timeout_from_env(),
         )
 
     @property

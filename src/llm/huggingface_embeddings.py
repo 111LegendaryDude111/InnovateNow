@@ -11,7 +11,9 @@ from .errors import HuggingFaceEmbeddingsConnectionError, HuggingFaceEmbeddingsE
 DEFAULT_HUGGINGFACE_EMBEDDING_BASE_URL = (
     "https://router.huggingface.co/hf-inference/models"
 )
-DEFAULT_HUGGINGFACE_EMBEDDING_MODEL = "ibm-granite/granite-embedding-311m-multilingual-r2"
+DEFAULT_HUGGINGFACE_EMBEDDING_MODEL = (
+    "ibm-granite/granite-embedding-311m-multilingual-r2"
+)
 DEFAULT_HUGGINGFACE_EMBEDDING_TIMEOUT = 120.0
 
 
@@ -29,7 +31,9 @@ class HuggingFaceEmbeddingClient:
         if not self.model:
             raise ValueError("Hugging Face embedding model must be a non-empty string")
         if not self.base_url:
-            raise ValueError("Hugging Face embedding base URL must be a non-empty string")
+            raise ValueError(
+                "Hugging Face embedding base URL must be a non-empty string"
+            )
 
     @classmethod
     def from_env(
@@ -99,7 +103,9 @@ def parse_embedding_vectors(
     if expected_count == 1 and _is_numeric_vector(payload):
         return [_coerce_vector(payload)]
     if not isinstance(payload, list):
-        raise HuggingFaceEmbeddingsError("Hugging Face embeddings returned non-array JSON")
+        raise HuggingFaceEmbeddingsError(
+            "Hugging Face embeddings returned non-array JSON"
+        )
 
     vectors = [_coerce_vector(item) for item in payload]
     if len(vectors) != expected_count:
@@ -142,22 +148,33 @@ def _post_json_value(
         ) from exc
 
     if not body:
-        raise HuggingFaceEmbeddingsError("Hugging Face embeddings returned empty response")
+        raise HuggingFaceEmbeddingsError(
+            "Hugging Face embeddings returned empty response"
+        )
     try:
         return json.loads(body.decode("utf-8"))
     except json.JSONDecodeError as exc:
-        raise HuggingFaceEmbeddingsError("Hugging Face embeddings returned invalid JSON") from exc
+        raise HuggingFaceEmbeddingsError(
+            "Hugging Face embeddings returned invalid JSON"
+        ) from exc
 
 
 def _coerce_vector(value: object) -> list[float]:
     if not _is_numeric_vector(value):
-        raise HuggingFaceEmbeddingsError("Hugging Face embeddings returned invalid vector")
+        raise HuggingFaceEmbeddingsError(
+            "Hugging Face embeddings returned invalid vector"
+        )
     return [float(item) for item in value]
 
 
 def _is_numeric_vector(value: object) -> bool:
-    return isinstance(value, list) and bool(value) and all(
-        isinstance(item, int | float) and not isinstance(item, bool) for item in value
+    return (
+        isinstance(value, list)
+        and bool(value)
+        and all(
+            isinstance(item, int | float) and not isinstance(item, bool)
+            for item in value
+        )
     )
 
 

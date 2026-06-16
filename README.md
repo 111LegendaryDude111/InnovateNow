@@ -7,6 +7,7 @@
 - **Embeddings**: документы режутся на chunks, превращаются в векторы через Hugging Face и ищутся по semantic similarity.
 - **Qdrant semantic search**: добавлен проверяемый vertical slice для vector database readiness: 60 sample documents -> Hugging Face embeddings -> Qdrant collection -> ingest vectors with payload -> top-k search demo по password/headphones queries.
 - **Product semantic search API**: `POST /search/semantic` ищет товары natural language query через Hugging Face embeddings и in-memory `numpy` index без обязательного Qdrant/Docker.
+- **PDF Q&A Tool**: frontend загружает PDF, backend извлекает page-aware chunks через `pypdf`, строит session-scoped in-memory `numpy` index через Hugging Face embeddings и отвечает через OpenRouter с sources.
 - **Generate image**: frontend отправляет prompt и настройки, backend вызывает Hugging Face и возвращает изображение.
 
 ## Что сделано по Qdrant
@@ -26,3 +27,14 @@
 - Добавлен endpoint `POST /search/semantic` с validation для blank query и `top_k`.
 - Добавлены тесты без сети, Docker, Qdrant и реального `HF_TOKEN`: `tests/test_product_semantic_search.py`.
 - Документация с example queries и expected top results: `docs/product-semantic-search.md`.
+
+## Что сделано по PDF Q&A Tool
+
+- Добавлены dependencies `pypdf` и `python-multipart` для PDF parsing и multipart upload.
+- Добавлены endpoints `POST /pdf/ingest` и `POST /pdf/ask`.
+- Upload валидирует empty upload, file type, empty file, 8 MB limit, invalid PDF и PDF without extractable text.
+- PDF text режется на chunks с `filename`, `page` и `chunk_id`.
+- Session-scoped store держит chunks и embeddings только in-memory per process.
+- Frontend получил страницу `PDF Q&A` с upload state, processed documents, question input, answer, sources и retrieved chunks.
+- Добавлены tests с mocked PDF extraction, Hugging Face embeddings и OpenRouter: `tests/test_pdf_qa.py`.
+- Документация: `docs/pdf-qa-tool.md`.

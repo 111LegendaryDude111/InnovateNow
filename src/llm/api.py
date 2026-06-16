@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from dataclasses import asdict
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -20,6 +20,13 @@ from .image_options import (
 )
 from .openrouter import OpenRouterClient
 from .openrouter_streaming import stream_openrouter_prompt_chunks
+from .pdf_qa_api import (
+    PdfAskRequest,
+    PdfAskResponse,
+    PdfIngestResponse,
+    create_pdf_ask_response,
+    create_pdf_ingest_response,
+)
 from .product_search_api import (
     SemanticSearchRequest,
     SemanticSearchResponse,
@@ -104,6 +111,20 @@ async def respond_to_voice(request: Request) -> VoiceResponse:
 def search_semantic_products(request: SemanticSearchRequest) -> SemanticSearchResponse:
     """Принимает natural language query и возвращает semantic product matches."""
     return create_semantic_search_response(request)
+
+
+@app.post("/pdf/ingest", response_model=PdfIngestResponse)
+async def ingest_pdf_files(
+    files: list[UploadFile] | None = File(default=None),
+) -> PdfIngestResponse:
+    """Принимает PDF upload и возвращает session ID для Q&A."""
+    return await create_pdf_ingest_response(files)
+
+
+@app.post("/pdf/ask", response_model=PdfAskResponse)
+def ask_pdf_question(request: PdfAskRequest) -> PdfAskResponse:
+    """Отвечает на вопрос по ранее обработанной PDF session."""
+    return create_pdf_ask_response(request)
 
 
 def create_image_response(

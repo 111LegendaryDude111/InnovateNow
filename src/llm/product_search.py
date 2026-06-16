@@ -23,8 +23,7 @@ class EmbeddingProvider(Protocol):
     model: str
     has_api_key: bool
 
-    def embed_texts(self, texts: Sequence[str]) -> list[list[float]]:
-        ...
+    def embed_texts(self, texts: Sequence[str]) -> list[list[float]]: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -49,7 +48,9 @@ class ProductSearchIndex:
     embeddings: np.ndarray
     model: str
 
-    def search(self, query_embedding: list[float], *, top_k: int) -> list[ProductSearchResult]:
+    def search(
+        self, query_embedding: list[float], *, top_k: int
+    ) -> list[ProductSearchResult]:
         """Возвращает товары по cosine similarity к embedding запроса."""
         scores = cosine_scores(query_embedding, self.embeddings.tolist())
         order = np.argsort(-scores, kind="stable")[:top_k]
@@ -70,7 +71,9 @@ class ProductSearchService:
         dataset_path: Path = DEFAULT_PRODUCT_DATASET_PATH,
         products: list[Product] | None = None,
         provider: EmbeddingProvider | None = None,
-        provider_factory: Callable[[], EmbeddingProvider] = HuggingFaceEmbeddingClient.from_env,
+        provider_factory: Callable[
+            [], EmbeddingProvider
+        ] = HuggingFaceEmbeddingClient.from_env,
     ) -> None:
         self._dataset_path = dataset_path
         self._products = products
@@ -104,8 +107,14 @@ class ProductSearchService:
 
     def _product_index(self) -> ProductSearchIndex:
         if self._index is None:
-            products = self._products if self._products is not None else load_products(self._dataset_path)
-            self._index = build_product_search_index(products, self._embedding_provider())
+            products = (
+                self._products
+                if self._products is not None
+                else load_products(self._dataset_path)
+            )
+            self._index = build_product_search_index(
+                products, self._embedding_provider()
+            )
         return self._index
 
 

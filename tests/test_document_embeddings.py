@@ -128,7 +128,10 @@ class DocumentEmbeddingsTests(unittest.TestCase):
         self.assertGreater(matches[0].score, matches[1].score)
 
     def test_committed_sample_dataset_has_unique_business_documents(self) -> None:
-        path = Path(__file__).resolve().parents[1] / "data/internal_knowledge_documents.json"
+        path = (
+            Path(__file__).resolve().parents[1]
+            / "data/internal_knowledge_documents.json"
+        )
 
         documents = load_documents(path)
 

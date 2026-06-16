@@ -22,7 +22,9 @@ class FakeSpeechClient:
         self.text = text
         self.calls: list[tuple[bytes, str]] = []
 
-    def transcribe(self, audio_body: bytes, *, mime_type: str) -> SpeechTranscriptionResult:
+    def transcribe(
+        self, audio_body: bytes, *, mime_type: str
+    ) -> SpeechTranscriptionResult:
         self.calls.append((audio_body, mime_type))
         return SpeechTranscriptionResult(
             text=self.text,
@@ -131,7 +133,9 @@ class VoiceApiTests(unittest.TestCase):
 
     def test_provider_errors_return_bad_gateway(self) -> None:
         class FailingSpeechClient(FakeSpeechClient):
-            def transcribe(self, audio_body: bytes, *, mime_type: str) -> SpeechTranscriptionResult:
+            def transcribe(
+                self, audio_body: bytes, *, mime_type: str
+            ) -> SpeechTranscriptionResult:
                 raise HuggingFaceSpeechError("ASR failed")
 
         with self.assertRaises(HTTPException) as raised:

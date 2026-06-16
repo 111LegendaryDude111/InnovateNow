@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ImagePage from "./ImagePage.jsx";
+import PdfQaPage from "./PdfQaPage.jsx";
 import StreamPage from "./StreamPage.jsx";
 import VoicePage from "./VoicePage.jsx";
 
@@ -7,6 +8,7 @@ const PAGES = [
   { id: "stream", label: "LLM Stream", title: "Streaming Messages" },
   { id: "images", label: "Images", title: "CreativeCanvas AI" },
   { id: "voice", label: "Voice Assistant", title: "Voice Assistant" },
+  { id: "pdf", label: "PDF Q&A", title: "PDF Q&A" },
 ];
 
 function App() {
@@ -37,6 +39,7 @@ function App() {
       {activePage === "stream" ? <StreamPage /> : null}
       {activePage === "images" ? <ImagePage /> : null}
       {activePage === "voice" ? <VoicePage /> : null}
+      {activePage === "pdf" ? <PdfQaPage /> : null}
     </main>
   );
 }

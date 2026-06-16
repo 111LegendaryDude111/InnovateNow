@@ -32,14 +32,18 @@ def chunk_documents(
     if max_words < 1:
         raise ValueError("max_words must be positive")
     if overlap_words < 0 or overlap_words >= max_words:
-        raise ValueError("overlap_words must be non-negative and smaller than max_words")
+        raise ValueError(
+            "overlap_words must be non-negative and smaller than max_words"
+        )
 
     chunks: list[DocumentChunk] = []
     for document in documents:
         clean_text = preprocess_text(document.text)
         words = clean_text.split()
         if not words:
-            raise ValueError(f"document has no text after preprocessing: {document.document_id}")
+            raise ValueError(
+                f"document has no text after preprocessing: {document.document_id}"
+            )
         chunks.extend(_chunk_document(document, words, max_words, overlap_words))
     return chunks
 

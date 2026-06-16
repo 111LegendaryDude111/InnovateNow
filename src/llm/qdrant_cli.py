@@ -36,7 +36,9 @@ def add_qdrant_subcommands(subparsers: argparse._SubParsersAction) -> None:
     )
     _add_provider_options(ingest_parser)
     _add_qdrant_options(ingest_parser)
-    ingest_parser.add_argument("--documents", type=Path, default=DEFAULT_QDRANT_DOCUMENTS_PATH)
+    ingest_parser.add_argument(
+        "--documents", type=Path, default=DEFAULT_QDRANT_DOCUMENTS_PATH
+    )
     ingest_parser.add_argument("--recreate", action="store_true")
 
     search_parser = subparsers.add_parser(
@@ -65,7 +67,12 @@ def run_qdrant_command(args: argparse.Namespace) -> int:
             return _run_search(args, [args.query])
         if args.command == "qdrant-demo":
             return _run_search(args, list(DEFAULT_QDRANT_DEMO_QUERIES))
-    except (ValueError, OSError, HuggingFaceEmbeddingsError, QdrantReadinessError) as exc:
+    except (
+        ValueError,
+        OSError,
+        HuggingFaceEmbeddingsError,
+        QdrantReadinessError,
+    ) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1
     raise ValueError(f"Unknown Qdrant command: {args.command}")

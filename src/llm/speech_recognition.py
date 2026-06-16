@@ -8,7 +8,9 @@ from urllib import request
 from .errors import HuggingFaceSpeechConnectionError, HuggingFaceSpeechError
 from .transport import send_json_request
 
-DEFAULT_HUGGINGFACE_SPEECH_BASE_URL = "https://router.huggingface.co/hf-inference/models"
+DEFAULT_HUGGINGFACE_SPEECH_BASE_URL = (
+    "https://router.huggingface.co/hf-inference/models"
+)
 DEFAULT_HUGGINGFACE_SPEECH_MODEL = "openai/whisper-large-v3"
 DEFAULT_HUGGINGFACE_SPEECH_TIMEOUT = 120.0
 MAX_VOICE_AUDIO_BYTES = 8 * 1024 * 1024
@@ -70,7 +72,9 @@ class HuggingFaceSpeechClient:
     def model_url(self) -> str:
         return f"{self.base_url}/{self.model}"
 
-    def transcribe(self, audio_body: bytes, *, mime_type: str) -> SpeechTranscriptionResult:
+    def transcribe(
+        self, audio_body: bytes, *, mime_type: str
+    ) -> SpeechTranscriptionResult:
         """Отправляет audio bytes в Hugging Face ASR и возвращает текст."""
         clean_audio = require_voice_audio(audio_body)
         clean_mime_type = require_voice_mime_type(mime_type)
@@ -108,8 +112,12 @@ def require_voice_mime_type(mime_type: str) -> str:
     clean_mime_type = mime_type.split(";", 1)[0].strip().lower()
     if not clean_mime_type:
         raise ValueError("audio content type is required")
-    if clean_mime_type != "application/octet-stream" and not clean_mime_type.startswith("audio/"):
-        raise ValueError("audio content type must be audio/* or application/octet-stream")
+    if clean_mime_type != "application/octet-stream" and not clean_mime_type.startswith(
+        "audio/"
+    ):
+        raise ValueError(
+            "audio content type must be audio/* or application/octet-stream"
+        )
     return clean_mime_type
 
 
