@@ -2,6 +2,7 @@ const IMAGE_ENDPOINT = "http://127.0.0.1:8000/images/generate";
 const PDF_ASK_ENDPOINT = "http://127.0.0.1:8000/pdf/ask";
 const PDF_INGEST_ENDPOINT = "http://127.0.0.1:8000/pdf/ingest";
 const STREAM_ENDPOINT = "http://127.0.0.1:8000/llm/stream";
+const SUPPORT_ENDPOINT = "http://127.0.0.1:8000/support/haven/respond";
 const VOICE_ENDPOINT = "http://127.0.0.1:8000/voice/respond";
 
 export async function generateImage({ prompt, aspectRatio, stylePreset }) {
@@ -80,6 +81,20 @@ export async function askPdfQuestion({ sessionId, question, topK }) {
       question,
       top_k: topK,
     }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await readErrorMessage(response));
+  }
+
+  return response.json();
+}
+
+export async function askHavenSupport({ message, channel }) {
+  const response = await fetch(SUPPORT_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message, channel }),
   });
 
   if (!response.ok) {

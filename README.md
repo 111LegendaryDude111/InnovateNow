@@ -8,6 +8,7 @@
 - **Qdrant semantic search**: добавлен проверяемый vertical slice для vector database readiness: 60 sample documents -> Hugging Face embeddings -> Qdrant collection -> ingest vectors with payload -> top-k search demo по password/headphones queries.
 - **Product semantic search API**: `POST /search/semantic` ищет товары natural language query через Hugging Face embeddings и in-memory `numpy` index без обязательного Qdrant/Docker.
 - **Cinder hybrid search MVP**: `POST /search/cinder/hybrid` ищет synthetic home-goods catalog через keyword, vector, filters, merge/rank и explicit fallback metadata.
+- **Haven support bot**: `POST /support/haven/respond` отвечает на support-вопросы Haven через policy scope, structured KB, intent routing, refusals и escalation handoff.
 - **PDF Q&A Tool**: frontend загружает PDF, backend извлекает page-aware chunks через `pypdf`, строит session-scoped in-memory `numpy` index через Hugging Face embeddings и отвечает через OpenRouter с sources.
 - **Generate image**: frontend отправляет prompt и настройки, backend вызывает Hugging Face и возвращает изображение.
 
@@ -38,6 +39,15 @@
 - Добавлен endpoint `POST /search/cinder/hybrid` с keyword retrieval, optional vector retrieval, hard filters, merge/rank и explicit fallback metadata.
 - Добавлена документация Steps 2-6: `docs/cinder-hybrid-search.md`.
 - Добавлены tests без сети и реального `HF_TOKEN`: `tests/test_cinder_hybrid_search_inputs.py`, `tests/test_cinder_hybrid_search.py`, `tests/test_cinder_hybrid_search_quality.py`.
+
+## Что сделано по Haven support bot
+
+- Добавлен structured support contract `data/haven_support_knowledge.json`: scope, canonical terms, boundary rules, supported/unsupported/escalation intents, KB entries and flows.
+- Добавлен deterministic runtime без LLM/network calls: `src/llm/haven_support_*`.
+- Добавлен endpoint `POST /support/haven/respond` с actions `answer`, `escalate`, `refuse`, `clarify` и optional handoff payload.
+- Frontend получил страницу `Haven Support` для help center / in-app channel checks.
+- Добавлены tests: `tests/test_haven_support_bot.py`.
+- Документация: `docs/haven-support-bot.md`.
 
 ## Что сделано по PDF Q&A Tool
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import HavenSupportPage from "./HavenSupportPage.jsx";
 import ImagePage from "./ImagePage.jsx";
 import PdfQaPage from "./PdfQaPage.jsx";
 import StreamPage from "./StreamPage.jsx";
@@ -9,6 +10,7 @@ const PAGES = [
   { id: "images", label: "Images", title: "CreativeCanvas AI" },
   { id: "voice", label: "Voice Assistant", title: "Voice Assistant" },
   { id: "pdf", label: "PDF Q&A", title: "PDF Q&A" },
+  { id: "support", label: "Haven Support", title: "Haven Support Bot" },
 ];
 
 function App() {
@@ -40,6 +42,7 @@ function App() {
       {activePage === "images" ? <ImagePage /> : null}
       {activePage === "voice" ? <VoicePage /> : null}
       {activePage === "pdf" ? <PdfQaPage /> : null}
+      {activePage === "support" ? <HavenSupportPage /> : null}
     </main>
   );
 }

@@ -2,6 +2,7 @@
 @import "./navigation.css";
 @import "./pdf.css";
 @import "./stream.css";
+@import "./support.css";
 @import "./voice.css";
 
 :root {

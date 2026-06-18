@@ -599,3 +599,39 @@
 - Commands run: `cat` required context/skills/subagent files, `wc -l`, `uv run python -m py_compile ...`, `uv run pytest tests/test_cinder_hybrid_search.py tests/test_cinder_hybrid_search_quality.py`, `uv run pytest tests/test_cinder_hybrid_search_inputs.py tests/test_cinder_hybrid_search.py tests/test_cinder_hybrid_search_quality.py`, `git diff --check`, `uv run pytest`.
 - Result: Added `POST /search/cinder/hybrid`, CSV loader, keyword retrieval, optional vector retrieval, hard filters, merge/rank scoring with behavior signals, explicit fallback metadata, endpoint docs and quality smoke tests. Cinder targeted tests passed 13/13; full pytest passed 105/105 with one existing Starlette deprecation warning; `git diff --check` passed; new/edited code files remain at or below 200 lines.
 - Follow-up: Production hardening still needs real Cinder schema, tuned ranking weights, monitoring, persistent vector index and live quality metrics before production release.
+
+### Log Entry
+
+- Time: 2026-06-18 22:40 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Переписана документация Cinder hybrid search на русском языке с описанием компонентов и runtime flow.
+- Reason: Пользователь попросил документацию по гибридному поиску: из каких компонентов состоит и как работает.
+- Files touched: `docs/cinder-hybrid-search.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `cat` required context files and Cinder implementation files, `git diff --check docs/cinder-hybrid-search.md`, `wc -l docs/cinder-hybrid-search.md`.
+- Result: Документ теперь описывает API adapter, catalog loader, text builder, service orchestration, keyword retrieval, vector retrieval, filters, merge, ranking, fallback behavior, request/response examples, validation tests and current limits.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-18 22:51 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Реализован `temp.txt`: Haven support bot scope/KB/flows/runtime endpoint, escalation handoff, frontend page and tests.
+- Reason: Пользователь попросил реализовать AI Customer Support Bot для Haven с support boundaries, KB, conversation flows, bot logic and coverage tests.
+- Files touched: `data/haven_support_knowledge.json`, `src/llm/haven_support_bot.py`, `src/llm/haven_support_api.py`, `src/llm/haven_support_config.py`, `src/llm/haven_support_models.py`, `src/llm/api.py`, `frontend/src/HavenSupportPage.jsx`, `frontend/src/support.css`, `frontend/src/api.js`, `frontend/src/App.jsx`, `frontend/src/styles.css`, `tests/test_haven_support_bot.py`, `docs/haven-support-bot.md`, `README.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_HANDOFF.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `sed -n ...` required context/skills/domain rules and implementation patterns, `rg --files`, `wc -l ...`, `uv run pytest tests/test_haven_support_bot.py`, `uv run pytest`, `npm run build`, `git diff --check`, `git status --short --untracked-files=all`, `make dev`, `curl -fsS http://127.0.0.1:5173/`, `curl -fsS -X POST http://127.0.0.1:8000/support/haven/respond ...`.
+- Result: Added deterministic policy router without LLM/network calls; structured Haven support contract includes supported/unsupported/escalation rules, boundary rules, canonical terms, KB and flows. Targeted tests passed 9/9. First full `uv run pytest` failed because `include_router` added an object without `.path` to `app.routes`; endpoint registration was changed to direct app registration, then full pytest passed 114/114 with one existing Starlette deprecation warning. Frontend build passed. `git diff --check` passed. New/edited code files are under 200 lines. Dev stack is running at `http://127.0.0.1:5173/`; support endpoint returned `intent=device_setup`, `action=answer` for a Haven Cam setup request.
+- Follow-up: Production bot would still need real Haven policies, support system integration, monitoring, eval set, and audited copy before live use.
+
+### Log Entry
+
+- Time: 2026-06-18 23:00 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Подробно переписана документация Haven support bot на русском языке.
+- Reason: Пользователь попросил подробно описать, что сделано, какие технологии использованы и как работает задача, без лишних англицизмов.
+- Files touched: `docs/haven-support-bot.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `sed -n ...` required context and Haven implementation files, `rg -n ... docs/haven-support-bot.md`, `git diff --check docs/haven-support-bot.md`, `wc -l docs/haven-support-bot.md`, `date '+%Y-%m-%d %H:%M %Z'`.
+- Result: Документ теперь подробно описывает назначение, состав реализации, технологии, границы поддержки, файл знаний, серверную часть, выбор ответа, виды ответов, форму запроса/ответа, пользовательскую часть, проверки, причины отказа от внешней языковой модели, расширение и ограничения.
+- Follow-up: none

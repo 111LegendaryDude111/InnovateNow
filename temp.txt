@@ -1,0 +1,128 @@
+Build an AI Customer Support Bot    
+
+
+Define Support Scope
+Build the bot around Haven’s real support needs by identifying the exact customer questions it must handle, the cases it must refuse, and the situations that require escalation. Focus on Haven’s home security products, monitoring plans, billing, account access, device setup, and troubleshooting workflows so the bot is tightly aligned to the company’s support operations and customer journey.
+
+Goal
+Lock down the bot’s support boundaries and core customer intents for Haven.
+
+Tasks to complete
+Deliverables
+Intent and escalation scope configuration
+Supported vs unsupported request list
+Haven support boundary rules
+
+
+explore
+Example implementation
+Supported
+Device setup
+Billing questions
+Basic troubleshooting
+Escalate
+Account access issues
+Safety-sensitive concerns
+Unresolved device failures
+
+
+lightbulb
+Tips
+Treat scope as a policy artifact, not just a feature list. The strongest support bots are explicit about what they will answer, what they will not answer, and when they must hand off—especially for account, billing, and safety-related requests.
+
+Prepare Knowledge Base
+Create the structured knowledge foundation for Haven’s bot using product details, troubleshooting steps, billing policies, plan information, and common account workflows. Organize the content so the bot can retrieve concise, customer-friendly answers that match Haven’s product language and support policies.
+
+Prepare Knowledge Base
+fullscreen
+Goal
+Assemble the support content the bot will use to answer Haven customer questions accurately.
+
+Tasks to complete
+Deliverables
+Structured support knowledge base content
+FAQ and troubleshooting content set
+Canonical product terminology list
+explore
+Example implementation
+Cameras
+Setup steps
+Connectivity issues
+Recording status
+Billing
+Payment methods
+Invoice questions
+Plan changes
+lightbulb
+Tips
+Keep knowledge entries atomic and consistent. Short, well-labeled content chunks are easier to retrieve, easier to maintain, and less likely to produce mixed or outdated answers.
+
+
+Build Conversation Flows
+Design and implement the conversation logic that guides Haven customers from greeting to resolution or escalation. The flows should handle common support journeys such as login help, device pairing, subscription questions, and issue triage, while keeping the interaction short, clear, and consistent with Haven’s support tone.
+
+Build Conversation Flows
+fullscreen
+Goal
+Create the bot’s customer-facing dialogue paths for Haven support scenarios.
+
+Tasks to complete
+Deliverables
+Conversation flow configuration
+Fallback and escalation flow logic
+Intent routing rules
+explore
+Example implementation
+Flow: Login Help
+Confirm the issue
+Ask for the affected account context
+Offer the next support step
+Escalate if access cannot be verified
+lightbulb
+Tips
+
+
+
+Implement Bot Logic
+Implement the runtime behavior that allows Haven’s bot to respond in the web help center and in-app support surfaces. Connect the bot to the approved support content, ensure it can classify requests correctly, and configure the handoff path so customers can move from automated help to human support without losing context.
+
+Goal
+Wire the bot into Haven’s support channels and operational systems.
+
+Tasks to complete
+Deliverables
+Bot integration configuration
+Escalation handoff payload structure
+Runtime response handling rules
+explore
+Example implementation
+Handoff Summary
+Intent: Billing question
+Status: Unresolved
+Context: Customer asked about a recent charge
+Next step: Human review
+lightbulb
+Tips
+
+
+
+    Test Support Coverage
+Run structured testing against Haven’s customer support use cases to confirm the bot answers correctly, escalates appropriately, and avoids unsupported actions. Test both successful resolution paths and failure cases so the bot behaves predictably for Haven customers across billing, setup, troubleshooting, and account-related requests.
+
+Goal
+Validate that the bot works reliably across Haven’s most important support scenarios.
+
+Tasks to complete
+Deliverables
+Support scenario test suite
+Escalation validation results
+Bot behavior verification checklist
+explore
+Example implementation
+Test Result
+Intent: Device setup
+Expected: Guided troubleshooting
+Actual: Guided troubleshooting
+Status: Pass
+lightbulb
+Tips

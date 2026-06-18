@@ -1,0 +1,168 @@
+{
+  "company": "Haven",
+  "version": "2026-06-18",
+  "canonical_terms": [
+    {
+      "term": "Haven Cam",
+      "meaning": "Indoor or outdoor security camera with live view, recording, and motion alerts."
+    },
+    {
+      "term": "Haven Hub",
+      "meaning": "Home base station that connects sensors, cameras, and monitoring services."
+    },
+    {
+      "term": "Haven Secure",
+      "meaning": "Paid monitoring plan with cloud recording, cellular backup, and professional monitoring options."
+    },
+    {
+      "term": "Haven Sense",
+      "meaning": "Door, window, motion, smoke, and water sensors paired through the Haven app."
+    }
+  ],
+  "boundary_rules": [
+    "Answer only Haven home security product, monitoring plan, billing policy, setup, and basic troubleshooting questions.",
+    "Do not verify identity, change account data, change billing data, cancel service, issue refunds, or promise emergency dispatch.",
+    "Escalate account access, safety-sensitive, billing dispute, refund, cancellation, and unresolved hardware failure requests.",
+    "Refuse unrelated product advice, legal advice, insurance advice, medical advice, competitor support, and non-Haven device support.",
+    "For active danger, tell the customer to contact local emergency services and hand off to human support."
+  ],
+  "supported_requests": [
+    {
+      "intent": "device_setup",
+      "label": "Device setup and pairing",
+      "route": "answer",
+      "keywords": ["setup", "install", "pair", "add camera", "add sensor", "haven cam", "haven hub", "mount", "qr code"],
+      "entry_ids": ["device_setup"]
+    },
+    {
+      "intent": "billing_general",
+      "label": "General billing questions",
+      "route": "answer",
+      "keywords": ["billing", "invoice", "payment method", "receipt", "bill date", "charge date", "tax", "card"],
+      "entry_ids": ["billing_general"]
+    },
+    {
+      "intent": "monitoring_plans",
+      "label": "Monitoring plan information",
+      "route": "answer",
+      "keywords": ["monitoring", "plan", "subscription", "haven secure", "cloud recording", "cellular backup"],
+      "entry_ids": ["monitoring_plans"]
+    },
+    {
+      "intent": "basic_troubleshooting",
+      "label": "Basic device troubleshooting",
+      "route": "answer",
+      "keywords": ["offline", "wifi", "wi fi", "battery", "sensor not responding", "camera not working", "motion alerts", "recording"],
+      "entry_ids": ["basic_troubleshooting"]
+    }
+  ],
+  "escalation_requests": [
+    {
+      "intent": "account_access",
+      "label": "Account access and identity verification",
+      "route": "escalate",
+      "keywords": ["locked out", "cannot log in", "can't log in", "log in", "password reset", "2fa", "two factor", "email change", "identity"],
+      "reason": "Requires identity verification or account change.",
+      "next_step": "Human support verifies identity before changing account access."
+    },
+    {
+      "intent": "safety_sensitive",
+      "label": "Active safety concern",
+      "route": "escalate",
+      "keywords": ["break in", "intruder", "fire", "smoke alarm", "emergency", "police", "dispatch", "panic", "medical"],
+      "reason": "Safety-sensitive request needs emergency guidance and human review.",
+      "next_step": "Customer should contact local emergency services first if there is immediate danger."
+    },
+    {
+      "intent": "billing_sensitive",
+      "label": "Refunds, disputes, and cancellation",
+      "route": "escalate",
+      "keywords": ["refund", "dispute", "cancel", "cancellation", "recent charge", "wrong charge", "chargeback", "downgrade my plan"],
+      "reason": "Account-specific billing action requires human review.",
+      "next_step": "Billing specialist reviews account history and confirms the requested action."
+    },
+    {
+      "intent": "unresolved_device_failure",
+      "label": "Unresolved hardware failure",
+      "route": "escalate",
+      "keywords": ["still offline", "still broken", "replacement", "warranty", "defective", "after reset", "failed after troubleshooting"],
+      "reason": "Device may need replacement or deeper diagnostics.",
+      "next_step": "Technical support collects diagnostics and checks replacement eligibility."
+    }
+  ],
+  "unsupported_requests": [
+    {
+      "intent": "non_haven_product",
+      "label": "Non-Haven device support",
+      "route": "refuse",
+      "keywords": ["ring", "nest", "arlo", "eufy", "simplisafe", "adt", "wyze"],
+      "answer": "I can only help with Haven products and Haven support policies."
+    },
+    {
+      "intent": "legal_or_insurance",
+      "label": "Legal, medical, or insurance advice",
+      "route": "refuse",
+      "keywords": ["legal", "lawsuit", "insurance claim", "medical advice", "liability", "court"],
+      "answer": "I cannot give legal, medical, or insurance advice. I can help with Haven support topics or route you to support."
+    },
+    {
+      "intent": "unrelated_request",
+      "label": "Unrelated request",
+      "route": "refuse",
+      "keywords": ["weather", "recipe", "homework", "stock price", "movie"],
+      "answer": "I can only help with Haven home security support topics."
+    }
+  ],
+  "knowledge": [
+    {
+      "id": "device_setup",
+      "intent": "device_setup",
+      "title": "Set up Haven devices",
+      "answer": "Open the Haven app, choose Add device, scan the QR code, keep the device near the Haven Hub, then follow the pairing prompts. Mount cameras after the app confirms live view and recording status.",
+      "steps": ["Open Haven app", "Choose Add device", "Scan QR code", "Pair near Haven Hub", "Confirm live view or sensor status"],
+      "escalate_when": ["QR code will not scan", "Device never appears in pairing mode", "Customer cannot access account"]
+    },
+    {
+      "id": "billing_general",
+      "intent": "billing_general",
+      "title": "Billing and invoices",
+      "answer": "Haven bills monitoring plans monthly or annually based on the selected plan. Customers can view invoices, billing date, saved payment method, and tax details in Account > Billing.",
+      "steps": ["Open Account", "Select Billing", "Review invoices and payment method", "Escalate refunds, disputes, or cancellation requests"],
+      "escalate_when": ["Customer asks for refund", "Customer disputes a charge", "Customer asks to cancel or downgrade"]
+    },
+    {
+      "id": "monitoring_plans",
+      "intent": "monitoring_plans",
+      "title": "Monitoring plans",
+      "answer": "Haven Basic covers app alerts and device status. Haven Secure adds cloud recording, cellular backup, and optional professional monitoring. Plan availability can vary by device and service address.",
+      "steps": ["Confirm customer needs alerts, recording, backup, or professional monitoring", "Explain matching plan", "Escalate account-specific plan changes"],
+      "escalate_when": ["Customer asks to change plan", "Customer asks about address eligibility", "Customer asks about a specific charge"]
+    },
+    {
+      "id": "basic_troubleshooting",
+      "intent": "basic_troubleshooting",
+      "title": "Basic troubleshooting",
+      "answer": "For offline or unreliable devices, check power, confirm Wi-Fi or Hub connectivity, restart the device, update the Haven app, and test the device within range of the Hub before remounting.",
+      "steps": ["Check power or battery", "Confirm Wi-Fi or Hub connection", "Restart device", "Update Haven app", "Test near Hub"],
+      "escalate_when": ["Device stays offline after reset", "Hardware looks damaged", "Safety alarm is active"]
+    }
+  ],
+  "flows": [
+    {
+      "intent": "device_setup",
+      "steps": ["Identify device type", "Give pairing steps", "Check app confirmation", "Escalate if pairing fails"]
+    },
+    {
+      "intent": "billing_general",
+      "steps": ["Answer general policy", "Point to Account > Billing", "Escalate account-specific action"]
+    },
+    {
+      "intent": "monitoring_plans",
+      "steps": ["Explain plan difference", "Name plan limits", "Escalate plan changes"]
+    },
+    {
+      "intent": "basic_troubleshooting",
+      "steps": ["Triage power and connectivity", "Suggest restart and app update", "Escalate unresolved failure"]
+    }
+  ]
+}

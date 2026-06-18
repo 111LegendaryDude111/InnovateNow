@@ -12,6 +12,7 @@ from pydantic import BaseModel
 
 from .env import load_env_file
 from .errors import HuggingFaceImageError
+from .haven_support_api import HavenSupportResponse, respond_to_haven_support
 from .cinder_hybrid_search_api import (
     CinderHybridSearchRequest,
     CinderHybridSearchResponse,
@@ -44,10 +45,7 @@ from .streaming import (
 from .voice_api import VoiceResponse, create_voice_response
 
 API_ENV_FILE = Path(__file__).resolve().parents[2] / ".env"
-LOCAL_FRONTEND_ORIGINS = [
-    "http://127.0.0.1:5173",
-    "http://localhost:5173",
-]
+LOCAL_FRONTEND_ORIGINS = ["http://127.0.0.1:5173", "http://localhost:5173"]
 
 
 @asynccontextmanager
@@ -64,6 +62,7 @@ app.add_middleware(
     allow_methods=["POST", "OPTIONS"],
     allow_headers=["content-type"],
 )
+app.post("/support/haven/respond", response_model=HavenSupportResponse)(respond_to_haven_support)
 
 
 class StreamRequest(BaseModel):
