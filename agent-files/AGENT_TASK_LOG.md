@@ -587,3 +587,15 @@
 - Commands run: `cat` required context/skills/subagent files, `rg`/`wc` inspection commands, `uv run pytest tests/test_cinder_hybrid_search_inputs.py`, `uv run pytest`, `git diff --check`.
 - Result: Added audit doc with current product flow review, inventory, hybrid signal mapping, field inclusion matrix, limitations and example input split; added 45-product CSV and 20-query CSV; targeted validation passed 5/5; full pytest passed 97/97 with one existing Starlette deprecation warning; `git diff --check` passed.
 - Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-18 22:35 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Расширен Cinder hybrid search от Step 0 input audit до end-to-end MVP после review feedback.
+- Reason: Пользователь указал, что Step 2 retrieval, Step 3 merge/rank, Step 4 fallback, Step 5 quality validation и Step 6 release hardening отсутствуют.
+- Files touched: `src/llm/cinder_catalog.py`, `src/llm/cinder_search_models.py`, `src/llm/cinder_search_text.py`, `src/llm/cinder_filtering.py`, `src/llm/cinder_ranking.py`, `src/llm/cinder_hybrid_search.py`, `src/llm/cinder_hybrid_search_api.py`, `src/llm/api.py`, `tests/test_cinder_hybrid_search.py`, `tests/test_cinder_hybrid_search_quality.py`, `docs/cinder-hybrid-search.md`, `docs/cinder-hybrid-search-inputs-audit.md`, `README.md`, `agent-files/CONTEXT.md`, `issues/015-audit-cinder-hybrid-search-inputs.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `cat` required context/skills/subagent files, `wc -l`, `uv run python -m py_compile ...`, `uv run pytest tests/test_cinder_hybrid_search.py tests/test_cinder_hybrid_search_quality.py`, `uv run pytest tests/test_cinder_hybrid_search_inputs.py tests/test_cinder_hybrid_search.py tests/test_cinder_hybrid_search_quality.py`, `git diff --check`, `uv run pytest`.
+- Result: Added `POST /search/cinder/hybrid`, CSV loader, keyword retrieval, optional vector retrieval, hard filters, merge/rank scoring with behavior signals, explicit fallback metadata, endpoint docs and quality smoke tests. Cinder targeted tests passed 13/13; full pytest passed 105/105 with one existing Starlette deprecation warning; `git diff --check` passed; new/edited code files remain at or below 200 lines.
+- Follow-up: Production hardening still needs real Cinder schema, tuned ranking weights, monitoring, persistent vector index and live quality metrics before production release.

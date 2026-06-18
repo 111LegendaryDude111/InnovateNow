@@ -12,6 +12,11 @@ from pydantic import BaseModel
 
 from .env import load_env_file
 from .errors import HuggingFaceImageError
+from .cinder_hybrid_search_api import (
+    CinderHybridSearchRequest,
+    CinderHybridSearchResponse,
+    create_cinder_hybrid_search_response,
+)
 from .image_generation import HuggingFaceImageClient
 from .image_options import (
     require_image_aspect_ratio,
@@ -111,6 +116,14 @@ async def respond_to_voice(request: Request) -> VoiceResponse:
 def search_semantic_products(request: SemanticSearchRequest) -> SemanticSearchResponse:
     """Принимает natural language query и возвращает semantic product matches."""
     return create_semantic_search_response(request)
+
+
+@app.post("/search/cinder/hybrid", response_model=CinderHybridSearchResponse)
+def search_cinder_hybrid(
+    request: CinderHybridSearchRequest,
+) -> CinderHybridSearchResponse:
+    """Ищет Cinder home-goods catalog через keyword, vector, filters и ranking."""
+    return create_cinder_hybrid_search_response(request)
 
 
 @app.post("/pdf/ingest", response_model=PdfIngestResponse)

@@ -1,7 +1,8 @@
 # Cinder Hybrid Search Inputs Audit
 
-Step 0 фиксирует input contract для будущего Cinder hybrid search по
-home-goods catalog. Production hybrid endpoint в этом шаге не добавляется.
+Step 0 фиксирует input contract для Cinder hybrid search по home-goods catalog.
+Follow-up implementation for retrieval, merge/rank, fallback, quality checks
+and release hardening is documented in `docs/cinder-hybrid-search.md`.
 
 ## Current Product Search Flow
 

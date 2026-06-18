@@ -35,7 +35,9 @@ The product dataset must include at least 40 home-goods records with exact-match
 
 The query set must include exact SKU queries, exact product-name queries, broad category queries, attribute-based queries and vague intent/discovery queries. Add structured filters where relevant.
 
-Do not build the production hybrid search endpoint in this issue. This issue defines and validates the inputs and produces artifacts needed by later hybrid retrieval implementation.
+Initial scope did not require a production hybrid search endpoint. After review
+feedback, this issue was expanded with an MVP endpoint that implements retrieval,
+merge/rank, fallback, search quality smoke tests and release-hardening docs.
 
 ## Search input inventory requirements
 
@@ -89,6 +91,15 @@ Add an inclusion/exclusion table that states whether each field is used for keyw
 - [x] Tests or validation script check CSV headers, minimum row counts, required edge cases and numeric field parseability.
 - [x] Documentation explains limitations and which production signals remain unknown or unavailable in the current project.
 - [x] `uv run pytest` passes if validation tests are added; otherwise a documented validation command passes.
+
+## Scope expansion after review
+
+- [x] Step 2 retrieval layer loads Cinder CSV and supports keyword retrieval, vector retrieval and structured filters.
+- [x] Step 3 merge/rank combines keyword and vector candidates and preserves behavior signals after retrieval.
+- [x] Step 4 fallback behavior is implemented and exposed through response metadata.
+- [x] Step 5 search quality validation includes representative recall@3 smoke tests beyond CSV query inventory.
+- [x] Step 6 release hardening is documented with validation, no-secret, no-network-test and known production gap notes.
+- [x] `POST /search/cinder/hybrid` is registered in the existing FastAPI app.
 
 ## Suggested implementation notes
 
