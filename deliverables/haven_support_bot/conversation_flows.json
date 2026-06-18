@@ -1,0 +1,85 @@
+{
+  "company": "Haven",
+  "version": "2026-06-18",
+  "purpose": "Describe intent routing, clarification prompts, fallback behavior, and escalation handoff payload structure.",
+  "routing_order": [
+    "escalation_triggers",
+    "unsupported_requests",
+    "supported_intents",
+    "clarification_fallback"
+  ],
+  "intent_routing_rules": [
+    {
+      "intent": "device_setup",
+      "action": "answer",
+      "steps": ["Identify device type", "Give pairing steps", "Check app confirmation", "Escalate if pairing fails"],
+      "source_entry_ids": ["device_setup"]
+    },
+    {
+      "intent": "billing_general",
+      "action": "answer",
+      "steps": ["Answer general policy", "Point to Account > Billing", "Escalate account-specific action"],
+      "source_entry_ids": ["billing_general"]
+    },
+    {
+      "intent": "monitoring_plans",
+      "action": "answer",
+      "steps": ["Explain plan difference", "Name plan limits", "Escalate plan changes"],
+      "source_entry_ids": ["monitoring_plans"]
+    },
+    {
+      "intent": "basic_troubleshooting",
+      "action": "answer",
+      "steps": ["Triage power and connectivity", "Suggest restart and app update", "Escalate unresolved failure"],
+      "source_entry_ids": ["basic_troubleshooting"]
+    },
+    {
+      "intent": "account_access",
+      "action": "escalate",
+      "steps": ["Confirm account access issue", "Do not verify identity in bot", "Create handoff for human support"]
+    },
+    {
+      "intent": "safety_sensitive",
+      "action": "escalate",
+      "steps": ["Tell customer to contact local emergency services if danger is immediate", "Create handoff for human support"]
+    },
+    {
+      "intent": "billing_sensitive",
+      "action": "escalate",
+      "steps": ["Do not issue refund or cancellation", "Create handoff for billing specialist"]
+    },
+    {
+      "intent": "unresolved_device_failure",
+      "action": "escalate",
+      "steps": ["Summarize failed troubleshooting", "Create handoff for technical support"]
+    }
+  ],
+  "clarification_prompt": {
+    "intent": "unknown",
+    "action": "clarify",
+    "message": "I can help with Haven device setup, monitoring plans, billing policy, account workflows, and basic troubleshooting. Please rephrase the request within those support areas.",
+    "next_steps": ["Rephrase as a Haven support question or contact Haven support."]
+  },
+  "fallback_behavior": {
+    "unknown_request": "Return action=clarify and ask customer to rephrase within Haven support areas.",
+    "unsupported_request": "Return action=refuse with a short boundary-safe explanation.",
+    "escalation_request": "Return action=escalate and include handoff payload.",
+    "empty_message": "Return HTTP 400 with message must be a non-empty string.",
+    "invalid_channel": "Return HTTP 400 with channel must be help_center or in_app."
+  },
+  "supported_channels": ["help_center", "in_app"],
+  "handoff_payload_structure": {
+    "intent": "string",
+    "status": "needs_human",
+    "context": "original customer message",
+    "reason": "why human review is required",
+    "next_step": "recommended next action for support team"
+  },
+  "handoff_example": {
+    "intent": "billing_sensitive",
+    "status": "needs_human",
+    "context": "Customer asked about a recent charge.",
+    "reason": "Account-specific billing action requires human review.",
+    "next_step": "Billing specialist reviews account history and confirms the requested action."
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "company": "Haven",
+  "version": "2026-06-18",
+  "purpose": "Define support boundaries, supported intents, unsupported requests, escalation triggers, and safety rules for Haven customer support bot.",
+  "boundary_rules": [
+    "Answer only Haven home security product, monitoring plan, billing policy, setup, and basic troubleshooting questions.",
+    "Do not verify identity, change account data, change billing data, cancel service, issue refunds, or promise emergency dispatch.",
+    "Escalate account access, safety-sensitive, billing dispute, refund, cancellation, and unresolved hardware failure requests.",
+    "Refuse unrelated product advice, legal advice, insurance advice, medical advice, competitor support, and non-Haven device support.",
+    "For active danger, tell the customer to contact local emergency services and hand off to human support."
+  ],
+  "supported_intents": [
+    {
+      "intent": "device_setup",
+      "label": "Device setup and pairing",
+      "route": "answer",
+      "description": "Customer needs help installing, pairing, mounting, or adding Haven devices.",
+      "keywords": ["setup", "install", "pair", "add camera", "add sensor", "haven cam", "haven hub", "mount", "qr code"],
+      "knowledge_entry_ids": ["device_setup"]
+    },
+    {
+      "intent": "billing_general",
+      "label": "General billing questions",
+      "route": "answer",
+      "description": "Customer asks general billing, invoice, tax, receipt, or payment method questions that do not require account action.",
+      "keywords": ["billing", "invoice", "payment method", "receipt", "bill date", "charge date", "tax", "card"],
+      "knowledge_entry_ids": ["billing_general"]
+    },
+    {
+      "intent": "monitoring_plans",
+      "label": "Monitoring plan information",
+      "route": "answer",
+      "description": "Customer asks what Haven plans include or how monitoring features differ.",
+      "keywords": ["monitoring", "plan", "subscription", "haven secure", "cloud recording", "cellular backup"],
+      "knowledge_entry_ids": ["monitoring_plans"]
+    },
+    {
+      "intent": "basic_troubleshooting",
+      "label": "Basic device troubleshooting",
+      "route": "answer",
+      "description": "Customer needs first-line help with offline devices, battery, connectivity, recordings, or alerts.",
+      "keywords": ["offline", "wifi", "wi fi", "battery", "sensor not responding", "camera not working", "motion alerts", "recording"],
+      "knowledge_entry_ids": ["basic_troubleshooting"]
+    }
+  ],
+  "unsupported_requests": [
+    {
+      "intent": "non_haven_product",
+      "label": "Non-Haven device support",
+      "route": "refuse",
+      "keywords": ["ring", "nest", "arlo", "eufy", "simplisafe", "adt", "wyze"],
+      "response": "I can only help with Haven products and Haven support policies."
+    },
+    {
+      "intent": "legal_or_insurance",
+      "label": "Legal, medical, or insurance advice",
+      "route": "refuse",
+      "keywords": ["legal", "lawsuit", "insurance claim", "medical advice", "liability", "court"],
+      "response": "I cannot give legal, medical, or insurance advice. I can help with Haven support topics or route you to support."
+    },
+    {
+      "intent": "unrelated_request",
+      "label": "Unrelated request",
+      "route": "refuse",
+      "keywords": ["weather", "recipe", "homework", "stock price", "movie"],
+      "response": "I can only help with Haven home security support topics."
+    }
+  ],
+  "escalation_triggers": [
+    {
+      "intent": "account_access",
+      "label": "Account access and identity verification",
+      "route": "escalate",
+      "keywords": ["locked out", "cannot log in", "can't log in", "log in", "password reset", "2fa", "two factor", "email change", "identity"],
+      "reason": "Requires identity verification or account change.",
+      "next_step": "Human support verifies identity before changing account access."
+    },
+    {
+      "intent": "safety_sensitive",
+      "label": "Active safety concern",
+      "route": "escalate",
+      "keywords": ["break in", "intruder", "fire", "smoke alarm", "emergency", "police", "dispatch", "panic", "medical"],
+      "reason": "Safety-sensitive request needs emergency guidance and human review.",
+      "next_step": "Customer should contact local emergency services first if there is immediate danger."
+    },
+    {
+      "intent": "billing_sensitive",
+      "label": "Refunds, disputes, and cancellation",
+      "route": "escalate",
+      "keywords": ["refund", "dispute", "cancel", "cancellation", "recent charge", "wrong charge", "chargeback", "downgrade my plan"],
+      "reason": "Account-specific billing action requires human review.",
+      "next_step": "Billing specialist reviews account history and confirms the requested action."
+    },
+    {
+      "intent": "unresolved_device_failure",
+      "label": "Unresolved hardware failure",
+      "route": "escalate",
+      "keywords": ["still offline", "still broken", "replacement", "warranty", "defective", "after reset", "failed after troubleshooting"],
+      "reason": "Device may need replacement or deeper diagnostics.",
+      "next_step": "Technical support collects diagnostics and checks replacement eligibility."
+    }
+  ]
+}

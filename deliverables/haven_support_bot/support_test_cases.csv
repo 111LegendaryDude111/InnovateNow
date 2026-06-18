@@ -1,0 +1,13 @@
+case_id,customer_message,channel,expected_intent,expected_action,expected_escalation,expected_refusal,expected_source_id,expected_handoff_status,validation_status,notes
+HAVEN-TC-001,How do I pair and install a new Haven Cam?,help_center,device_setup,answer,false,false,device_setup,,pass,Supported setup request should return setup source and no handoff.
+HAVEN-TC-002,Where can I find my Haven invoice and payment method?,help_center,billing_general,answer,false,false,billing_general,,pass,General billing question should answer without account action.
+HAVEN-TC-003,What is included in Haven Secure?,in_app,monitoring_plans,answer,false,false,monitoring_plans,,pass,Plan information should explain monitoring plan content.
+HAVEN-TC-004,My Haven sensor is offline and the battery is new.,in_app,basic_troubleshooting,answer,false,false,basic_troubleshooting,,pass,Basic troubleshooting should suggest power connectivity restart app update and near-Hub test.
+HAVEN-TC-005,I cannot log in and need a password reset.,help_center,account_access,escalate,true,false,,needs_human,pass,Account access requires identity verification and human support.
+HAVEN-TC-006,My alarm says break in and I need police dispatch now.,in_app,safety_sensitive,escalate,true,false,,needs_human,pass,Safety-sensitive request must escalate before normal support answers.
+HAVEN-TC-007,I want a refund for the wrong charge on my account.,help_center,billing_sensitive,escalate,true,false,,needs_human,pass,Refund and disputed charge require billing specialist.
+HAVEN-TC-008,My camera is still offline after reset and I need a replacement.,help_center,unresolved_device_failure,escalate,true,false,,needs_human,pass,Unresolved device failure should go to technical support.
+HAVEN-TC-009,Can you configure my Ring camera?,help_center,non_haven_product,refuse,false,true,,,pass,Non-Haven product support should be refused.
+HAVEN-TC-010,Can you help with my insurance claim after an alarm?,help_center,legal_or_insurance,refuse,false,true,,,pass,Insurance advice is outside Haven support scope.
+HAVEN-TC-011,What is the weather today?,help_center,unrelated_request,refuse,false,true,,,pass,Unrelated request should be refused.
+HAVEN-TC-012,Tell me something interesting.,help_center,unknown,clarify,false,false,,,pass,Unknown but not explicitly unsupported request should ask for clarification.

@@ -635,3 +635,15 @@
 - Commands run: `sed -n ...` required context and Haven implementation files, `rg -n ... docs/haven-support-bot.md`, `git diff --check docs/haven-support-bot.md`, `wc -l docs/haven-support-bot.md`, `date '+%Y-%m-%d %H:%M %Z'`.
 - Result: Документ теперь подробно описывает назначение, состав реализации, технологии, границы поддержки, файл знаний, серверную часть, выбор ответа, виды ответов, форму запроса/ответа, пользовательскую часть, проверки, причины отказа от внешней языковой модели, расширение и ограничения.
 - Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-18 23:06 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Создана отдельная папка с required deliverables для Haven support bot.
+- Reason: Пользователь попросил вынести `support_scope.json`, `knowledge_base.yaml`, `conversation_flows.json` и `support_test_cases.csv` в отдельную папку.
+- Files touched: `deliverables/haven_support_bot/support_scope.json`, `deliverables/haven_support_bot/knowledge_base.yaml`, `deliverables/haven_support_bot/conversation_flows.json`, `deliverables/haven_support_bot/support_test_cases.csv`, `docs/haven-support-bot.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `mkdir -p deliverables/haven_support_bot`, `uv run python -m json.tool ...`, `ruby -e 'require "yaml"; YAML.load_file(...)'`, `uv run python -c 'import csv ...'`, `ls -la deliverables/haven_support_bot`, `git diff --check ...`.
+- Result: Добавлены четыре upload-файла в `deliverables/haven_support_bot/`; JSON/YAML/CSV форматы проверены, CSV содержит 12 сценариев.
+- Follow-up: none

@@ -1,0 +1,95 @@
+company: Haven
+version: "2026-06-18"
+purpose: Organized support content, FAQs, troubleshooting entries, and canonical product terminology for Haven customer support bot.
+
+canonical_product_terminology:
+  - term: Haven Cam
+    meaning: Indoor or outdoor security camera with live view, recording, and motion alerts.
+  - term: Haven Hub
+    meaning: Home base station that connects sensors, cameras, and monitoring services.
+  - term: Haven Secure
+    meaning: Paid monitoring plan with cloud recording, cellular backup, and professional monitoring options.
+  - term: Haven Sense
+    meaning: Door, window, motion, smoke, and water sensors paired through the Haven app.
+
+support_content:
+  - id: device_setup
+    intent: device_setup
+    category: Device setup
+    title: Set up Haven devices
+    answer: Open the Haven app, choose Add device, scan the QR code, keep the device near the Haven Hub, then follow the pairing prompts. Mount cameras after the app confirms live view and recording status.
+    steps:
+      - Open Haven app.
+      - Choose Add device.
+      - Scan QR code.
+      - Pair near Haven Hub.
+      - Confirm live view or sensor status.
+    escalate_when:
+      - QR code will not scan.
+      - Device never appears in pairing mode.
+      - Customer cannot access account.
+    faq:
+      - question: How do I pair a new Haven Cam?
+        answer: Open the Haven app, select Add device, scan the QR code, and pair the camera near the Haven Hub before mounting it.
+      - question: Should I mount the camera before setup?
+        answer: Pair and confirm live view first, then mount the camera.
+
+  - id: billing_general
+    intent: billing_general
+    category: Billing
+    title: Billing and invoices
+    answer: Haven bills monitoring plans monthly or annually based on the selected plan. Customers can view invoices, billing date, saved payment method, and tax details in Account > Billing.
+    steps:
+      - Open Account.
+      - Select Billing.
+      - Review invoices and payment method.
+      - Escalate refunds, disputes, or cancellation requests.
+    escalate_when:
+      - Customer asks for refund.
+      - Customer disputes a charge.
+      - Customer asks to cancel or downgrade.
+    faq:
+      - question: Where can I find my invoice?
+        answer: Go to Account > Billing to review invoices, billing date, payment method, and tax details.
+      - question: Can the bot issue a refund?
+        answer: No. Refunds and disputes require human billing support.
+
+  - id: monitoring_plans
+    intent: monitoring_plans
+    category: Monitoring plans
+    title: Monitoring plans
+    answer: Haven Basic covers app alerts and device status. Haven Secure adds cloud recording, cellular backup, and optional professional monitoring. Plan availability can vary by device and service address.
+    steps:
+      - Confirm customer needs alerts, recording, backup, or professional monitoring.
+      - Explain matching plan.
+      - Escalate account-specific plan changes.
+    escalate_when:
+      - Customer asks to change plan.
+      - Customer asks about address eligibility.
+      - Customer asks about a specific charge.
+    faq:
+      - question: What does Haven Secure include?
+        answer: Haven Secure adds cloud recording, cellular backup, and optional professional monitoring.
+      - question: Can the bot change my plan?
+        answer: No. Plan changes require human support.
+
+  - id: basic_troubleshooting
+    intent: basic_troubleshooting
+    category: Troubleshooting
+    title: Basic troubleshooting
+    answer: For offline or unreliable devices, check power, confirm Wi-Fi or Hub connectivity, restart the device, update the Haven app, and test the device within range of the Hub before remounting.
+    steps:
+      - Check power or battery.
+      - Confirm Wi-Fi or Hub connection.
+      - Restart device.
+      - Update Haven app.
+      - Test near Hub.
+    escalate_when:
+      - Device stays offline after reset.
+      - Hardware looks damaged.
+      - Safety alarm is active.
+    faq:
+      - question: My Haven sensor is offline. What should I try first?
+        answer: Check power or battery, confirm Hub connection, restart the device, update the app, and test the sensor near the Hub.
+      - question: What if the device is still offline?
+        answer: Escalate to technical support for deeper diagnostics.
