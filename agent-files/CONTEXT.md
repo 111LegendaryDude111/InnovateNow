@@ -23,6 +23,7 @@
 | 2026-06-16 | Qdrant выбран для vector database readiness | Нужен локальный production-like vector DB без managed cloud account | Добавлены Docker-инструкция, `qdrant-client>=1.12.0`, committed sample dataset на 60 items и CLI `qdrant-ingest`/`qdrant-search`/`qdrant-demo` |
 | 2026-06-16 | Product semantic search API использует in-memory `numpy` index | Issue `013` требует endpoint без обязательного Qdrant/Docker | `POST /search/semantic` строит lazy product index из committed JSON, использует существующий Hugging Face embeddings client и кеширует index per process |
 | 2026-06-16 | PDF Q&A Tool использует session-scoped in-memory RAG index | Issue `014` требует upload/retrieval/answer MVP без persistent PDF storage и тяжелых RAG dependencies | `POST /pdf/ingest` парсит PDF через `pypdf`, строит chunks + Hugging Face embeddings; `POST /pdf/ask` retrieves через `numpy` cosine и отвечает через OpenRouter |
+| 2026-06-18 | Cinder hybrid search начинается с input audit | Issue `015` запрещает строить production hybrid endpoint на Step 0 | Добавлены Cinder audit doc, 45-item synthetic home-goods CSV, query CSV and stdlib validation tests |
 
 ## Implemented Features
 
@@ -36,6 +37,7 @@
 | 2026-06-16 | Qdrant semantic search readiness | Vertical slice: 60 sample docs -> remote Hugging Face embeddings -> Qdrant collection with cosine distance -> payload upsert -> password/headphones top-k demo | `data/qdrant_sample_documents.json`, `src/llm/qdrant_vector_store.py`, `src/llm/qdrant_cli.py`, `docs/qdrant-semantic-search.md` | Реальные provider/Qdrant calls только через ручные CLI команды; tests use fake embeddings and fake Qdrant client |
 | 2026-06-16 | Product semantic search API | Product catalog -> normalized product text -> remote Hugging Face embeddings -> in-memory `numpy` index -> `POST /search/semantic` top-k products | `data/product_catalog.json`, `src/llm/product_catalog.py`, `src/llm/product_search.py`, `src/llm/product_search_api.py`, `docs/product-semantic-search.md` | Endpoint требует server-side `HF_TOKEN`; tests use fake embeddings and do not call network |
 | 2026-06-16 | PDF Q&A Tool | Multipart PDF upload -> `pypdf` page text -> chunks with source metadata -> Hugging Face embeddings -> session-scoped in-memory index -> OpenRouter grounded answer with sources | `src/llm/pdf_processing.py`, `src/llm/pdf_qa_models.py`, `src/llm/pdf_qa.py`, `src/llm/pdf_qa_api.py`, `frontend/src/PdfQaPage.jsx`, `docs/pdf-qa-tool.md` | Requires server-side `HF_TOKEN` for ingest and `OPENROUTER_API_KEY` for grounded answers; tests mock PDF extraction/providers |
+| 2026-06-18 | Cinder hybrid search inputs audit | Step 0 input contract: current product flow review -> inventory -> signal mapping -> inclusion matrix -> synthetic products and queries -> validation tests | `docs/cinder-hybrid-search-inputs-audit.md`, `data/cinder_home_goods_products.csv`, `data/cinder_home_goods_queries.csv`, `tests/test_cinder_hybrid_search_inputs.py` | Production hybrid endpoint intentionally not implemented in issue `015` |
 
 ## Architecture Notes
 
@@ -44,6 +46,7 @@
 - Потоки данных: Document embeddings: `data/internal_knowledge_documents.json` -> preprocessing/chunking -> Hugging Face feature-extraction API -> `artifacts/document_embeddings.json` -> cosine similarity top-k.
 - Потоки данных: Qdrant readiness: `data/qdrant_sample_documents.json` -> Hugging Face feature-extraction API -> Qdrant collection `innovatech_sample_documents` -> `qdrant-demo` top-k retrieval.
 - Потоки данных: Product semantic search API: `data/product_catalog.json` -> normalized product text -> Hugging Face feature-extraction API -> per-process in-memory `numpy` index -> query embedding -> top-k products.
+- Потоки данных: Cinder hybrid search Step 0: synthetic product/query CSV -> stdlib validation -> documented keyword/vector/filter/ranking input contract; no runtime endpoint yet.
 - Потоки данных: PDF Q&A Tool: multipart PDF upload -> `pypdf` text extraction -> page-aware chunks -> Hugging Face embeddings -> session-scoped in-memory `numpy` matrix -> question embedding -> top-k chunks -> OpenRouter answer with sources.
 - Интеграции: `make dev` перед стартом убивает listeners на `8000/5173`, затем запускает `uv run uvicorn ...` и `cd frontend && npm run dev`; `/images/generate` вызывает Hugging Face HF Inference API через server-side `HF_TOKEN`.
 - Где нельзя ломать интерфейсы:

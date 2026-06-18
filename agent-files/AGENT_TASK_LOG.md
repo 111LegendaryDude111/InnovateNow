@@ -563,3 +563,27 @@
 - Commands run: `rg ...`, `sed -n ...`, `uv run pytest tests/test_product_semantic_search_endpoint.py tests/test_product_semantic_search.py`, `uv run pytest`, `git diff --check`, `wc -l ...`, secret guard `rg ...`.
 - Result: Добавлен `TestClient.post("/search/semantic", ...)` test с fake service; docs explicitly state this is a REST API path registered in `src/llm/api.py`, not CLI-only. Checks passed: product tests 9/9, full pytest 83/83, `git diff --check`; one Starlette deprecation warning from FastAPI TestClient.
 - Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-18 22:13 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Добавлена локальная задача `015` для Cinder hybrid search input audit и обновлен индекс задач.
+- Reason: Пользователь попросил создать задачу по audit search inputs, hybrid keyword/vector signal mapping и synthetic home-goods search dataset.
+- Files touched: `issues/015-audit-cinder-hybrid-search-inputs.md`, `issues/README.md`, `agent-files/AGENT_TASK_LOG.md`, `agent-files/AGENT_HANDOFF.md`.
+- Commands run: `date '+%Y-%m-%d %H:%M %Z'`, `git status --short --untracked-files=all`, `find issues -maxdepth 1 -type f -print | sort`, `git diff --check -- issues/015-audit-cinder-hybrid-search-inputs.md issues/README.md`.
+- Result: Issue `015` создан как `AFK`; в задаче зафиксированы CSV schemas, minimum 40 product records, query set, input inventory, hybrid signal mapping, field inclusion/exclusion and validation criteria.
+- Follow-up: Реализовать issue `015`, если пользователь попросит перейти от постановки задачи к выполнению.
+
+### Log Entry
+
+- Time: 2026-06-18 22:22 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Реализован issue `015`: Cinder hybrid search Step 0 input audit без production endpoint.
+- Reason: Нужны проверяемые inputs для будущего keyword/vector/filter/ranking retrieval и синтетические home-goods данные без внешних источников.
+- Files touched: `docs/cinder-hybrid-search-inputs-audit.md`, `data/cinder_home_goods_products.csv`, `data/cinder_home_goods_queries.csv`, `tests/test_cinder_hybrid_search_inputs.py`, `README.md`, `agent-files/CONTEXT.md`, `issues/015-audit-cinder-hybrid-search-inputs.md`, `agent-files/AGENT_HANDOFF.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `cat` required context/skills/subagent files, `rg`/`wc` inspection commands, `uv run pytest tests/test_cinder_hybrid_search_inputs.py`, `uv run pytest`, `git diff --check`.
+- Result: Added audit doc with current product flow review, inventory, hybrid signal mapping, field inclusion matrix, limitations and example input split; added 45-product CSV and 20-query CSV; targeted validation passed 5/5; full pytest passed 97/97 with one existing Starlette deprecation warning; `git diff --check` passed.
+- Follow-up: none
