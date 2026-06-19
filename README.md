@@ -9,6 +9,7 @@
 - **Product semantic search API**: `POST /search/semantic` ищет товары natural language query через Hugging Face embeddings и in-memory `numpy` index без обязательного Qdrant/Docker.
 - **Cinder hybrid search MVP**: `POST /search/cinder/hybrid` ищет synthetic home-goods catalog через keyword, vector, filters, merge/rank и explicit fallback metadata.
 - **Haven support bot**: `POST /support/haven/respond` отвечает на support-вопросы Haven через policy scope, structured KB, intent routing, refusals и escalation handoff.
+- **Northstar Relay fine-tuning dataset**: deterministic synthetic support dataset package для audit -> keep/remove/review -> standardized JSONL -> validation readiness workflow.
 - **PDF Q&A Tool**: frontend загружает PDF, backend извлекает page-aware chunks через `pypdf`, строит session-scoped in-memory `numpy` index через Hugging Face embeddings и отвечает через OpenRouter с sources.
 - **Generate image**: frontend отправляет prompt и настройки, backend вызывает Hugging Face и возвращает изображение.
 
@@ -48,6 +49,15 @@
 - Frontend получил страницу `Haven Support` для help center / in-app channel checks.
 - Добавлены tests: `tests/test_haven_support_bot.py`.
 - Документация: `docs/haven-support-bot.md`.
+
+## Что сделано по Northstar Relay fine-tuning dataset
+
+- Добавлен raw synthetic source dataset `data/northstar_relay_support_records.csv` на 152 records с keep/review/remove audit status.
+- Добавлен standardized JSONL `data/northstar_relay_standardized_conversations.jsonl` на 120 retained conversations.
+- Добавлен audit artifact `data/northstar_relay_dataset_audit.json` с inventory, duplicate groups, exclusion reasons and validation report.
+- Добавлены upload-ready deliverables: `deliverables/northstar_relay_finetuning/validated_finetuning_dataset.jsonl` и `deliverables/northstar_relay_finetuning/dataset_quality_report.pdf`.
+- Добавлен deterministic generator `scripts/build_northstar_relay_dataset.py` и validation tests `tests/test_northstar_relay_dataset.py`.
+- Документация: `docs/northstar-relay-finetuning-dataset.md`.
 
 ## Что сделано по PDF Q&A Tool
 

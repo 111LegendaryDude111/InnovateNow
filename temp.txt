@@ -1,128 +1,136 @@
-Build an AI Customer Support Bot    
+Fine-Tune a Language Model
+
+Prepare Training Data
+Build the fine-tuning dataset for Alpenglow Support Systems using support-style conversations that reflect Alpenglow Assist’s product scope: onboarding, troubleshooting, account access, billing basics, and common workflow questions. Ensure the data is consistent with the tone expected in a customer-facing support assistant for mid-market SaaS users, with concise, helpful, and brand-safe responses.
+
+Assemble a clean, domain-specific dataset for Alpenglow Assist.
+
+Deliverables
+Curated training dataset for Alpenglow Assist
+Cleaned and deduplicated example set
+Topic-balanced sample distribution
+
+Generate Sample Data
+Generate a comprehensive mock fine-tuning dataset for Alpenglow Assist as JSONL-style conversation examples. Include all fields needed for the full workflow: unique conversation_id, topic, intent, user_message, assistant_response, escalation_flag, difficulty, tone, and source_notes. Cover these categories evenly: onboarding, troubleshooting, account access, billing basics, workflow/how-to questions, and safe escalation cases. Include a mix of short and medium-length support conversations, realistic SaaS customer phrasing, and a few intentional anomalies for cleaning such as duplicates, near-duplicates, contradictory answers, off-brand tone, incomplete responses, and mislabeled topics. Ensure the dataset is large enough to support deduplication, balancing, and validation splitting in later steps. Keep all responses concise, helpful, and customer-facing, with no policy-violating or overly technical content.
 
 
-Define Support Scope
-Build the bot around Haven’s real support needs by identifying the exact customer questions it must handle, the cases it must refuse, and the situations that require escalation. Focus on Haven’s home security products, monitoring plans, billing, account access, device setup, and troubleshooting workflows so the bot is tightly aligned to the company’s support operations and customer journey.
+Example implementation
+Sample cleaned training record
+role	content
+user	I can’t access my account after resetting my password.
+assistant	Please try signing in again using the new password and confirm your email is verified. If you still can’t access the account, I can help you check for a lockout or reset issue.
+Topic: Account access
+
+Quality check: Clear, concise, brand-safe
+
+
+Define Fine-Tuning Setup
+Set up the fine-tuning plan for Alpenglow Support Systems by selecting the target model, training format, and evaluation approach appropriate for Alpenglow Assist. The setup should reflect the product’s need for reliable support answers, short turnaround time, and safe handling of customer-facing queries.
+
+
+Configure the model training approach for Alpenglow’s support assistant.
+
+
+Deliverables
+Selected base model and training configuration
+Defined validation strategy
+Fine-tuning setup parameters
+
+
+Example implementation
+Fine-tuning setup summary
+Base model: Instruction-tuned support-capable model
+Training format: User message → assistant response
+Validation split: 10–15% held out
+Checkpointing: Save best validation checkpoint
+
+
+Run Training Iterations
+Execute the fine-tuning process for Alpenglow Support Systems and iterate on the model until it performs well on Alpenglow Assist’s target support scenarios. Focus on improving answer accuracy, response consistency, and adherence to the company’s support tone across onboarding and troubleshooting prompts.
 
 Goal
-Lock down the bot’s support boundaries and core customer intents for Haven.
+Train and refine the model for Alpenglow Assist support performance.
 
-Tasks to complete
+
 Deliverables
-Intent and escalation scope configuration
-Supported vs unsupported request list
-Haven support boundary rules
+Fine-tuned model checkpoint
+Training run results
+Refined model version after iteration
 
 
-explore
 Example implementation
-Supported
-Device setup
-Billing questions
-Basic troubleshooting
-Escalate
-Account access issues
-Safety-sensitive concerns
-Unresolved device failures
+Training run snapshot
+Run 03: Best validation loss
+Status: Stable
+Observed issue: Slightly verbose answers on troubleshooting prompts
+Action: Reduced response length bias in next iteration
 
 
-lightbulb
-Tips
-Treat scope as a policy artifact, not just a feature list. The strongest support bots are explicit about what they will answer, what they will not answer, and when they must hand off—especially for account, billing, and safety-related requests.
+Evaluate Model Quality
+Test the fine-tuned Alpenglow Assist model against realistic support prompts from Alpenglow Support Systems, including onboarding questions, troubleshooting requests, and account-related issues. Evaluate whether the model stays accurate, concise, and safe while maintaining the intended support tone for SaaS end users.
 
-Prepare Knowledge Base
-Create the structured knowledge foundation for Haven’s bot using product details, troubleshooting steps, billing policies, plan information, and common account workflows. Organize the content so the bot can retrieve concise, customer-friendly answers that match Haven’s product language and support policies.
-
-Prepare Knowledge Base
-fullscreen
-Goal
-Assemble the support content the bot will use to answer Haven customer questions accurately.
-
-Tasks to complete
-Deliverables
-Structured support knowledge base content
-FAQ and troubleshooting content set
-Canonical product terminology list
-explore
-Example implementation
-Cameras
-Setup steps
-Connectivity issues
-Recording status
-Billing
-Payment methods
-Invoice questions
-Plan changes
-lightbulb
-Tips
-Keep knowledge entries atomic and consistent. Short, well-labeled content chunks are easier to retrieve, easier to maintain, and less likely to produce mixed or outdated answers.
-
-
-Build Conversation Flows
-Design and implement the conversation logic that guides Haven customers from greeting to resolution or escalation. The flows should handle common support journeys such as login help, device pairing, subscription questions, and issue triage, while keeping the interaction short, clear, and consistent with Haven’s support tone.
-
-Build Conversation Flows
-fullscreen
-Goal
-Create the bot’s customer-facing dialogue paths for Haven support scenarios.
-
-Tasks to complete
-Deliverables
-Conversation flow configuration
-Fallback and escalation flow logic
-Intent routing rules
-explore
-Example implementation
-Flow: Login Help
-Confirm the issue
-Ask for the affected account context
-Offer the next support step
-Escalate if access cannot be verified
-lightbulb
-Tips
-
-
-
-Implement Bot Logic
-Implement the runtime behavior that allows Haven’s bot to respond in the web help center and in-app support surfaces. Connect the bot to the approved support content, ensure it can classify requests correctly, and configure the handoff path so customers can move from automated help to human support without losing context.
 
 Goal
-Wire the bot into Haven’s support channels and operational systems.
+Verify that the fine-tuned model meets Alpenglow’s support standards.
 
-Tasks to complete
+
+
 Deliverables
-Bot integration configuration
-Escalation handoff payload structure
-Runtime response handling rules
-explore
+Evaluation results for held-out prompts
+Failure-case list
+Quality assessment summary
+
+
 Example implementation
-Handoff Summary
-Intent: Billing question
-Status: Unresolved
-Context: Customer asked about a recent charge
-Next step: Human review
-lightbulb
-Tips
+Evaluation summary
+Metric	Result
+Accuracy	92%
+Tone consistency	95%
+Safety	100%
+Top failure case: Missing escalation guidance for account lockout
 
 
 
-    Test Support Coverage
-Run structured testing against Haven’s customer support use cases to confirm the bot answers correctly, escalates appropriately, and avoids unsupported actions. Test both successful resolution paths and failure cases so the bot behaves predictably for Haven customers across billing, setup, troubleshooting, and account-related requests.
+ackage Deployment Model
+Package the final fine-tuned model from Alpenglow Support Systems so it can be integrated into Alpenglow Assist’s customer support workflow. Ensure the model artifact is ready for deployment, versioned correctly, and aligned with the product’s support use case and audience expectations.
 
 Goal
-Validate that the bot works reliably across Haven’s most important support scenarios.
+Prepare the fine-tuned model for use in Alpenglow Assist.
 
-Tasks to complete
+
 Deliverables
-Support scenario test suite
-Escalation validation results
-Bot behavior verification checklist
-explore
+Final model artifact
+Versioned deployment package
+Integration-ready model output
+
+
 Example implementation
-Test Result
-Intent: Device setup
-Expected: Guided troubleshooting
-Actual: Guided troubleshooting
-Status: Pass
-lightbulb
-Tips
+Deployment package
+Model version: alpenglow-assist-v1.0.0
+Checkpoint: best-validation
+Artifact: deployment-ready bundle
+Status: Ready for integration
+
+
+
+final files:
+
+
+description
+alpenglow_assist_training_dataset.jsonl
+JSONL conversation dataset containing cleaned, deduplicated, topic-balanced support examples for Alpenglow Assist.
+cloud_upload
+Upload File
+description
+fine_tuning_setup.json
+Configuration file defining the selected base model, training objective, validation split, and evaluation checkpoints.
+cloud_upload
+Upload File
+description
+training_evaluation_report.pdf
+PDF summary of training iterations, validation behavior, evaluation results, failure cases, and final quality assessment.
+cloud_upload
+Upload File
+description
+deployment_package.json
+Versioned metadata for the final model artifact, including checkpoint selection, model version, and integration-ready packaging details.

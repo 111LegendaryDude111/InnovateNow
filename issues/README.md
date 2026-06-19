@@ -29,3 +29,4 @@
 | 013 | Добавить API endpoint для semantic product search | AFK | Нет |
 | 014 | Создать PDF Q&A Tool с upload, retrieval и answer generation | AFK | Нет |
 | 015 | Провести audit search inputs для Cinder hybrid search | AFK | Нет |
+| 016 | Подготовить fine-tuning dataset для Northstar Relay support responses | AFK | Нет |

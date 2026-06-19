@@ -647,3 +647,51 @@
 - Commands run: `mkdir -p deliverables/haven_support_bot`, `uv run python -m json.tool ...`, `ruby -e 'require "yaml"; YAML.load_file(...)'`, `uv run python -c 'import csv ...'`, `ls -la deliverables/haven_support_bot`, `git diff --check ...`.
 - Result: Добавлены четыре upload-файла в `deliverables/haven_support_bot/`; JSON/YAML/CSV форматы проверены, CSV содержит 12 сценариев.
 - Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-19 10:29 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Добавлена локальная задача `016` для Northstar Relay fine-tuning dataset package и обновлен индекс задач.
+- Reason: Пользователь попросил создать задачу из `temp.txt` про audit, standardization and validation of synthetic support records for fine-tuning.
+- Files touched: `issues/016-prepare-northstar-relay-finetuning-dataset.md`, `issues/README.md`, `agent-files/AGENT_TASK_LOG.md`, `agent-files/AGENT_HANDOFF.md`.
+- Commands run: `date '+%Y-%m-%d %H:%M %Z'`, `find issues -maxdepth 1 -type f -print | sort`, `git diff --check -- issues/016-prepare-northstar-relay-finetuning-dataset.md issues/README.md`, `git status --short --untracked-files=all`.
+- Result: Issue `016` создан как `AFK`; зафиксированы raw CSV schema, standardized JSONL schema, audit artifact, docs, validation requirements and no-real-customer-data guardrails.
+- Follow-up: Реализовать issue `016`, если пользователь попросит перейти от постановки задачи к выполнению.
+
+### Log Entry
+
+- Time: 2026-06-19 13:14 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Реализован issue `016`: Northstar Relay synthetic fine-tuning dataset package.
+- Reason: Пользователь попросил подготовить committed raw support records, audit trail, standardized JSONL, validation report and readiness docs без реальных customer data.
+- Files touched: `data/northstar_relay_support_records.csv`, `data/northstar_relay_standardized_conversations.jsonl`, `data/northstar_relay_dataset_audit.json`, `scripts/build_northstar_relay_dataset.py`, `scripts/northstar_relay_dataset_audit.py`, `scripts/northstar_relay_dataset_contract.py`, `scripts/northstar_relay_dataset_edges.py`, `tests/test_northstar_relay_dataset.py`, `docs/northstar-relay-finetuning-dataset.md`, `README.md`, `agent-files/CONTEXT.md`, `issues/016-prepare-northstar-relay-finetuning-dataset.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `uv run python scripts/build_northstar_relay_dataset.py`, `uv run pytest tests/test_northstar_relay_dataset.py`, `uv run pytest`, `wc -l ...`, `rg -n "[ \t]+$" ...`, `git diff --check -- README.md agent-files/CONTEXT.md`.
+- Result: Added 152 source records, 120 retained conversations, audit counts/inventory/duplicates/exclusions, deterministic stdlib generator, dataset docs and six validation tests. Targeted pytest passed 6/6; full `uv run pytest` passed 120/120 with one existing Starlette deprecation warning. New code/test files are under 200 lines. Global `git diff --check` is still blocked by pre-existing trailing whitespace in `temp.txt`.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-19 18:15 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Добавлены upload-ready deliverables для Northstar Relay с exact expected filenames.
+- Reason: Пользователь спросил, где `validated_finetuning_dataset.jsonl` и `dataset_quality_report.pdf`; предыдущая реализация имела equivalent artifacts под другими именами.
+- Files touched: `deliverables/northstar_relay_finetuning/validated_finetuning_dataset.jsonl`, `deliverables/northstar_relay_finetuning/dataset_quality_report.pdf`, `scripts/build_northstar_relay_upload_deliverables.py`, `tests/test_northstar_relay_dataset.py`, `docs/northstar-relay-finetuning-dataset.md`, `README.md`, `agent-files/CONTEXT.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `uv run python scripts/build_northstar_relay_upload_deliverables.py`, `uv run pytest tests/test_northstar_relay_dataset.py`, `uv run pytest`, `rg -n "[ \t]+$" ...`, `git diff --check -- ...`.
+- Result: Upload folder now contains the exact JSONL and PDF filenames; dataset tests passed 7/7; full pytest passed 121/121 with one existing Starlette deprecation warning.
+- Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-19 18:18 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Добавлен раздел `Что Сделано` в документацию Northstar Relay fine-tuning dataset.
+- Reason: Пользователь попросил добавить документацию с описанием выполненной работы.
+- Files touched: `docs/northstar-relay-finetuning-dataset.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `git diff --check -- docs/northstar-relay-finetuning-dataset.md`, `sed -n '1,90p' docs/northstar-relay-finetuning-dataset.md`, `date '+%Y-%m-%d %H:%M %Z'`.
+- Result: Документация теперь кратко описывает созданные datasets, audit artifacts, upload-ready deliverables, generators, validation tests and synthetic/no-provider-call constraints.
+- Follow-up: none

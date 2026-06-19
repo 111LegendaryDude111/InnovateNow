@@ -1,0 +1,1331 @@
+{
+  "schema_version": "2026-06-19",
+  "dataset": "northstar_relay_support_responses",
+  "source_record_count": 152,
+  "standardized_record_count": 120,
+  "status_counts": {
+    "keep": 120,
+    "review": 16,
+    "remove": 16
+  },
+  "channel_counts": {
+    "chat": 38,
+    "email": 38,
+    "internal_note": 38,
+    "mixed": 38
+  },
+  "product_area_vocabulary": [
+    "inbox_routing",
+    "automations",
+    "billing",
+    "integrations",
+    "reporting",
+    "mobile_app",
+    "user_management",
+    "workspace_settings"
+  ],
+  "issue_category_vocabulary": [
+    "technical_troubleshooting",
+    "how_to",
+    "billing_question",
+    "account_access",
+    "configuration",
+    "escalation"
+  ],
+  "exclusion_reason_counts": {
+    "near_duplicate": 2,
+    "exact_duplicate": 2,
+    "missing_customer_context": 1,
+    "missing_resolution_context": 2,
+    "truncated_message": 2,
+    "malformed_timestamp": 2,
+    "ambiguous_customer_goal": 1,
+    "escalation_required": 1,
+    "internal_note_only": 1,
+    "partial_mixed_format": 1,
+    "ambiguous_product_area": 1,
+    "billing_action_requires_human": 1,
+    "off_topic_content": 2,
+    "spam_or_test_record": 1,
+    "no_support_response": 1,
+    "unsupported_legal_request": 1,
+    "empty_transcript": 1,
+    "customer_only_thread": 1,
+    "assistant_only_note": 1,
+    "external_product_request": 1,
+    "training_unsuitable_rant": 1,
+    "malformed_without_context": 1,
+    "no_customer_problem": 1,
+    "unsupported_custom_code": 1,
+    "duplicate_without_resolution": 1,
+    "ambiguous_escalation": 1
+  },
+  "inventory": {
+    "keep": [
+      {
+        "record_id": "NR-0001",
+        "channel": "chat",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": "DUP-ROUTE-001"
+      },
+      {
+        "record_id": "NR-0002",
+        "channel": "email",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0003",
+        "channel": "internal_note",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0004",
+        "channel": "mixed",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0005",
+        "channel": "chat",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0006",
+        "channel": "email",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0007",
+        "channel": "internal_note",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0008",
+        "channel": "mixed",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0009",
+        "channel": "chat",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0010",
+        "channel": "email",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0011",
+        "channel": "email",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0012",
+        "channel": "internal_note",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0013",
+        "channel": "mixed",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": "DUP-BILL-001"
+      },
+      {
+        "record_id": "NR-0014",
+        "channel": "chat",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0015",
+        "channel": "email",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0016",
+        "channel": "internal_note",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0017",
+        "channel": "mixed",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0018",
+        "channel": "chat",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0019",
+        "channel": "email",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0020",
+        "channel": "internal_note",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0021",
+        "channel": "internal_note",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0022",
+        "channel": "mixed",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0023",
+        "channel": "chat",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0024",
+        "channel": "email",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0025",
+        "channel": "internal_note",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0026",
+        "channel": "mixed",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0027",
+        "channel": "chat",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0028",
+        "channel": "email",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0029",
+        "channel": "internal_note",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0030",
+        "channel": "mixed",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0031",
+        "channel": "mixed",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0032",
+        "channel": "chat",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0033",
+        "channel": "email",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0034",
+        "channel": "internal_note",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0035",
+        "channel": "mixed",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0036",
+        "channel": "chat",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0037",
+        "channel": "email",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0038",
+        "channel": "internal_note",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0039",
+        "channel": "mixed",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0040",
+        "channel": "chat",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0041",
+        "channel": "chat",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0042",
+        "channel": "email",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0043",
+        "channel": "internal_note",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0044",
+        "channel": "mixed",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0045",
+        "channel": "chat",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0046",
+        "channel": "email",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0047",
+        "channel": "internal_note",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0048",
+        "channel": "mixed",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0049",
+        "channel": "chat",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0050",
+        "channel": "email",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0051",
+        "channel": "email",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0052",
+        "channel": "internal_note",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0053",
+        "channel": "mixed",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0054",
+        "channel": "chat",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0055",
+        "channel": "email",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0056",
+        "channel": "internal_note",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0057",
+        "channel": "mixed",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0058",
+        "channel": "chat",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0059",
+        "channel": "email",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0060",
+        "channel": "internal_note",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0061",
+        "channel": "internal_note",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0062",
+        "channel": "mixed",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0063",
+        "channel": "chat",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0064",
+        "channel": "email",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0065",
+        "channel": "internal_note",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0066",
+        "channel": "mixed",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0067",
+        "channel": "chat",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0068",
+        "channel": "email",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0069",
+        "channel": "internal_note",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0070",
+        "channel": "mixed",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0071",
+        "channel": "mixed",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0072",
+        "channel": "chat",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0073",
+        "channel": "email",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0074",
+        "channel": "internal_note",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0075",
+        "channel": "mixed",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0076",
+        "channel": "chat",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0077",
+        "channel": "email",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0078",
+        "channel": "internal_note",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0079",
+        "channel": "mixed",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0080",
+        "channel": "chat",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0081",
+        "channel": "chat",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0082",
+        "channel": "email",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0083",
+        "channel": "internal_note",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0084",
+        "channel": "mixed",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0085",
+        "channel": "chat",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0086",
+        "channel": "email",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0087",
+        "channel": "internal_note",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0088",
+        "channel": "mixed",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0089",
+        "channel": "chat",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0090",
+        "channel": "email",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0091",
+        "channel": "email",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0092",
+        "channel": "internal_note",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0093",
+        "channel": "mixed",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0094",
+        "channel": "chat",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0095",
+        "channel": "email",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0096",
+        "channel": "internal_note",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0097",
+        "channel": "mixed",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0098",
+        "channel": "chat",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0099",
+        "channel": "email",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0100",
+        "channel": "internal_note",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0101",
+        "channel": "internal_note",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0102",
+        "channel": "mixed",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0103",
+        "channel": "chat",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0104",
+        "channel": "email",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0105",
+        "channel": "internal_note",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0106",
+        "channel": "mixed",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0107",
+        "channel": "chat",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0108",
+        "channel": "email",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0109",
+        "channel": "internal_note",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0110",
+        "channel": "mixed",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0111",
+        "channel": "mixed",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0112",
+        "channel": "chat",
+        "product_area": "automations",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0113",
+        "channel": "email",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0114",
+        "channel": "internal_note",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0115",
+        "channel": "mixed",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0116",
+        "channel": "chat",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0117",
+        "channel": "email",
+        "product_area": "user_management",
+        "issue_category": "account_access",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0118",
+        "channel": "internal_note",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0119",
+        "channel": "mixed",
+        "product_area": "inbox_routing",
+        "issue_category": "how_to",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0120",
+        "channel": "chat",
+        "product_area": "automations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "",
+        "duplicate_group_id": ""
+      }
+    ],
+    "review": [
+      {
+        "record_id": "NR-0121",
+        "channel": "chat",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "near_duplicate",
+        "duplicate_group_id": "DUP-ROUTE-001"
+      },
+      {
+        "record_id": "NR-0123",
+        "channel": "internal_note",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "near_duplicate",
+        "duplicate_group_id": "DUP-BILL-001"
+      },
+      {
+        "record_id": "NR-0125",
+        "channel": "chat",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "missing_customer_context",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0126",
+        "channel": "email",
+        "product_area": "mobile_app",
+        "issue_category": "escalation",
+        "exclusion_reason": "missing_resolution_context",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0127",
+        "channel": "internal_note",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "truncated_message",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0128",
+        "channel": "mixed",
+        "product_area": "workspace_settings",
+        "issue_category": "how_to",
+        "exclusion_reason": "malformed_timestamp",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0129",
+        "channel": "chat",
+        "product_area": "inbox_routing",
+        "issue_category": "configuration",
+        "exclusion_reason": "ambiguous_customer_goal",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0130",
+        "channel": "email",
+        "product_area": "user_management",
+        "issue_category": "escalation",
+        "exclusion_reason": "escalation_required",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0131",
+        "channel": "internal_note",
+        "product_area": "billing",
+        "issue_category": "configuration",
+        "exclusion_reason": "internal_note_only",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0132",
+        "channel": "mixed",
+        "product_area": "integrations",
+        "issue_category": "escalation",
+        "exclusion_reason": "partial_mixed_format",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0133",
+        "channel": "chat",
+        "product_area": "reporting",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "malformed_timestamp",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0134",
+        "channel": "email",
+        "product_area": "inbox_routing",
+        "issue_category": "configuration",
+        "exclusion_reason": "ambiguous_product_area",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0135",
+        "channel": "internal_note",
+        "product_area": "billing",
+        "issue_category": "escalation",
+        "exclusion_reason": "billing_action_requires_human",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0150",
+        "channel": "email",
+        "product_area": "user_management",
+        "issue_category": "escalation",
+        "exclusion_reason": "ambiguous_escalation",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0151",
+        "channel": "internal_note",
+        "product_area": "mobile_app",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "truncated_message",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0152",
+        "channel": "mixed",
+        "product_area": "workspace_settings",
+        "issue_category": "how_to",
+        "exclusion_reason": "missing_resolution_context",
+        "duplicate_group_id": ""
+      }
+    ],
+    "remove": [
+      {
+        "record_id": "NR-0122",
+        "channel": "email",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "exact_duplicate",
+        "duplicate_group_id": "DUP-ROUTE-001"
+      },
+      {
+        "record_id": "NR-0124",
+        "channel": "mixed",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "exact_duplicate",
+        "duplicate_group_id": "DUP-BILL-001"
+      },
+      {
+        "record_id": "NR-0136",
+        "channel": "mixed",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "off_topic_content",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0137",
+        "channel": "chat",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "spam_or_test_record",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0138",
+        "channel": "email",
+        "product_area": "automations",
+        "issue_category": "escalation",
+        "exclusion_reason": "no_support_response",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0139",
+        "channel": "internal_note",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "unsupported_legal_request",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0140",
+        "channel": "mixed",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "empty_transcript",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0141",
+        "channel": "chat",
+        "product_area": "integrations",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "customer_only_thread",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0142",
+        "channel": "email",
+        "product_area": "reporting",
+        "issue_category": "how_to",
+        "exclusion_reason": "assistant_only_note",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0143",
+        "channel": "internal_note",
+        "product_area": "user_management",
+        "issue_category": "configuration",
+        "exclusion_reason": "external_product_request",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0144",
+        "channel": "mixed",
+        "product_area": "workspace_settings",
+        "issue_category": "escalation",
+        "exclusion_reason": "training_unsuitable_rant",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0145",
+        "channel": "chat",
+        "product_area": "inbox_routing",
+        "issue_category": "technical_troubleshooting",
+        "exclusion_reason": "malformed_without_context",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0146",
+        "channel": "email",
+        "product_area": "workspace_settings",
+        "issue_category": "configuration",
+        "exclusion_reason": "off_topic_content",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0147",
+        "channel": "internal_note",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "no_customer_problem",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0148",
+        "channel": "mixed",
+        "product_area": "integrations",
+        "issue_category": "how_to",
+        "exclusion_reason": "unsupported_custom_code",
+        "duplicate_group_id": ""
+      },
+      {
+        "record_id": "NR-0149",
+        "channel": "chat",
+        "product_area": "billing",
+        "issue_category": "billing_question",
+        "exclusion_reason": "duplicate_without_resolution",
+        "duplicate_group_id": "DUP-BILL-001"
+      }
+    ]
+  },
+  "duplicate_groups": [
+    {
+      "duplicate_group_id": "DUP-BILL-001",
+      "record_ids": [
+        "NR-0013",
+        "NR-0123",
+        "NR-0124",
+        "NR-0149"
+      ],
+      "kept_record_id": "NR-0013",
+      "statuses": {
+        "keep": 1,
+        "review": 1,
+        "remove": 2
+      },
+      "reason": "Only one representative conversation is retained for training."
+    },
+    {
+      "duplicate_group_id": "DUP-ROUTE-001",
+      "record_ids": [
+        "NR-0001",
+        "NR-0121",
+        "NR-0122"
+      ],
+      "kept_record_id": "NR-0001",
+      "statuses": {
+        "keep": 1,
+        "review": 1,
+        "remove": 1
+      },
+      "reason": "Only one representative conversation is retained for training."
+    }
+  ],
+  "validation_report": {
+    "passed_count": 12,
+    "failed_count": 0,
+    "warning_count": 3,
+    "failed_checks": [],
+    "warning_checks": [
+      "duplicate_groups_reported",
+      "review_records_present",
+      "remove_records_present"
+    ]
+  }
+}

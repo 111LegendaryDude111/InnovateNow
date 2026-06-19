@@ -1,0 +1,102 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Length 1184 >>
+stream
+BT
+/F1 11 Tf
+72 760 Td
+14 TL
+(Northstar Relay Dataset Quality Report) Tj
+T*
+() Tj
+T*
+(Record inclusion decisions) Tj
+T*
+(Source records: 152) Tj
+T*
+(Approved keep records: 120) Tj
+T*
+(Review records excluded from training: 16) Tj
+T*
+(Removed records excluded from training: 16) Tj
+T*
+() Tj
+T*
+(Exclusions) Tj
+T*
+(- exact_duplicate: 2) Tj
+T*
+(- malformed_timestamp: 2) Tj
+T*
+(- missing_resolution_context: 2) Tj
+T*
+(- near_duplicate: 2) Tj
+T*
+(- off_topic_content: 2) Tj
+T*
+(- truncated_message: 2) Tj
+T*
+(- ambiguous_customer_goal: 1) Tj
+T*
+(- ambiguous_escalation: 1) Tj
+T*
+() Tj
+T*
+(Duplicates) Tj
+T*
+(Duplicate groups reported: 2) Tj
+T*
+(- DUP-BILL-001: keep NR-0013) Tj
+T*
+(- DUP-ROUTE-001: keep NR-0001) Tj
+T*
+() Tj
+T*
+(Formatting and validation issues) Tj
+T*
+(Passed checks: 12) Tj
+T*
+(Failed checks: 0) Tj
+T*
+(Warnings: 3) Tj
+T*
+(Warning checks: duplicate_groups_reported, review_records_present, remove_records_present) Tj
+T*
+() Tj
+T*
+(Final readiness status) Tj
+T*
+(Ready for offline fine-tuning preparation experiments.) Tj
+T*
+(Not approved for production model launch without real evaluation.) Tj
+T*
+(Dataset is fully synthetic and contains no real customer data.) Tj
+T*
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000311 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1547
+%%EOF
