@@ -27,6 +27,7 @@
 | 2026-06-18 | Cinder hybrid search MVP остается in-memory | Нужен end-to-end hybrid slice без новых dependencies и без production Cinder schema | `POST /search/cinder/hybrid` использует CSV loader, keyword retrieval, optional Hugging Face vector retrieval, hard filters, merge/rank and explicit fallback metadata |
 | 2026-06-18 | Haven support bot использует deterministic policy routing | Задача про scope/boundaries требует проверяемого поведения без сетевого LLM | `POST /support/haven/respond` классифицирует по structured KB, отвечает, отказывает, уточняет или формирует escalation handoff |
 | 2026-06-19 | Northstar Relay fine-tuning dataset остается synthetic/offline | Нужно проверить support-response data workflow без реальных customer data и provider calls | Добавлены raw CSV, standardized JSONL, audit JSON, generator, validation tests and readiness docs |
+| 2026-06-19 | Alpenglow Assist training package остается blocked до выбора provider/model | Issue `017` требует HITL перед реальным fine-tuning | Добавлены synthetic JSONL, setup JSON, PDF report and deployment metadata со статусом `blocked_pending_model_provider_decision` |
 
 ## Implemented Features
 
@@ -44,6 +45,7 @@
 | 2026-06-18 | Cinder hybrid search MVP | Synthetic CSV -> keyword retrieval + optional vector retrieval -> hard filters -> merge/rank -> explicit fallback metadata -> `POST /search/cinder/hybrid` | `src/llm/cinder_*`, `docs/cinder-hybrid-search.md`, `tests/test_cinder_hybrid_search.py`, `tests/test_cinder_hybrid_search_quality.py` | No new dependencies; real vector path requires server-side `HF_TOKEN`; fallback supports keyword-only behavior |
 | 2026-06-18 | Haven support bot | Structured Haven scope/KB/flows -> deterministic intent routing -> answer/escalate/refuse/clarify -> optional handoff payload and frontend page | `data/haven_support_knowledge.json`, `src/llm/haven_support_*`, `frontend/src/HavenSupportPage.jsx`, `docs/haven-support-bot.md`, `tests/test_haven_support_bot.py` | No LLM/network dependency; escalation covers account access, safety, billing action and unresolved device failure |
 | 2026-06-19 | Northstar Relay fine-tuning dataset | Synthetic raw support records -> source audit -> keep/review/remove inventory -> duplicate/exclusion audit -> standardized JSONL -> validation report -> upload deliverables | `data/northstar_relay_support_records.csv`, `data/northstar_relay_standardized_conversations.jsonl`, `data/northstar_relay_dataset_audit.json`, `deliverables/northstar_relay_finetuning/*`, `scripts/build_northstar_relay_dataset.py`, `docs/northstar-relay-finetuning-dataset.md`, `tests/test_northstar_relay_dataset.py` | 152 source records, 120 retained conversations, no real customer data, no provider calls, stdlib generator/validation |
+| 2026-06-19 | Alpenglow Assist fine-tuning package | Synthetic support examples -> deterministic train/validation split -> blocked fine-tuning setup -> PDF evaluation report -> deployment package metadata | `deliverables/alpenglow_assist_finetuning/*`, `scripts/build_alpenglow_assist_finetuning.py`, `docs/alpenglow-assist-finetuning.md`, `tests/test_alpenglow_assist_finetuning.py` | 108 retained examples, no provider calls, no real checkpoint/metrics until human provider/model approval |
 
 ## Architecture Notes
 
@@ -55,6 +57,7 @@
 - Потоки данных: Cinder hybrid search: `data/cinder_home_goods_products.csv` -> CSV validation -> keyword retrieval + optional Hugging Face embeddings -> hard filters -> merge/rank -> `POST /search/cinder/hybrid`.
 - Потоки данных: Haven support bot: `data/haven_support_knowledge.json` -> escalation/unsupported/supported routing -> answer/refuse/clarify or handoff payload -> `POST /support/haven/respond`.
 - Потоки данных: Northstar Relay fine-tuning dataset: synthetic raw CSV -> audit status keep/review/remove -> duplicate/exclusion inventory -> standardized JSONL -> validation report.
+- Потоки данных: Alpenglow Assist fine-tuning package: synthetic support templates -> cleaned balanced JSONL -> blocked setup/report/deployment metadata.
 - Потоки данных: PDF Q&A Tool: multipart PDF upload -> `pypdf` text extraction -> page-aware chunks -> Hugging Face embeddings -> session-scoped in-memory `numpy` matrix -> question embedding -> top-k chunks -> OpenRouter answer with sources.
 - Интеграции: `make dev` перед стартом убивает listeners на `8000/5173`, затем запускает `uv run uvicorn ...` и `cd frontend && npm run dev`; `/images/generate` вызывает Hugging Face HF Inference API через server-side `HF_TOKEN`.
 - Где нельзя ломать интерфейсы:

@@ -10,6 +10,7 @@
 - **Cinder hybrid search MVP**: `POST /search/cinder/hybrid` ищет synthetic home-goods catalog через keyword, vector, filters, merge/rank и explicit fallback metadata.
 - **Haven support bot**: `POST /support/haven/respond` отвечает на support-вопросы Haven через policy scope, structured KB, intent routing, refusals и escalation handoff.
 - **Northstar Relay fine-tuning dataset**: deterministic synthetic support dataset package для audit -> keep/remove/review -> standardized JSONL -> validation readiness workflow.
+- **Alpenglow Assist fine-tuning package**: deterministic synthetic support dataset, blocked fine-tuning setup, evaluation report and deployment metadata для будущего provider-approved training run.
 - **PDF Q&A Tool**: frontend загружает PDF, backend извлекает page-aware chunks через `pypdf`, строит session-scoped in-memory `numpy` index через Hugging Face embeddings и отвечает через OpenRouter с sources.
 - **Generate image**: frontend отправляет prompt и настройки, backend вызывает Hugging Face и возвращает изображение.
 
@@ -58,6 +59,15 @@
 - Добавлены upload-ready deliverables: `deliverables/northstar_relay_finetuning/validated_finetuning_dataset.jsonl` и `deliverables/northstar_relay_finetuning/dataset_quality_report.pdf`.
 - Добавлен deterministic generator `scripts/build_northstar_relay_dataset.py` и validation tests `tests/test_northstar_relay_dataset.py`.
 - Документация: `docs/northstar-relay-finetuning-dataset.md`.
+
+## Что сделано по Alpenglow Assist fine-tuning package
+
+- Добавлен upload-ready JSONL `deliverables/alpenglow_assist_finetuning/alpenglow_assist_training_dataset.jsonl` на 108 synthetic support examples.
+- Покрыты onboarding, troubleshooting, account access, billing basics, workflow/how-to и safe escalation cases с balanced split 96 train / 12 validation.
+- Добавлены blocked artifacts: `fine_tuning_setup.json`, `training_evaluation_report.pdf` и `deployment_package.json` со статусом `blocked_pending_model_provider_decision`.
+- Добавлен deterministic generator `scripts/build_alpenglow_assist_finetuning.py` без provider calls и тяжелых ML dependencies.
+- Добавлены validation tests `tests/test_alpenglow_assist_finetuning.py`.
+- Документация: `docs/alpenglow-assist-finetuning.md`.
 
 ## Что сделано по PDF Q&A Tool
 

@@ -2,6 +2,18 @@
 
 ### Log Entry
 
+- Time: 2026-06-23 00:00 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Уточнена проверяемость Alpenglow Assist fine-tuning deliverable после review note про возможное расхождение 31 vs 108 records.
+- Reason: Сделать явным, что committed upload JSONL содержит 108 one-object-per-line records, а более короткий reviewer excerpt является preview/truncation.
+- Files touched: `scripts/build_alpenglow_assist_finetuning.py`, `tests/test_alpenglow_assist_finetuning.py`, `docs/alpenglow-assist-finetuning.md`, `deliverables/alpenglow_assist_finetuning/fine_tuning_setup.json`, `deliverables/alpenglow_assist_finetuning/training_evaluation_report.pdf`, `deliverables/alpenglow_assist_finetuning/deployment_package.json`, `agent-files/AGENT_TASK_LOG.md`, `agent-files/AGENT_HANDOFF.md`.
+- Commands run: `uv run python scripts/build_alpenglow_assist_finetuning.py`, `uv run pytest tests/test_alpenglow_assist_finetuning.py`, `git diff --check`, `wc -l ...`, `uv run pytest`.
+- Result: JSONL count remains 108; setup/report now include dataset integrity clarification; targeted tests passed 5/5; full test suite passed 126/126 with existing StarletteDeprecationWarning.
+- Follow-up: none
+
+### Log Entry
+
 - Time: 2026-06-16 23:29 MSK
 - Agent: Codex
 - Action type: edit
@@ -695,3 +707,27 @@
 - Commands run: `git diff --check -- docs/northstar-relay-finetuning-dataset.md`, `sed -n '1,90p' docs/northstar-relay-finetuning-dataset.md`, `date '+%Y-%m-%d %H:%M %Z'`.
 - Result: Документация теперь кратко описывает созданные datasets, audit artifacts, upload-ready deliverables, generators, validation tests and synthetic/no-provider-call constraints.
 - Follow-up: none
+
+### Log Entry
+
+- Time: 2026-06-19 18:21 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Добавлена локальная задача `017` для Alpenglow Assist fine-tuning workflow и обновлен индекс задач.
+- Reason: Пользователь попросил создать новую задачу из `temp.txt` про подготовку dataset, fine-tuning setup, training iterations, evaluation and deployment package.
+- Files touched: `issues/017-finetune-alpenglow-assist-support-model.md`, `issues/README.md`, `agent-files/AGENT_TASK_LOG.md`, `agent-files/AGENT_HANDOFF.md`.
+- Commands run: `date '+%Y-%m-%d %H:%M %Z'`, `find issues -maxdepth 1 -type f -print | sort`, `git diff --check -- issues/017-finetune-alpenglow-assist-support-model.md issues/README.md`, `git status --short --untracked-files=all`.
+- Result: Issue `017` создан как `HITL`, потому что перед training нужен human decision по base model, provider/runtime, compute/budget and secret handling. В задаче зафиксированы final files, synthetic JSONL dataset schema, setup, evaluation, deployment package and no-fake-metrics guardrails.
+- Follow-up: Получить human decision по training provider/model before implementation can run actual fine-tuning.
+
+### Log Entry
+
+- Time: 2026-06-19 18:32 MSK
+- Agent: Codex
+- Action type: edit
+- Action: Реализован blocked Alpenglow Assist fine-tuning package для issue `017`.
+- Reason: Пользователь попросил подготовить end-to-end fine-tuning workflow artifacts без выдуманного checkpoint до выбора provider/model.
+- Files touched: `deliverables/alpenglow_assist_finetuning/*`, `scripts/build_alpenglow_assist_finetuning.py`, `scripts/alpenglow_assist_finetuning_data.py`, `tests/test_alpenglow_assist_finetuning.py`, `docs/alpenglow-assist-finetuning.md`, `README.md`, `agent-files/CONTEXT.md`, `issues/017-finetune-alpenglow-assist-support-model.md`, `agent-files/AGENT_TASK_LOG.md`.
+- Commands run: `uv run python scripts/build_alpenglow_assist_finetuning.py`, `uv run pytest tests/test_alpenglow_assist_finetuning.py`, `uv run pytest`, `wc -l ...`, `python3 -m py_compile ...`.
+- Result: Added 108 synthetic cleaned support examples, deterministic 96/12 split, blocked setup JSON, PDF evaluation report, deployment metadata with hashes, docs and validation tests. Targeted pytest passed 5/5; full `uv run pytest` passed 126/126 with one existing FastAPI TestClient warning. New code/test files are under 200 lines.
+- Follow-up: Real fine-tuning remains blocked until human approval of base model, provider/runtime, compute/budget and secret handling.

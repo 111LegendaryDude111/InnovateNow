@@ -1,0 +1,36 @@
+{
+  "checkpoint_selection": "blocked until base model, provider, budget, and secret policy are approved",
+  "dataset": {
+    "path": "deliverables/alpenglow_assist_finetuning/alpenglow_assist_training_dataset.jsonl",
+    "records": 108,
+    "sha256": "e6454a989c6d0c5618906b72d8429a40a4c115a2f1f80b7bb762ba6ac1d85680"
+  },
+  "evaluation_report": {
+    "path": "deliverables/alpenglow_assist_finetuning/training_evaluation_report.pdf",
+    "readiness_verdict": "blocked_pending_model_provider_decision",
+    "sha256": "6d5e115eca300102fe26bd207382a7251bb5a587a50f19a227f28b15db788198"
+  },
+  "fine_tuning_setup": {
+    "path": "deliverables/alpenglow_assist_finetuning/fine_tuning_setup.json",
+    "sha256": "f99efaf3ae489450024dbdba1582340bfe8d4105bac15987f401c5e62069b258"
+  },
+  "integration_readiness_status": "not_ready_for_support_workflow_integration",
+  "known_limitations": [
+    "No real training run executed.",
+    "No live model metrics or checkpoint IDs exist.",
+    "Synthetic data needs human review before provider upload."
+  ],
+  "model_version": "alpenglow-assist-v1.0.0",
+  "next_steps": [
+    "Choose base model and provider/runtime.",
+    "Approve compute budget and secret handling.",
+    "Run fine-tuning and replace blocked fields with real run metadata."
+  ],
+  "owner": "Alpenglow Assist product owner",
+  "rollback_fallback_notes": [
+    "Keep existing support workflow active until a validated checkpoint is approved.",
+    "Rollback means routing traffic to the current non-fine-tuned assistant or human support queue."
+  ],
+  "selected_checkpoint": null,
+  "training_status": "blocked_pending_model_provider_decision"
+}

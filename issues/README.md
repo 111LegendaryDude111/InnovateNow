@@ -30,3 +30,4 @@
 | 014 | Создать PDF Q&A Tool с upload, retrieval и answer generation | AFK | Нет |
 | 015 | Провести audit search inputs для Cinder hybrid search | AFK | Нет |
 | 016 | Подготовить fine-tuning dataset для Northstar Relay support responses | AFK | Нет |
+| 017 | Fine-tune Alpenglow Assist support model | HITL | Human decision: base model, provider/runtime, compute/budget and secret handling |

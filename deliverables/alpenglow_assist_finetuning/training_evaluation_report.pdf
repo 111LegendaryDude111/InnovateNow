@@ -1,0 +1,68 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Length 1548 >>
+stream
+BT
+/F1 11 Tf
+72 760 Td
+14 TL
+(Alpenglow Assist Training Evaluation Report) Tj
+T*
+(Training status: blocked_pending_model_provider_decision) Tj
+T*
+(Dataset records: 108 synthetic examples) Tj
+T*
+(Dataset integrity: upload JSONL contains one object per line; shorter reviewer excerpts are previews only.) Tj
+T*
+(Split: train 96 / validation 12) Tj
+T*
+(Topic distribution: account_access=18, billing_basics=18, onboarding=18, safe_escalation=18, troubleshooting=18, workflow_how_to=18) Tj
+T*
+(Candidate cleaning: retained 108 / excluded 12) Tj
+T*
+(Excluded anomalies: contradictory_answer, direct_answer_to_escalation_case, exact_duplicate, incomplete_response, mislabeled_topic, near_duplicate, off_brand_tone, unsafe_overly_technical_response) Tj
+T*
+(Duplicate leakage check: no duplicate user messages across train and validation.) Tj
+T*
+(Tone check: all retained examples use concise_support.) Tj
+T*
+(Safety check: escalation cases use handoff language, not direct account or billing actions.) Tj
+T*
+(Training iterations: not run; pending human model/provider/runtime decision.) Tj
+T*
+(Held-out evaluation prompts: six prompts cover onboarding, troubleshooting, account access, billing basics, workflow, and escalation.) Tj
+T*
+(Held-out results: blocked because no checkpoint exists.) Tj
+T*
+(Failure cases: no model failures observed; expected risk areas are verbosity, missed escalation, and billing wording drift.) Tj
+T*
+(Readiness verdict: blocked_pending_model_provider_decision. Upload-ready data exists; deployment is not approved.) Tj
+T*
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000311 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1911
+%%EOF

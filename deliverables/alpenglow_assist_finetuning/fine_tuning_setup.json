@@ -1,0 +1,192 @@
+{
+  "base_model": "pending_human_decision",
+  "candidate_cleaning_summary": {
+    "candidate_count": 120,
+    "duplicate_cross_split_leakage": false,
+    "excluded_candidate_examples": [
+      {
+        "candidate_id": "AA-X001",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": "DUP-EXACT-001",
+        "kept_conversation_id": "AA-0001",
+        "reason": "exact_duplicate"
+      },
+      {
+        "candidate_id": "AA-X002",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": "DUP-NEAR-001",
+        "kept_conversation_id": "AA-0008",
+        "reason": "near_duplicate"
+      },
+      {
+        "candidate_id": "AA-X003",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": null,
+        "kept_conversation_id": null,
+        "reason": "contradictory_answer"
+      },
+      {
+        "candidate_id": "AA-X004",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": null,
+        "kept_conversation_id": null,
+        "reason": "off_brand_tone"
+      },
+      {
+        "candidate_id": "AA-X005",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": null,
+        "kept_conversation_id": null,
+        "reason": "incomplete_response"
+      },
+      {
+        "candidate_id": "AA-X006",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": null,
+        "kept_conversation_id": null,
+        "reason": "mislabeled_topic"
+      },
+      {
+        "candidate_id": "AA-X007",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": null,
+        "kept_conversation_id": null,
+        "reason": "unsafe_overly_technical_response"
+      },
+      {
+        "candidate_id": "AA-X008",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": null,
+        "kept_conversation_id": null,
+        "reason": "direct_answer_to_escalation_case"
+      },
+      {
+        "candidate_id": "AA-X009",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": "DUP-EXACT-002",
+        "kept_conversation_id": "AA-0042",
+        "reason": "exact_duplicate"
+      },
+      {
+        "candidate_id": "AA-X010",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": "DUP-NEAR-002",
+        "kept_conversation_id": "AA-0079",
+        "reason": "near_duplicate"
+      },
+      {
+        "candidate_id": "AA-X011",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": null,
+        "kept_conversation_id": null,
+        "reason": "off_brand_tone"
+      },
+      {
+        "candidate_id": "AA-X012",
+        "decision": "exclude_before_training_jsonl",
+        "duplicate_group_id": null,
+        "kept_conversation_id": null,
+        "reason": "incomplete_response"
+      }
+    ],
+    "excluded_count": 12,
+    "exclusion_reason_counts": {
+      "contradictory_answer": 1,
+      "direct_answer_to_escalation_case": 1,
+      "exact_duplicate": 2,
+      "incomplete_response": 2,
+      "mislabeled_topic": 1,
+      "near_duplicate": 2,
+      "off_brand_tone": 2,
+      "unsafe_overly_technical_response": 1
+    },
+    "retained_count": 108
+  },
+  "checkpointing_strategy": {
+    "planned_policy": "save provider checkpoints per approved run and select best validation checkpoint",
+    "status": "blocked_pending_model_provider_decision"
+  },
+  "dataset_integrity": {
+    "jsonl_path": "deliverables/alpenglow_assist_finetuning/alpenglow_assist_training_dataset.jsonl",
+    "jsonl_record_count": 108,
+    "record_count_source": "one JSON object per JSONL line",
+    "review_note": "Shorter rendered excerpts are previews only, not the full upload dataset."
+  },
+  "dependencies_policy": {
+    "allowed": [
+      "python stdlib",
+      "pytest validation"
+    ],
+    "forbidden": [
+      "pandas",
+      "torch",
+      "tensorflow",
+      "transformers",
+      "datasets",
+      "training SDKs before approval"
+    ]
+  },
+  "evaluation_prompt_set_references": [
+    {
+      "prompt": "A new team wants first-week setup guidance.",
+      "prompt_id": "AA-EVAL-001",
+      "topic": "onboarding"
+    },
+    {
+      "prompt": "Notifications and report exports are failing.",
+      "prompt_id": "AA-EVAL-002",
+      "topic": "troubleshooting"
+    },
+    {
+      "prompt": "A user lost MFA and needs access.",
+      "prompt_id": "AA-EVAL-003",
+      "topic": "account_access"
+    },
+    {
+      "prompt": "An admin asks why seats changed the invoice.",
+      "prompt_id": "AA-EVAL-004",
+      "topic": "billing_basics"
+    },
+    {
+      "prompt": "A team wants a priority routing workflow.",
+      "prompt_id": "AA-EVAL-005",
+      "topic": "workflow_how_to"
+    },
+    {
+      "prompt": "A suspected account takeover needs escalation.",
+      "prompt_id": "AA-EVAL-006",
+      "topic": "safe_escalation"
+    }
+  ],
+  "project": "alpenglow_assist",
+  "safety_tone_criteria": [
+    "concise_support tone",
+    "no secrets or PII",
+    "escalate account, billing action, privacy, and security cases"
+  ],
+  "schema_version": "2026-06-19",
+  "secret_handling": "Do not read, print, store, or commit provider API keys. Human approval required before training calls.",
+  "split_distribution": {
+    "train": 96,
+    "validation": 12
+  },
+  "topic_distribution": {
+    "account_access": 18,
+    "billing_basics": 18,
+    "onboarding": 18,
+    "safe_escalation": 18,
+    "troubleshooting": 18,
+    "workflow_how_to": 18
+  },
+  "training_format": {
+    "input": "user_message",
+    "output": "assistant_response"
+  },
+  "training_provider_runtime": "pending_human_decision",
+  "training_status": "blocked_pending_model_provider_decision",
+  "validation_split": {
+    "actual_ratio": 0.1111,
+    "seed": 17017,
+    "target": "10-15%"
+  }
+}
